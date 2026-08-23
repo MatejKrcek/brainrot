@@ -27,7 +27,7 @@ enum SelectionStore {
 
 /// Applies / removes the shield. Safe to call from the app and from extensions.
 enum ShieldController {
-    static let store = ManagedSettingsStore(named: .brainrot)
+    static let store = ManagedSettingsStore(named: .graymatter)
 
     static func lock() {
         let sel = SelectionStore.load()
@@ -48,12 +48,7 @@ enum ShieldController {
 
     /// Decide whether apps should be locked right now, and apply it.
     static func reconcile() {
-        if SharedStore.isUnlocked { unlock(); return }
-        switch SharedStore.mode {
-        case .gate:
-            lock()
-        case .limit:
-            SharedStore.minutesToday >= SharedStore.dailyLimit ? lock() : unlock()
-        }
+        if SharedStore.isUnlocked || !SharedStore.lockEnabled { unlock(); return }
+        SharedStore.minutesToday >= SharedStore.dailyLimit ? lock() : unlock()
     }
 }

@@ -4,13 +4,13 @@ import ManagedSettings
 
 extension DeviceActivityName {
     /// Repeating all-day schedule that counts usage of the selected apps.
-    static let daily = DeviceActivityName("brainrot.daily")
+    static let daily = DeviceActivityName("graymatter.daily")
     /// One-shot schedule for an unlock window earned by a challenge.
-    static let unlock = DeviceActivityName("brainrot.unlock")
+    static let unlock = DeviceActivityName("graymatter.unlock")
 }
 
 extension DeviceActivityEvent.Name {
-    static let tickPrefix = "brainrot.tick."
+    static let tickPrefix = "graymatter.tick."
     static func tick(_ minutes: Int) -> DeviceActivityEvent.Name { .init(tickPrefix + String(minutes)) }
     var tickMinutes: Int? {
         guard rawValue.hasPrefix(Self.tickPrefix) else { return nil }
@@ -19,7 +19,7 @@ extension DeviceActivityEvent.Name {
 }
 
 extension ManagedSettingsStore.Name {
-    static let brainrot = ManagedSettingsStore.Name("brainrot")
+    static let graymatter = ManagedSettingsStore.Name("graymatter")
 }
 
 /// Minute marks at which the monitor extension is woken. Minute resolution for the first

@@ -1,4 +1,4 @@
-name: Brainrot
+name: GrayMatter
 options:
   bundleIdPrefix: com.matejkrcek
   deploymentTarget:
@@ -28,245 +28,225 @@ targetTemplates:
         SKIP_INSTALL: YES
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
 
-targets:
-  Brainrot:
+  AppBase:
     type: application
     platform: iOS
     sources:
-      - path: Brainrot
+      - path: GrayMatter
         excludes: ["Info*.plist", "*.entitlements"]
       - Shared
       - SharedScreenTime
+    settings:
+      base:
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        INFOPLIST_KEY_UIStatusBarStyle: UIStatusBarStyleDefault
+
+targets:
+  GrayMatter:
+    templates: [AppBase]
     dependencies:
-      - target: BrainrotWidget
-      - target: BrainrotMonitor
-      - target: BrainrotReport
-      - target: BrainrotShieldConfig
-      - target: BrainrotShieldAction
+      - target: GrayMatterWidget
+      - target: GrayMatterMonitor
+      - target: GrayMatterReport
+      - target: GrayMatterShield
+      - target: GrayMatterShieldAction
     info:
-      path: Brainrot/Info.plist
-      properties:
-        CFBundleDisplayName: Brainrot
+      path: GrayMatter/Info.plist
+      properties: &appInfo
+        CFBundleDisplayName: Gray Matter
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         UILaunchScreen:
           UIColorName: LaunchBackground
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
-        UIUserInterfaceStyle: Dark
         UIRequiresFullScreen: true
         ITSAppUsesNonExemptEncryption: false
-        NSMotionUsageDescription: "Brainrot counts your steps during the 'Walk it off' challenge."
         CFBundleURLTypes:
-          - CFBundleURLName: com.matejkrcek.brainrot
-            CFBundleURLSchemes: [brainrot]
+          - CFBundleURLName: com.matejkrcek.graymatter
+            CFBundleURLSchemes: [graymatter]
     entitlements:
-      path: Brainrot/Brainrot.entitlements
+      path: GrayMatter/GrayMatter.entitlements
       properties:
         com.apple.developer.family-controls: true
-        com.apple.security.application-groups: [group.com.matejkrcek.brainrot]
+        com.apple.security.application-groups: [group.com.matejkrcek.graymatter]
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.matejkrcek.brainrot
-        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
-        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
-        INFOPLIST_KEY_UIStatusBarStyle: UIStatusBarStyleLightContent
+        PRODUCT_BUNDLE_IDENTIFIER: com.matejkrcek.graymatter
 
-  BrainrotWidget:
+  GrayMatterWidget:
     templates: [Extension]
     sources:
-      - path: BrainrotWidget
+      - path: GrayMatterWidget
         excludes: ["Info*.plist", "*.entitlements"]
       - Shared
     info:
-      path: BrainrotWidget/Info.plist
+      path: GrayMatterWidget/Info.plist
       properties:
-        CFBundleDisplayName: Brainrot
+        CFBundleDisplayName: Gray Matter
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
     entitlements:
-      path: BrainrotWidget/BrainrotWidget.entitlements
+      path: GrayMatterWidget/GrayMatterWidget.entitlements
       properties:
-        com.apple.security.application-groups: [group.com.matejkrcek.brainrot]
+        com.apple.security.application-groups: [group.com.matejkrcek.graymatter]
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.matejkrcek.brainrot.widget
+        PRODUCT_BUNDLE_IDENTIFIER: com.matejkrcek.graymatter.widget
 
-  BrainrotMonitor:
+  GrayMatterMonitor:
     templates: [Extension]
     sources:
-      - path: BrainrotMonitor
+      - path: GrayMatterMonitor
         excludes: ["Info*.plist", "*.entitlements"]
       - Shared
       - SharedScreenTime
     info:
-      path: BrainrotMonitor/Info.plist
+      path: GrayMatterMonitor/Info.plist
       properties:
-        CFBundleDisplayName: Brainrot Monitor
+        CFBundleDisplayName: Gray Matter Monitor
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         NSExtension:
           NSExtensionPointIdentifier: com.apple.deviceactivity.monitor-extension
           NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).DeviceActivityMonitorExtension
     entitlements:
-      path: BrainrotMonitor/BrainrotMonitor.entitlements
+      path: GrayMatterMonitor/GrayMatterMonitor.entitlements
       properties:
         com.apple.developer.family-controls: true
-        com.apple.security.application-groups: [group.com.matejkrcek.brainrot]
+        com.apple.security.application-groups: [group.com.matejkrcek.graymatter]
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.matejkrcek.brainrot.monitor
+        PRODUCT_BUNDLE_IDENTIFIER: com.matejkrcek.graymatter.monitor
 
-  BrainrotReport:
+  GrayMatterReport:
     templates: [Extension]
     sources:
-      - path: BrainrotReport
+      - path: GrayMatterReport
         excludes: ["Info*.plist", "*.entitlements"]
       - Shared
     info:
-      path: BrainrotReport/Info.plist
+      path: GrayMatterReport/Info.plist
       properties:
-        CFBundleDisplayName: Brainrot Report
+        CFBundleDisplayName: Gray Matter Report
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         NSExtension:
           NSExtensionPointIdentifier: com.apple.deviceactivityui.report-extension
     entitlements:
-      path: BrainrotReport/BrainrotReport.entitlements
+      path: GrayMatterReport/GrayMatterReport.entitlements
       properties:
         com.apple.developer.family-controls: true
-        com.apple.security.application-groups: [group.com.matejkrcek.brainrot]
+        com.apple.security.application-groups: [group.com.matejkrcek.graymatter]
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.matejkrcek.brainrot.report
+        PRODUCT_BUNDLE_IDENTIFIER: com.matejkrcek.graymatter.report
 
-  BrainrotShieldConfig:
+  GrayMatterShield:
     templates: [Extension]
     sources:
-      - path: BrainrotShieldConfig
+      - path: GrayMatterShield
         excludes: ["Info*.plist", "*.entitlements"]
       - Shared
     info:
-      path: BrainrotShieldConfig/Info.plist
+      path: GrayMatterShield/Info.plist
       properties:
-        CFBundleDisplayName: Brainrot Shield
+        CFBundleDisplayName: Gray Matter Shield
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         NSExtension:
           NSExtensionPointIdentifier: com.apple.ManagedSettingsUI.shield-configuration-service
           NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).ShieldConfigurationExtension
     entitlements:
-      path: BrainrotShieldConfig/BrainrotShieldConfig.entitlements
+      path: GrayMatterShield/GrayMatterShield.entitlements
       properties:
         com.apple.developer.family-controls: true
-        com.apple.security.application-groups: [group.com.matejkrcek.brainrot]
+        com.apple.security.application-groups: [group.com.matejkrcek.graymatter]
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.matejkrcek.brainrot.shieldconfig
+        PRODUCT_BUNDLE_IDENTIFIER: com.matejkrcek.graymatter.shield
 
-  BrainrotShieldAction:
+  GrayMatterShieldAction:
     templates: [Extension]
     sources:
-      - path: BrainrotShieldAction
+      - path: GrayMatterShieldAction
         excludes: ["Info*.plist", "*.entitlements"]
       - Shared
     info:
-      path: BrainrotShieldAction/Info.plist
+      path: GrayMatterShieldAction/Info.plist
       properties:
-        CFBundleDisplayName: Brainrot Shield Action
+        CFBundleDisplayName: Gray Matter Shield Action
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         NSExtension:
           NSExtensionPointIdentifier: com.apple.ManagedSettings.shield-action-service
           NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).ShieldActionExtension
     entitlements:
-      path: BrainrotShieldAction/BrainrotShieldAction.entitlements
+      path: GrayMatterShieldAction/GrayMatterShieldAction.entitlements
       properties:
         com.apple.developer.family-controls: true
-        com.apple.security.application-groups: [group.com.matejkrcek.brainrot]
+        com.apple.security.application-groups: [group.com.matejkrcek.graymatter]
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.matejkrcek.brainrot.shieldaction
-
+        PRODUCT_BUNDLE_IDENTIFIER: com.matejkrcek.graymatter.shieldaction
 
   # ---------------------------------------------------------------------------
   # Lite: identical code, NO Family Controls entitlement and no Screen Time
-  # extensions → installs on a free Personal Team. Runs in demo mode + widgets.
+  # extensions → installs on a free Personal Team. Runs in demo mode + widget.
   # ---------------------------------------------------------------------------
-  BrainrotLite:
-    type: application
-    platform: iOS
-    sources:
-      - path: Brainrot
-        excludes: ["Info*.plist", "*.entitlements"]
-      - Shared
-      - SharedScreenTime
+  GrayMatterLite:
+    templates: [AppBase]
     dependencies:
-      - target: BrainrotLiteWidget
+      - target: GrayMatterLiteWidget
     info:
-      path: Brainrot/Info-Lite.plist
-      properties:
-        CFBundleDisplayName: Brainrot
-        CFBundleShortVersionString: $(MARKETING_VERSION)
-        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
-        UILaunchScreen:
-          UIColorName: LaunchBackground
-        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
-        UIUserInterfaceStyle: Dark
-        UIRequiresFullScreen: true
-        ITSAppUsesNonExemptEncryption: false
-        NSMotionUsageDescription: "Brainrot counts your steps during the 'Walk it off' challenge."
-        CFBundleURLTypes:
-          - CFBundleURLName: com.matejkrcek.brainrot
-            CFBundleURLSchemes: [brainrot]
+      path: GrayMatter/Info-Lite.plist
+      properties: *appInfo
     entitlements:
-      path: Brainrot/BrainrotLite.entitlements
+      path: GrayMatter/GrayMatterLite.entitlements
       properties:
-        com.apple.security.application-groups: [group.com.matejkrcek.brainrot]
+        com.apple.security.application-groups: [group.com.matejkrcek.graymatter]
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.matejkrcek.brainrotlite
-        PRODUCT_NAME: BrainrotLite
-        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
-        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
-        INFOPLIST_KEY_UIStatusBarStyle: UIStatusBarStyleLightContent
+        PRODUCT_BUNDLE_IDENTIFIER: com.matejkrcek.graymatterlite
+        PRODUCT_NAME: GrayMatterLite
 
-  BrainrotLiteWidget:
+  GrayMatterLiteWidget:
     templates: [Extension]
     sources:
-      - path: BrainrotWidget
+      - path: GrayMatterWidget
         excludes: ["Info*.plist", "*.entitlements"]
       - Shared
     info:
-      path: BrainrotWidget/Info-Lite.plist
+      path: GrayMatterWidget/Info-Lite.plist
       properties:
-        CFBundleDisplayName: Brainrot
+        CFBundleDisplayName: Gray Matter
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
     entitlements:
-      path: BrainrotWidget/BrainrotLiteWidget.entitlements
+      path: GrayMatterWidget/GrayMatterLiteWidget.entitlements
       properties:
-        com.apple.security.application-groups: [group.com.matejkrcek.brainrot]
+        com.apple.security.application-groups: [group.com.matejkrcek.graymatter]
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.matejkrcek.brainrotlite.widget
+        PRODUCT_BUNDLE_IDENTIFIER: com.matejkrcek.graymatterlite.widget
 
 schemes:
-  Brainrot:
+  GrayMatter:
     build:
       targets:
-        Brainrot: all
+        GrayMatter: all
     run:
       config: Debug
     archive:
       config: Release
-  BrainrotLite:
+  GrayMatterLite:
     build:
       targets:
-        BrainrotLite: all
+        GrayMatterLite: all
     run:
       config: Debug
     archive:
