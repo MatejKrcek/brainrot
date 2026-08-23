@@ -1,0 +1,273 @@
+name: Brainrot
+options:
+  bundleIdPrefix: com.matejkrcek
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+  generateEmptyDirectories: true
+  xcodeVersion: "26.0"
+settings:
+  base:
+    DEVELOPMENT_TEAM: HRZTF76M9G
+    CODE_SIGN_STYLE: Automatic
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "1.0.0"
+    CURRENT_PROJECT_VERSION: "1"
+    TARGETED_DEVICE_FAMILY: "1"
+    IPHONEOS_DEPLOYMENT_TARGET: "17.0"
+    SWIFT_STRICT_CONCURRENCY: minimal
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+    GENERATE_INFOPLIST_FILE: NO
+
+targetTemplates:
+  Extension:
+    type: app-extension
+    platform: iOS
+    settings:
+      base:
+        SKIP_INSTALL: YES
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+
+targets:
+  Brainrot:
+    type: application
+    platform: iOS
+    sources:
+      - path: Brainrot
+        excludes: ["Info*.plist", "*.entitlements"]
+      - Shared
+      - SharedScreenTime
+    dependencies:
+      - target: BrainrotWidget
+      - target: BrainrotMonitor
+      - target: BrainrotReport
+      - target: BrainrotShieldConfig
+      - target: BrainrotShieldAction
+    info:
+      path: Brainrot/Info.plist
+      properties:
+        CFBundleDisplayName: Brainrot
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        UILaunchScreen:
+          UIColorName: LaunchBackground
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        UIUserInterfaceStyle: Dark
+        UIRequiresFullScreen: true
+        ITSAppUsesNonExemptEncryption: false
+        NSMotionUsageDescription: "Brainrot counts your steps during the 'Walk it off' challenge."
+        CFBundleURLTypes:
+          - CFBundleURLName: com.matejkrcek.brainrot
+            CFBundleURLSchemes: [brainrot]
+    entitlements:
+      path: Brainrot/Brainrot.entitlements
+      properties:
+        com.apple.developer.family-controls: true
+        com.apple.security.application-groups: [group.com.matejkrcek.brainrot]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.matejkrcek.brainrot
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        INFOPLIST_KEY_UIStatusBarStyle: UIStatusBarStyleLightContent
+
+  BrainrotWidget:
+    templates: [Extension]
+    sources:
+      - path: BrainrotWidget
+        excludes: ["Info*.plist", "*.entitlements"]
+      - Shared
+    info:
+      path: BrainrotWidget/Info.plist
+      properties:
+        CFBundleDisplayName: Brainrot
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    entitlements:
+      path: BrainrotWidget/BrainrotWidget.entitlements
+      properties:
+        com.apple.security.application-groups: [group.com.matejkrcek.brainrot]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.matejkrcek.brainrot.widget
+
+  BrainrotMonitor:
+    templates: [Extension]
+    sources:
+      - path: BrainrotMonitor
+        excludes: ["Info*.plist", "*.entitlements"]
+      - Shared
+      - SharedScreenTime
+    info:
+      path: BrainrotMonitor/Info.plist
+      properties:
+        CFBundleDisplayName: Brainrot Monitor
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.deviceactivity.monitor-extension
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).DeviceActivityMonitorExtension
+    entitlements:
+      path: BrainrotMonitor/BrainrotMonitor.entitlements
+      properties:
+        com.apple.developer.family-controls: true
+        com.apple.security.application-groups: [group.com.matejkrcek.brainrot]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.matejkrcek.brainrot.monitor
+
+  BrainrotReport:
+    templates: [Extension]
+    sources:
+      - path: BrainrotReport
+        excludes: ["Info*.plist", "*.entitlements"]
+      - Shared
+    info:
+      path: BrainrotReport/Info.plist
+      properties:
+        CFBundleDisplayName: Brainrot Report
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.deviceactivityui.report-extension
+    entitlements:
+      path: BrainrotReport/BrainrotReport.entitlements
+      properties:
+        com.apple.developer.family-controls: true
+        com.apple.security.application-groups: [group.com.matejkrcek.brainrot]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.matejkrcek.brainrot.report
+
+  BrainrotShieldConfig:
+    templates: [Extension]
+    sources:
+      - path: BrainrotShieldConfig
+        excludes: ["Info*.plist", "*.entitlements"]
+      - Shared
+    info:
+      path: BrainrotShieldConfig/Info.plist
+      properties:
+        CFBundleDisplayName: Brainrot Shield
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.ManagedSettingsUI.shield-configuration-service
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).ShieldConfigurationExtension
+    entitlements:
+      path: BrainrotShieldConfig/BrainrotShieldConfig.entitlements
+      properties:
+        com.apple.developer.family-controls: true
+        com.apple.security.application-groups: [group.com.matejkrcek.brainrot]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.matejkrcek.brainrot.shieldconfig
+
+  BrainrotShieldAction:
+    templates: [Extension]
+    sources:
+      - path: BrainrotShieldAction
+        excludes: ["Info*.plist", "*.entitlements"]
+      - Shared
+    info:
+      path: BrainrotShieldAction/Info.plist
+      properties:
+        CFBundleDisplayName: Brainrot Shield Action
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.ManagedSettings.shield-action-service
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).ShieldActionExtension
+    entitlements:
+      path: BrainrotShieldAction/BrainrotShieldAction.entitlements
+      properties:
+        com.apple.developer.family-controls: true
+        com.apple.security.application-groups: [group.com.matejkrcek.brainrot]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.matejkrcek.brainrot.shieldaction
+
+
+  # ---------------------------------------------------------------------------
+  # Lite: identical code, NO Family Controls entitlement and no Screen Time
+  # extensions → installs on a free Personal Team. Runs in demo mode + widgets.
+  # ---------------------------------------------------------------------------
+  BrainrotLite:
+    type: application
+    platform: iOS
+    sources:
+      - path: Brainrot
+        excludes: ["Info*.plist", "*.entitlements"]
+      - Shared
+      - SharedScreenTime
+    dependencies:
+      - target: BrainrotLiteWidget
+    info:
+      path: Brainrot/Info-Lite.plist
+      properties:
+        CFBundleDisplayName: Brainrot
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        UILaunchScreen:
+          UIColorName: LaunchBackground
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        UIUserInterfaceStyle: Dark
+        UIRequiresFullScreen: true
+        ITSAppUsesNonExemptEncryption: false
+        NSMotionUsageDescription: "Brainrot counts your steps during the 'Walk it off' challenge."
+        CFBundleURLTypes:
+          - CFBundleURLName: com.matejkrcek.brainrot
+            CFBundleURLSchemes: [brainrot]
+    entitlements:
+      path: Brainrot/BrainrotLite.entitlements
+      properties:
+        com.apple.security.application-groups: [group.com.matejkrcek.brainrot]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.matejkrcek.brainrotlite
+        PRODUCT_NAME: BrainrotLite
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        INFOPLIST_KEY_UIStatusBarStyle: UIStatusBarStyleLightContent
+
+  BrainrotLiteWidget:
+    templates: [Extension]
+    sources:
+      - path: BrainrotWidget
+        excludes: ["Info*.plist", "*.entitlements"]
+      - Shared
+    info:
+      path: BrainrotWidget/Info-Lite.plist
+      properties:
+        CFBundleDisplayName: Brainrot
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    entitlements:
+      path: BrainrotWidget/BrainrotLiteWidget.entitlements
+      properties:
+        com.apple.security.application-groups: [group.com.matejkrcek.brainrot]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.matejkrcek.brainrotlite.widget
+
+schemes:
+  Brainrot:
+    build:
+      targets:
+        Brainrot: all
+    run:
+      config: Debug
+    archive:
+      config: Release
+  BrainrotLite:
+    build:
+      targets:
+        BrainrotLite: all
+    run:
+      config: Debug
+    archive:
+      config: Release
