@@ -22,7 +22,7 @@ struct SettingsView: View {
                         HStack {
                             Label("Tracked apps", systemImage: "square.grid.2x2")
                             Spacer()
-                            Text(TrackedApp.summary(trackedIDs)).foregroundStyle(.secondary)
+                            Text(TrackedApp.summary(trackedIDs, extra: SharedStore.selectionCount)).foregroundStyle(.secondary)
                         }
                     }
                 } header: {

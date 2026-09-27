@@ -56,7 +56,7 @@ struct GrayMatterWidget: Widget {
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: BrainProvider()) { entry in
             BrainWidgetView(entry: entry)
-                .containerBackground(for: .widget) { Color(.systemBackground) }
+                .containerBackground(for: .widget) { WidgetBackdrop(rot: entry.snap.rot) }
         }
         .configurationDisplayName("Brain")
         .description("Your brain, as healthy as today's screen time allows.")

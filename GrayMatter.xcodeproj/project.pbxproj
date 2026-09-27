@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		02090313AE7114F85DCEB984 /* Alternatives.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FEE4EA3DD93C47E5FE323E /* Alternatives.swift */; };
 		054DA6ED0E82E905D597FAF0 /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7251C9C15F84448F80DB63 /* AppGroup.swift */; };
+		06F8649A5690D59B19CB244E /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 482CA212E4FCBAD50C8505F4 /* PrivacyInfo.xcprivacy */; };
 		0E8A4C033BA782D15D94B1FC /* SharedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3653CE8A9DA83F6C2637834F /* SharedStore.swift */; };
 		1186DE634ACDA391B889F093 /* SharedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3653CE8A9DA83F6C2637834F /* SharedStore.swift */; };
 		12CDB66FB0ED6925799C88C7 /* SelectionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790833A766AAAF7D15D31E07 /* SelectionStore.swift */; };
@@ -20,8 +21,10 @@
 		1A477C5D3253D6C02CA9AE0E /* ScreenTimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AAB17F2B5DF6870BF704C22 /* ScreenTimeManager.swift */; };
 		22A094C769C630D68E022264 /* BrainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B308FEAC2127F1F1A709C2 /* BrainView.swift */; };
 		259799675718C96D7E2E8FB1 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B973205C0BB00DCFC0EB5E71 /* OnboardingView.swift */; };
+		25D768529E60218B16BCA9BE /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 482CA212E4FCBAD50C8505F4 /* PrivacyInfo.xcprivacy */; };
 		2715A6C48BB161668DEE1BFD /* SharedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3653CE8A9DA83F6C2637834F /* SharedStore.swift */; };
 		2B236D31AB60192630B1B805 /* ShieldActionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1173F001F1F62191EC92603F /* ShieldActionExtension.swift */; };
+		2BE699006B689F485072A99B /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 482CA212E4FCBAD50C8505F4 /* PrivacyInfo.xcprivacy */; };
 		308A531435DD8C26AE1A30F3 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442193E566E4829C11676C8D /* AppModel.swift */; };
 		30AC4B2B9613301A9B85A0E6 /* Alternatives.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FEE4EA3DD93C47E5FE323E /* Alternatives.swift */; };
 		379B5396C0CB1C0118B48528 /* ShieldConfigurationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88AAFADB0D21CF7B7D73F315 /* ShieldConfigurationExtension.swift */; };
@@ -35,6 +38,8 @@
 		4D33C2AAB6276BB6C9429DE7 /* RotModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD09BF162F2320D0435FAD0D /* RotModel.swift */; };
 		526ECE67612152857959ED2A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42958A3A61CDE1EB76558A1D /* HomeView.swift */; };
 		579F2B60127B9BFC2CB717EC /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7251C9C15F84448F80DB63 /* AppGroup.swift */; };
+		5D8C901E3E5709D9F50843A6 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 482CA212E4FCBAD50C8505F4 /* PrivacyInfo.xcprivacy */; };
+		5D9ADA51D2C7D747687283AB /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 482CA212E4FCBAD50C8505F4 /* PrivacyInfo.xcprivacy */; };
 		5E037FA7ADAD9AAC9BF6ED49 /* GrayMatterMonitor.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 7D0FF0C9B95AF381474EB82B /* GrayMatterMonitor.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		60EE5E286AA0D41756DF0845 /* SharedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3653CE8A9DA83F6C2637834F /* SharedStore.swift */; };
 		614AE7F6014F90D332568150 /* BrainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B308FEAC2127F1F1A709C2 /* BrainView.swift */; };
@@ -51,12 +56,14 @@
 		8268379BC6607170A9E60ED7 /* TrackedApps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCF6244ACC986E283F86EB7 /* TrackedApps.swift */; };
 		84AAB4A52351EE15A9AA7713 /* HealthWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E674089D4ABDF36795E24B1 /* HealthWidget.swift */; };
 		8755667769955E3CFC11D87E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24F31F526B9BF87FDE64071B /* Assets.xcassets */; };
+		8A0A63678A9B1FC5A2822F39 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 482CA212E4FCBAD50C8505F4 /* PrivacyInfo.xcprivacy */; };
 		8A0DDEB37BC0057135D3B185 /* HealthWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E674089D4ABDF36795E24B1 /* HealthWidget.swift */; };
 		8E2D624160EDABD874393C76 /* GrayMatterLiteWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 815E45654056AC737F6A99FE /* GrayMatterLiteWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		92E888031F99B219C8483FC4 /* SelectionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790833A766AAAF7D15D31E07 /* SelectionStore.swift */; };
 		945373DEBFB42F2EA938F96F /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B973205C0BB00DCFC0EB5E71 /* OnboardingView.swift */; };
 		96B0FFAC372413C0E58BEEE0 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E43BDFA1F2C99FD4D10D8E /* Components.swift */; };
 		97D88A9CF963A4A880E107A4 /* Alternatives.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FEE4EA3DD93C47E5FE323E /* Alternatives.swift */; };
+		9A260EC91B90503D19FF45BA /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 482CA212E4FCBAD50C8505F4 /* PrivacyInfo.xcprivacy */; };
 		9AD16EDF4530D8A06842A688 /* Alternatives.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FEE4EA3DD93C47E5FE323E /* Alternatives.swift */; };
 		9B68DFBB5E141FC305B941C8 /* BrainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B308FEAC2127F1F1A709C2 /* BrainView.swift */; };
 		9F6B808345F6A7736352F208 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442193E566E4829C11676C8D /* AppModel.swift */; };
@@ -73,6 +80,7 @@
 		BF262968D032038CF44CABD6 /* SharedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3653CE8A9DA83F6C2637834F /* SharedStore.swift */; };
 		C66ED12097CA5979ADCA21B4 /* RotModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD09BF162F2320D0435FAD0D /* RotModel.swift */; };
 		C9C0A4F34165C2BACF047761 /* RotModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD09BF162F2320D0435FAD0D /* RotModel.swift */; };
+		CCF35E135E53E03839CFED80 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 482CA212E4FCBAD50C8505F4 /* PrivacyInfo.xcprivacy */; };
 		D0503F0A3422C1F4140C3F0D /* GrayMatterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1E3FAC6FB2F13D962EDD30 /* GrayMatterApp.swift */; };
 		D0ACFA52FB761928C52644FC /* RotModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD09BF162F2320D0435FAD0D /* RotModel.swift */; };
 		D35A3F8FA5660A73BC2C2B56 /* TrackedAppsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5962FA6DD05D67B39F82188C /* TrackedAppsView.swift */; };
@@ -183,6 +191,7 @@
 		3B2CBC5730D416A02AF033D2 /* GrayMatterWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = GrayMatterWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		42958A3A61CDE1EB76558A1D /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		442193E566E4829C11676C8D /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		482CA212E4FCBAD50C8505F4 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		5962FA6DD05D67B39F82188C /* TrackedAppsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackedAppsView.swift; sourceTree = "<group>"; };
 		6ED223EB94922DB0B215FC63 /* ActivityNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityNames.swift; sourceTree = "<group>"; };
 		6FCF6244ACC986E283F86EB7 /* TrackedApps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackedApps.swift; sourceTree = "<group>"; };
@@ -252,6 +261,7 @@
 				84FEE4EA3DD93C47E5FE323E /* Alternatives.swift */,
 				AA7251C9C15F84448F80DB63 /* AppGroup.swift */,
 				D2B308FEAC2127F1F1A709C2 /* BrainView.swift */,
+				482CA212E4FCBAD50C8505F4 /* PrivacyInfo.xcprivacy */,
 				BD09BF162F2320D0435FAD0D /* RotModel.swift */,
 				3653CE8A9DA83F6C2637834F /* SharedStore.swift */,
 				6FCF6244ACC986E283F86EB7 /* TrackedApps.swift */,
@@ -341,6 +351,7 @@
 			buildConfigurationList = 93934E8668FC191A875B0C9F /* Build configuration list for PBXNativeTarget "GrayMatterLiteWidget" */;
 			buildPhases = (
 				1D65B504575AFE45C84D50A3 /* Sources */,
+				AEBBA09A02EC29583C15369A /* Resources */,
 			);
 			buildRules = (
 			);
@@ -358,6 +369,7 @@
 			buildConfigurationList = 570FA03F095F0E87541DA296 /* Build configuration list for PBXNativeTarget "GrayMatterMonitor" */;
 			buildPhases = (
 				895BA63CF6C86FA6B504BEAC /* Sources */,
+				11C68F946E93870669CFEE75 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -375,6 +387,7 @@
 			buildConfigurationList = 5264F3553B18F9788587D7E0 /* Build configuration list for PBXNativeTarget "GrayMatterWidget" */;
 			buildPhases = (
 				1719D6C2961C767A9376A27F /* Sources */,
+				F52326E4BB48517DC7010D11 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -392,6 +405,7 @@
 			buildConfigurationList = FCD48541ECD783CADCD886F8 /* Build configuration list for PBXNativeTarget "GrayMatterShieldAction" */;
 			buildPhases = (
 				3667C072BB977E8C25F56671 /* Sources */,
+				5369F4D1C04CDDD8F522F58B /* Resources */,
 			);
 			buildRules = (
 			);
@@ -409,6 +423,7 @@
 			buildConfigurationList = 420CA68A3305B87540E89E78 /* Build configuration list for PBXNativeTarget "GrayMatterReport" */;
 			buildPhases = (
 				9EF060920DB83B7CFB8C165D /* Sources */,
+				9E9109B1E744C89E536F59E5 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -470,6 +485,7 @@
 			buildConfigurationList = B1DC78CAB3708FE4FCBD9D66 /* Build configuration list for PBXNativeTarget "GrayMatterShield" */;
 			buildPhases = (
 				CE97CE26BCC9767BD35C1229 /* Sources */,
+				9169CEB58A7B044A110A86C0 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -552,11 +568,36 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		11C68F946E93870669CFEE75 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2BE699006B689F485072A99B /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5369F4D1C04CDDD8F522F58B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5D8C901E3E5709D9F50843A6 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7924F25A3FFFA1B0A8A586C4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				FDFFE6C06801E24C0C5B9731 /* Assets.xcassets in Resources */,
+				06F8649A5690D59B19CB244E /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9169CEB58A7B044A110A86C0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9A260EC91B90503D19FF45BA /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,6 +606,31 @@
 			buildActionMask = 2147483647;
 			files = (
 				8755667769955E3CFC11D87E /* Assets.xcassets in Resources */,
+				25D768529E60218B16BCA9BE /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9E9109B1E744C89E536F59E5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5D9ADA51D2C7D747687283AB /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AEBBA09A02EC29583C15369A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A0A63678A9B1FC5A2822F39 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F52326E4BB48517DC7010D11 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CCF35E135E53E03839CFED80 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,6 +15,23 @@ struct HealthWidgetView: View {
     }
 }
 
+/// Widget background: system colour plus a soft radial tint in the brain's current colour, so the brain
+/// stands off both light and dark Home Screens (same idea as the app icon).
+struct WidgetBackdrop: View {
+    let rot: Double
+    var body: some View {
+        ZStack {
+            #if canImport(UIKit)
+            Color(.systemBackground)
+            #else
+            Color(nsColor: .windowBackgroundColor)
+            #endif
+            RadialGradient(colors: [Theme.rotColor(rot).opacity(0.22), .clear],
+                           center: UnitPoint(x: 0.5, y: 0.42), startRadius: 0, endRadius: 190)
+        }
+    }
+}
+
 /// Layout per family, with no WidgetKit environment so it can be rendered outside a widget (scripts/preview_widget.swift).
 struct HealthWidgetContent: View {
     let snap: RotSnapshot
@@ -150,7 +167,7 @@ struct HealthWidget: Widget {
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: BrainProvider()) { entry in
             HealthWidgetView(entry: entry)
-                .containerBackground(for: .widget) { Color(.systemBackground) }
+                .containerBackground(for: .widget) { WidgetBackdrop(rot: entry.snap.rot) }
         }
         .configurationDisplayName("Screen time")
         .description("Your brain with today's screen time and how much is left.")

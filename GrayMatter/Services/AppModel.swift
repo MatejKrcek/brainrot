@@ -9,6 +9,8 @@ final class AppModel: ObservableObject {
     @Published var showSettings = false
     /// Set by `--apps`; SettingsView pushes Tracked apps on first appearance.
     @Published var openTrackedApps = false
+    /// The "instead" quote on Home. Re-rolled every time the app comes to the foreground.
+    @Published var alternative: Alternative?
 
     let screenTime = ScreenTimeManager()
     private var timer: AnyCancellable?
@@ -32,6 +34,12 @@ final class AppModel: ObservableObject {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in self?.showSettings = true }
         }
         snap = SharedStore.snapshot()
+        rollAlternative()
+    }
+
+    /// Picks a different "you could have…" line than last time.
+    func rollAlternative() {
+        alternative = Alternative.random(for: SharedStore.minutesToday, except: alternative?.id)
     }
 
     func refresh() {
@@ -56,6 +64,7 @@ final class AppModel: ObservableObject {
         screenTime.refreshStatus()
         screenTime.ensureMonitoring()
         refresh()
+        rollAlternative()
         reloadWidgets(force: true)
         AppGroup.defaults.removeObject(forKey: "pendingUnlockRequest")
     }

@@ -61,6 +61,13 @@ xcrun simctl launch booted com.matejkrcek.graymatterlite --minutes=25
 Widget layouts can be rendered without a device: `scripts/preview_widget.sh out.png`.
 Launch arguments for testing: `--minutes=80` (sets today's usage, skips onboarding), `--settings`, `--apps` (opens Settings → Tracked apps).
 
+## App Store
+
+`AppStore/CHECKLIST.md` lists the manual steps (Family Controls *distribution* entitlement, App Store Connect record),
+`AppStore/METADATA.md` the listing text and review notes, `AppStore/PRIVACY.md` the privacy policy.
+`scripts/archive.sh` archives Release and uploads to App Store Connect (`ExportOptions.plist`).
+`Shared/PrivacyInfo.xcprivacy` is bundled into the app and every extension (UserDefaults, reasons CA92.1 + 1C8F.1).
+
 ## App Store notes
 
 * Bundle IDs: `com.matejkrcek.graymatter[.widget|.monitor|.report|.shield|.shieldaction]`, App Group `group.com.matejkrcek.graymatter`.

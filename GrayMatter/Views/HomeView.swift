@@ -14,7 +14,7 @@ struct HomeView: View {
                 VStack(spacing: 20) {
                     hero
                     usageCard
-                    if snap.minutes >= 5 { insteadCard }
+                    if model.alternative != nil { insteadCard }
                     if snap.isShielded || snap.isUnlocked { blockCard }
                     if model.screenTime.isAuthorized && SharedStore.isMonitoring {
                         Card(title: "Apps") { exactUsage }
@@ -35,7 +35,7 @@ struct HomeView: View {
             .refreshable { model.refresh() }
             .sheet(isPresented: $model.showSettings) { SettingsView().environmentObject(model) }
         }
-        .onAppear { model.refresh() }
+        .onAppear { model.refresh(); if model.alternative == nil { model.rollAlternative() } }
     }
 
     // MARK: Hero
@@ -83,24 +83,30 @@ struct HomeView: View {
         }
     }
 
-    // MARK: What the minutes could have bought
+    // MARK: What the minutes could have been (one quote, different on every open)
 
     private var insteadCard: some View {
-        Card(title: "Instead, you could have") {
-            VStack(alignment: .leading, spacing: 0) {
-                let alts = Alternative.fitting(snap.minutes)
-                ForEach(Array(alts.enumerated()), id: \.element.id) { i, a in
-                    HStack(spacing: 12) {
-                        Image(systemName: a.symbol).foregroundStyle(Theme.rotColor(snap.rot)).frame(width: 22)
-                        Text(a.text).font(.subheadline)
-                        Spacer()
-                        Text("\(a.times(in: snap.minutes))×").font(.subheadline.weight(.semibold)).monospacedDigit()
+        Card(title: "Instead") {
+            if let alt = model.alternative {
+                HStack(alignment: .top, spacing: 14) {
+                    Image(systemName: "quote.opening")
+                        .font(.title2.weight(.semibold))
+                        .foregroundStyle(Theme.rotColor(snap.rot))
+                        .padding(.top, 2)
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text(alt.text(for: snap.minutes))
+                            .font(.system(.title3, design: .serif).italic())
+                            .fixedSize(horizontal: false, vertical: true)
+                        Label("\(snap.minutes.asDuration) of scrolling", systemImage: alt.symbol)
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
                     }
-                    .padding(.vertical, 9)
-                    if i < alts.count - 1 { Divider() }
+                    Spacer(minLength: 0)
                 }
+                .padding(.vertical, 12)
+                .contentShape(Rectangle())
+                .onTapGesture { withAnimation(.easeInOut) { model.rollAlternative() } }
             }
-            .padding(.vertical, 4)
         }
     }
 

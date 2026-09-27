@@ -8,15 +8,7 @@ struct TrackedApp: Identifiable, Hashable {
     let name: String
     let symbol: String
 
-    static let customPrefix = "custom:"
-    var isCustom: Bool { id.hasPrefix(Self.customPrefix) }
-
-    static func custom(_ name: String) -> TrackedApp {
-        TrackedApp(id: customPrefix + name.lowercased(), name: name, symbol: "app")
-    }
-
-    /// Built-in list plus whatever the user added by name.
-    static var all: [TrackedApp] { builtIn + SharedStore.customAppNames.map(custom) }
+    static var all: [TrackedApp] { builtIn }
 
     static let builtIn: [TrackedApp] = [
         TrackedApp(id: "tiktok", name: "TikTok", symbol: "music.note"),
@@ -34,11 +26,11 @@ struct TrackedApp: Identifiable, Hashable {
 
     static func named(_ ids: Set<String>) -> [TrackedApp] { all.filter { ids.contains($0.id) } }
 
-    /// "TikTok, Instagram +3" for compact rows.
-    static func summary(_ ids: Set<String>, max: Int = 2) -> String {
+    /// "TikTok, Instagram +3" for compact rows. `extra` counts apps picked from the device on top.
+    static func summary(_ ids: Set<String>, max: Int = 2, extra: Int = 0) -> String {
         let names = named(ids).map(\.name)
-        if names.isEmpty { return "None" }
-        if names.count <= max { return names.joined(separator: ", ") }
-        return names.prefix(max).joined(separator: ", ") + " +\(names.count - max)"
+        let rest = names.count - min(names.count, max) + extra
+        if names.isEmpty { return extra == 0 ? "None" : "\(extra) from this iPhone" }
+        return names.prefix(max).joined(separator: ", ") + (rest > 0 ? " +\(rest)" : "")
     }
 }

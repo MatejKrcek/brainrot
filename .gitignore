@@ -6,3 +6,6 @@ xcuserdata/
 .DS_Store
 *.ipa
 *.dSYM.zip
+build-device/
+*.xcarchive
+AppStore/screenshots/

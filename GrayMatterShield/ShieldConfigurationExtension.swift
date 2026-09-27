@@ -8,7 +8,7 @@ final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
     private func config(name: String?) -> ShieldConfiguration {
         let snap = SharedStore.snapshot()
         let title = "\(name ?? "This app") is paused"
-        let sub = "Brain health \(snap.healthPercent)% — \(snap.minutes.asDuration) of \(snap.limit.asDuration) used today.\nOpen Brain Health to unblock for \(SharedStore.unlockMinutes) minutes."
+        let sub = "\(snap.minutes.asDuration) of scrolling today, limit \(snap.limit.asDuration). Your brain is \(snap.stage.title.lowercased()).\nOpen Brain Health to unblock for \(SharedStore.unlockMinutes) minutes."
         let icon = UIImage(systemName: "brain.head.profile",
                            withConfiguration: UIImage.SymbolConfiguration(pointSize: 40, weight: .medium))?
             .withTintColor(.white, renderingMode: .alwaysOriginal)
