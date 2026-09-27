@@ -2,7 +2,7 @@ import Foundation
 
 /// Shared identifiers used by the app and every extension.
 enum AppGroup {
-    static let id = "group.com.matejkrcek.graymatter"
+    static let id = "group.cz.krcek.brainhealth"
     static let urlScheme = "graymatter"
 
     static var defaults: UserDefaults {

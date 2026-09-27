@@ -1,5 +1,5 @@
 #!/bin/sh
-# Renders the Home Screen sizes of the Screen time widget to a PNG on macOS. usage: scripts/preview_widget.sh out.png [dark]
+# Renders the Home Screen sizes of the Screen time widget to a PNG on macOS. usage: scripts/preview_widget.sh out.png [dark|store]
 set -e
 cd "$(dirname "$0")/.."
 OUT=${1:-widget_preview.png}

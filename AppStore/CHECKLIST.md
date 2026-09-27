@@ -4,28 +4,26 @@ Everything in the repo is ready (privacy manifest, export compliance flag, icons
 These steps need the Apple developer account, not code.
 
 ## 0. Apple Developer Program (blocker — nothing below works without it)
-Team `HRZTF76M9G` ("Matej Krcek") is a free **Personal Team**. Verified 27 Sep 2026: archiving fails with
-"Personal development teams … do not support the Family Controls (Development) capability". A personal team
-cannot publish to the App Store or TestFlight at all, and cannot even run the full app on a device — that is
-why the phone only ever ran the Lite scheme in demo mode.
-- Enrol at https://developer.apple.com/programs/enroll/ (99 USD/year, usually approved within 48 h).
-- After approval: Xcode → Settings → Accounts → the team changes from "Personal Team" to your name; keep the
-  same team ID or update `DEVELOPMENT_TEAM` in `project.yml` and `teamID` in `ExportOptions.plist`.
-- Then install the **GrayMatter** scheme on your iPhone: Screen Time authorisation, real tracking and blocking start working.
+The project is now signed with team `Q6PTKMW725` (set in Xcode on 27 Sep 2026; `project.yml` and
+`ExportOptions.plist` carry it). The previous team `HRZTF76M9G` was a free Personal Team, which cannot use
+Family Controls, publish to the App Store or TestFlight — archiving failed with "Personal development teams …
+do not support the Family Controls (Development) capability". `Q6PTKMW725` must be a paid Apple Developer
+Program team for anything below to work (https://developer.apple.com/programs/enroll/, 99 USD/year).
+- Install the **GrayMatter** scheme on your iPhone from Xcode: Screen Time authorisation, real tracking and blocking start working.
 
 ## 1. Family Controls distribution entitlement (blocker — do this first, Apple takes days to weeks)
 The development entitlement works for local installs; the App Store build needs the **distribution** one.
 - https://developer.apple.com/contact/request/family-controls-distribution
-- Request it for the app **and each extension**: `com.matejkrcek.graymatter`, `.monitor`, `.report`, `.shield`, `.shieldaction`.
+- Request it for the app **and each extension**: `cz.krcek.greymatter`, `.monitor`, `.report`, `.shield`, `.shieldaction`.
 - Explain: personal screen-time awareness app, individual authorisation only, no parental controls, no data leaves the device.
 - Until it is approved, `scripts/archive.sh` fails at signing with a Family Controls provisioning error. TestFlight needs it too.
 
 ## 2. Developer portal identifiers (Xcode does most of it with automatic signing)
-- App IDs for the 5 bundle IDs above with capabilities: App Groups (`group.com.matejkrcek.graymatter`) on all,
+- App IDs for the 5 bundle IDs above with capabilities: App Groups (`group.cz.krcek.brainhealth`) on all,
   Family Controls on all five. Open the project in Xcode once with the team selected and let it register them.
 
 ## 3. App Store Connect
-- New app: name **Brain Health**, bundle ID `com.matejkrcek.graymatter`, SKU `brainhealth`.
+- New app: name **Brain Health**, bundle ID `cz.krcek.greymatter`, SKU `brainhealth`.
 - Paste listing text from `AppStore/METADATA.md`; privacy policy URL points at `AppStore/PRIVACY.md` in this repo
   (or host it on matejkrcek.com if you prefer a nicer URL).
 - App Privacy: "Data not collected". Age rating questionnaire: all "None" → 4+.

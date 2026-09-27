@@ -84,7 +84,7 @@ struct SettingsView: View {
                     }
                     .font(.subheadline)
                     if !AppGroup.isAvailable {
-                        Text("This build can't use the App Group, so the widget can't read the app's data. In Xcode, add the App Groups capability (group.com.matejkrcek.graymatter) to the app and widget targets under Signing & Capabilities.")
+                        Text("This build can't use the App Group, so the widget can't read the app's data. In Xcode, add the App Groups capability (group.cz.krcek.brainhealth) to the app and widget targets under Signing & Capabilities.")
                             .font(.footnote).foregroundStyle(.orange)
                     }
                     Button("Refresh widgets now") { model.reloadWidgets(force: true) }

@@ -2,8 +2,8 @@
 # Archives the full app (Release) and uploads it to App Store Connect.
 #   scripts/archive.sh            → archive + upload
 #   scripts/archive.sh --no-upload → archive only (build/BrainHealth.xcarchive)
-# Needs: Xcode signed in to the Apple ID of team HRZTF76M9G, and the Family Controls (Distribution)
-# entitlement approved for com.matejkrcek.graymatter + the 4 Screen Time extensions (see AppStore/CHECKLIST.md).
+# Needs: Xcode signed in to the Apple ID of team Q6PTKMW725, and the Family Controls (Distribution)
+# entitlement approved for cz.krcek.greymatter + the 4 Screen Time extensions (see AppStore/CHECKLIST.md).
 set -e
 cd "$(dirname "$0")/.."
 export DEVELOPER_DIR=${DEVELOPER_DIR:-/Applications/Xcode.app/Contents/Developer}

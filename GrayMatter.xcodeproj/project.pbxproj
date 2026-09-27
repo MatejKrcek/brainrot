@@ -508,35 +508,35 @@
 				LastUpgradeCheck = 2600;
 				TargetAttributes = {
 					12FA3826BCA5C6C6F44F36E4 = {
-						DevelopmentTeam = HRZTF76M9G;
+						DevelopmentTeam = Q6PTKMW725;
 						ProvisioningStyle = Automatic;
 					};
 					137DCA302AFBEDDFE7A5AEFC = {
-						DevelopmentTeam = HRZTF76M9G;
+						DevelopmentTeam = Q6PTKMW725;
 						ProvisioningStyle = Automatic;
 					};
 					56DAB4A6024A208EFCB95B45 = {
-						DevelopmentTeam = HRZTF76M9G;
+						DevelopmentTeam = Q6PTKMW725;
 						ProvisioningStyle = Automatic;
 					};
 					5B8A15531E772EB6B3F38B6A = {
-						DevelopmentTeam = HRZTF76M9G;
+						DevelopmentTeam = Q6PTKMW725;
 						ProvisioningStyle = Automatic;
 					};
 					8CCDD1D494E452610367FBBD = {
-						DevelopmentTeam = HRZTF76M9G;
+						DevelopmentTeam = Q6PTKMW725;
 						ProvisioningStyle = Automatic;
 					};
 					A7BBD03E2A2BB264780FDCB4 = {
-						DevelopmentTeam = HRZTF76M9G;
+						DevelopmentTeam = Q6PTKMW725;
 						ProvisioningStyle = Automatic;
 					};
 					C570459E78887BE2CC5C6B29 = {
-						DevelopmentTeam = HRZTF76M9G;
+						DevelopmentTeam = Q6PTKMW725;
 						ProvisioningStyle = Automatic;
 					};
 					FD3DD0F1FC06C673C6D337D0 = {
-						DevelopmentTeam = HRZTF76M9G;
+						DevelopmentTeam = Q6PTKMW725;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -822,7 +822,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.matejkrcek.graymatter;
+				PRODUCT_BUNDLE_IDENTIFIER = cz.krcek.greymatter;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -839,7 +839,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.matejkrcek.graymatter.widget;
+				PRODUCT_BUNDLE_IDENTIFIER = cz.krcek.greymatter.widget;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -859,7 +859,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.matejkrcek.graymatterlite;
+				PRODUCT_BUNDLE_IDENTIFIER = cz.krcek.greymatter.graymatterlite;
 				PRODUCT_NAME = GrayMatterLite;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -877,7 +877,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.matejkrcek.graymatter.report;
+				PRODUCT_BUNDLE_IDENTIFIER = cz.krcek.greymatter.report;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -895,7 +895,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.matejkrcek.graymatter.monitor;
+				PRODUCT_BUNDLE_IDENTIFIER = cz.krcek.greymatter.monitor;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -913,7 +913,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.matejkrcek.graymatter.shield;
+				PRODUCT_BUNDLE_IDENTIFIER = cz.krcek.greymatter.shield;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -931,7 +931,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.matejkrcek.graymatter.shield;
+				PRODUCT_BUNDLE_IDENTIFIER = cz.krcek.greymatter.shield;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -949,7 +949,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.matejkrcek.graymatterlite.widget;
+				PRODUCT_BUNDLE_IDENTIFIER = cz.krcek.greymatter.graymatterlite.widget;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -969,7 +969,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.matejkrcek.graymatterlite;
+				PRODUCT_BUNDLE_IDENTIFIER = cz.krcek.greymatter.graymatterlite;
 				PRODUCT_NAME = GrayMatterLite;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -989,7 +989,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.matejkrcek.graymatter;
+				PRODUCT_BUNDLE_IDENTIFIER = cz.krcek.greymatter;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1032,7 +1032,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = HRZTF76M9G;
+				DEVELOPMENT_TEAM = Q6PTKMW725;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -1077,7 +1077,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.matejkrcek.graymatter.report;
+				PRODUCT_BUNDLE_IDENTIFIER = cz.krcek.greymatter.report;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1095,7 +1095,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.matejkrcek.graymatter.shieldaction;
+				PRODUCT_BUNDLE_IDENTIFIER = cz.krcek.greymatter.shieldaction;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1113,7 +1113,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.matejkrcek.graymatter.monitor;
+				PRODUCT_BUNDLE_IDENTIFIER = cz.krcek.greymatter.monitor;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1157,7 +1157,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = HRZTF76M9G;
+				DEVELOPMENT_TEAM = Q6PTKMW725;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -1195,7 +1195,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.matejkrcek.graymatter.shieldaction;
+				PRODUCT_BUNDLE_IDENTIFIER = cz.krcek.greymatter.shieldaction;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1213,7 +1213,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.matejkrcek.graymatterlite.widget;
+				PRODUCT_BUNDLE_IDENTIFIER = cz.krcek.greymatter.graymatterlite.widget;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1231,7 +1231,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.matejkrcek.graymatter.widget;
+				PRODUCT_BUNDLE_IDENTIFIER = cz.krcek.greymatter.widget;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";

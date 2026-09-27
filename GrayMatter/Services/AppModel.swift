@@ -9,6 +9,8 @@ final class AppModel: ObservableObject {
     @Published var showSettings = false
     /// Set by `--apps`; SettingsView pushes Tracked apps on first appearance.
     @Published var openTrackedApps = false
+    /// `--store`: hide the demo card and show "Tracking" for App Store screenshots.
+    @Published var storeMode = false
     /// The "instead" quote on Home. Re-rolled every time the app comes to the foreground.
     @Published var alternative: Alternative?
 
@@ -23,12 +25,13 @@ final class AppModel: ObservableObject {
         applyLaunchArguments()
     }
 
-    /// Debug / screenshot helpers: `--minutes=80`, `--settings`, `--apps`.
+    /// Debug / screenshot helpers: `--minutes=80`, `--settings`, `--apps`, `--store`.
     private func applyLaunchArguments() {
         let args = CommandLine.arguments
         if let arg = args.first(where: { $0.hasPrefix("--minutes=") }), let m = Int(arg.dropFirst("--minutes=".count)) {
             SharedStore.minutesToday = m; SharedStore.demoMode = true; SharedStore.onboarded = true; onboarded = true
         }
+        storeMode = args.contains("--store")
         if args.contains("--settings") || args.contains("--apps") {
             openTrackedApps = args.contains("--apps")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in self?.showSettings = true }

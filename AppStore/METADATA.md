@@ -2,7 +2,7 @@
 
 **Name:** Brain Health
 **Subtitle (30):** See what scrolling does to you
-**Bundle ID:** com.matejkrcek.graymatter · **SKU:** brainhealth
+**Bundle ID:** cz.krcek.greymatter · **SKU:** brainhealth
 **Primary category:** Health & Fitness · **Secondary:** Lifestyle
 **Price:** Free · **Age rating:** 4+ (no objectionable content; the rotting brain is cartoon-style)
 **Privacy policy URL:** https://github.com/MatejKrcek/brainrot/blob/main/AppStore/PRIVACY.md

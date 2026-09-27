@@ -56,10 +56,10 @@ xcodebuild -project GrayMatter.xcodeproj -scheme GrayMatterLite \
   -destination 'platform=iOS Simulator,name=iPhone 17 Pro' -derivedDataPath build/sim \
   CODE_SIGN_IDENTITY="-" CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM="" build
 xcrun simctl install booted build/sim/Build/Products/Debug-iphonesimulator/GrayMatterLite.app
-xcrun simctl launch booted com.matejkrcek.graymatterlite --minutes=25
+xcrun simctl launch booted cz.krcek.greymatter.graymatterlite --minutes=25
 ```
 Widget layouts can be rendered without a device: `scripts/preview_widget.sh out.png`.
-Launch arguments for testing: `--minutes=80` (sets today's usage, skips onboarding), `--settings`, `--apps` (opens Settings → Tracked apps).
+Launch arguments for testing: `--minutes=80` (sets today's usage, skips onboarding), `--settings`, `--apps` (opens Settings → Tracked apps), `--store` (hides the demo card for App Store screenshots).
 
 ## App Store
 
@@ -70,6 +70,6 @@ Launch arguments for testing: `--minutes=80` (sets today's usage, skips onboardi
 
 ## App Store notes
 
-* Bundle IDs: `com.matejkrcek.graymatter[.widget|.monitor|.report|.shield|.shieldaction]`, App Group `group.com.matejkrcek.graymatter`.
+* Bundle IDs: `cz.krcek.greymatter[.widget|.monitor|.report|.shield|.shieldaction]`, App Group `group.cz.krcek.brainhealth`.
 * No network access, no analytics, no accounts. Usage data never leaves the device (Apple enforces this for the report extension).
 * Privacy nutrition label: "Data not collected".

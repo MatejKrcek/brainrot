@@ -18,7 +18,7 @@ struct HomeView: View {
                     if snap.isShielded || snap.isUnlocked { blockCard }
                     if model.screenTime.isAuthorized && SharedStore.isMonitoring {
                         Card(title: "Apps") { exactUsage }
-                    } else {
+                    } else if !model.storeMode {
                         demoCard
                     }
                 }
@@ -116,7 +116,7 @@ struct HomeView: View {
                 Label("Unblocked until \(u.formatted(date: .omitted, time: .shortened))", systemImage: "lock.open")
             } else if snap.isShielded {
                 Label("Blocked", systemImage: "lock.fill")
-            } else if snap.isMonitoring {
+            } else if snap.isMonitoring || model.storeMode {
                 Label("Tracking", systemImage: "eye")
             } else {
                 Label(SharedStore.demoMode ? "Demo" : "Paused", systemImage: "pause.circle")
