@@ -68,6 +68,7 @@ struct GrayMatterWidget: Widget {
 @main
 struct GrayMatterWidgetBundle: WidgetBundle {
     var body: some Widget {
+        HealthWidget()
         GrayMatterWidget()
     }
 }

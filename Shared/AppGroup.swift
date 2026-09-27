@@ -8,6 +8,12 @@ enum AppGroup {
     static var defaults: UserDefaults {
         UserDefaults(suiteName: id) ?? .standard
     }
+
+    /// False when the build isn't entitled to the App Group: the app, widget and extensions then each see
+    /// their own defaults and the widget never updates. Fix: App Groups capability on the team / target.
+    static var isAvailable: Bool {
+        FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: id) != nil
+    }
 }
 
 enum DeepLink {

@@ -28,6 +28,7 @@ final class ScreenTimeManager: ObservableObject {
         do {
             try await AuthorizationCenter.shared.requestAuthorization(for: .individual)
             refreshStatus()
+            if isAuthorized && !SelectionStore.isEmpty { startMonitoring() }
             return isAuthorized
         } catch {
             lastError = error.localizedDescription
@@ -38,7 +39,20 @@ final class ScreenTimeManager: ObservableObject {
 
     func saveSelection() {
         SelectionStore.save(selection)
-        if SharedStore.isMonitoring { startMonitoring() }
+        // Anything picked in Screen Time should be counted straight away.
+        if isAuthorized && !SelectionStore.isEmpty { startMonitoring() } else if SelectionStore.isEmpty { stopMonitoring() }
+    }
+
+    /// Called on every foreground. Screen Time silently drops schedules (reinstall, restore, iOS update),
+    /// so re-register when we think we're monitoring but the system has no active schedule.
+    func ensureMonitoring() {
+        guard isAuthorized else { return }
+        let active = center.activities
+        if SharedStore.isMonitoring, !active.contains(.daily) {
+            startMonitoring()
+        } else if !SharedStore.isMonitoring, SharedStore.onboarded, !SelectionStore.isEmpty, !SharedStore.demoMode {
+            startMonitoring()
+        }
     }
 
     /// (Re)starts the all-day usage monitor with minute-resolution thresholds.

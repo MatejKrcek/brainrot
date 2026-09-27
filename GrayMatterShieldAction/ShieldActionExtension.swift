@@ -2,7 +2,7 @@ import ManagedSettings
 import Foundation
 
 /// Handles the buttons on the shield. iOS does not let a shield open another app,
-/// so the secondary button can only close the shielded app; the user then opens Gray Matter.
+/// so the secondary button can only close the shielded app; the user then opens Brain Health.
 final class ShieldActionExtension: ShieldActionDelegate {
 
     private func handle(_ action: ShieldAction, completionHandler: @escaping (ShieldActionResponse) -> Void) {

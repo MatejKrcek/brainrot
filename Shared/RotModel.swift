@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// Rot is minutes / limit: 100% of the limit = 100% rot; visuals saturate at 125%.
-struct RotSnapshot {
+struct RotSnapshot: Equatable {
     var minutes: Int
     var limit: Int
     var lockEnabled: Bool

@@ -327,12 +327,119 @@ struct BrainView: View {
             ctx.stroke(cerebrum, with: .color(deep.color(0.9)), lineWidth: g.l(0.006))
             ctx.stroke(cerebellum, with: .color(deep.color(0.9)), lineWidth: g.l(0.006))
 
+
+            // Critters: flies circling from mid-rot, beetles crawling and maggots in the necrotic patches at heavy rot.
+            if rot > 0.5 {
+                let k = (rot - 0.5) / 0.5
+                let ink = RGB(r: 0.09, g: 0.09, b: 0.07)
+                var rng = SeededRandom(seed: 4242)
+
+                // Flies: hover around the silhouette on small orbits driven by `phase`.
+                let flyCount = Int(2 + 6 * k)
+                for i in 0..<flyCount {
+                    let ax = rng.range(0.02, 0.98), ay = rng.range(0.02, 0.70)
+                    let orbit = rng.range(0.015, 0.035)
+                    let speed = rng.range(1.0, 2.2) * (rng.next() < 0.5 ? 1 : -1)
+                    let a = phase * 2 * .pi * speed + Double(i) * 1.7
+                    let x = ax + cos(a) * orbit, y = ay + sin(a * 1.3) * orbit * 0.6
+                    let sz = rng.range(0.024, 0.034)
+                    let c = g.p(x, y)
+                    // wings (translucent, slightly ahead of the body)
+                    let flap = 0.6 + 0.4 * abs(sin(a * 9))
+                    for side in [-1.0, 1.0] {
+                        var w = Path()
+                        w.addEllipse(in: CGRect(x: c.x + side * g.l(sz * 0.15) - g.l(sz * 0.55), y: c.y - g.l(sz * 0.9 * flap),
+                                                width: g.l(sz * 1.1), height: g.l(sz * 0.7 * flap)))
+                        ctx.fill(w.applying(CGAffineTransform(translationX: c.x, y: c.y).rotated(by: side * 0.55).translatedBy(x: -c.x, y: -c.y)),
+                                 with: .color(.white.opacity(0.35)))
+                    }
+                    var body = Path()
+                    body.addEllipse(in: CGRect(x: c.x - g.l(sz * 0.5), y: c.y - g.l(sz * 0.32), width: g.l(sz), height: g.l(sz * 0.64)))
+                    ctx.fill(body, with: .color(ink.color(0.9)))
+                    var head = Path()
+                    head.addEllipse(in: CGRect(x: c.x + g.l(sz * 0.35), y: c.y - g.l(sz * 0.22), width: g.l(sz * 0.42), height: g.l(sz * 0.42)))
+                    ctx.fill(head, with: .color(ink.color(0.95)))
+                    var eye = Path()
+                    eye.addEllipse(in: CGRect(x: c.x + g.l(sz * 0.5), y: c.y - g.l(sz * 0.16), width: g.l(sz * 0.16), height: g.l(sz * 0.16)))
+                    ctx.fill(eye, with: .color(RGB(r: 0.75, g: 0.15, b: 0.12).color(0.9)))
+                }
+
+                // Beetles: crawl slowly along the surface (inside the silhouette).
+                if rot > 0.65 {
+                    let kb = (rot - 0.65) / 0.35
+                    let beetleCount = Int(1 + 3 * kb)
+                    var placed = 0, tries = 0
+                    while placed < beetleCount && tries < 40 {
+                        tries += 1
+                        let bx = rng.range(0.10, 0.90), by = rng.range(0.10, 0.62)
+                        let dir = rng.range(0, 2 * .pi)
+                        let crawl = 0.012 * sin(phase * 2 * .pi + Double(placed) * 2.1)
+                        let x = bx + cos(dir) * crawl, y = by + sin(dir) * crawl
+                        guard cerebrum.contains(g.p(x, y)) else { continue }
+                        placed += 1
+                        let sz = rng.range(0.03, 0.042)
+                        let c = g.p(x, y)
+                        let t = CGAffineTransform(translationX: c.x, y: c.y).rotated(by: dir).translatedBy(x: -c.x, y: -c.y)
+                        // legs
+                        var legs = Path()
+                        for j in -1...1 {
+                            let ly = c.y + CGFloat(j) * g.l(sz * 0.22)
+                            legs.move(to: CGPoint(x: c.x - g.l(sz * 0.62), y: ly)); legs.addLine(to: CGPoint(x: c.x - g.l(sz * 0.30), y: ly))
+                            legs.move(to: CGPoint(x: c.x + g.l(sz * 0.62), y: ly)); legs.addLine(to: CGPoint(x: c.x + g.l(sz * 0.30), y: ly))
+                        }
+                        ctx.stroke(legs.applying(t), with: .color(ink.color(0.85)), style: StrokeStyle(lineWidth: g.l(0.0035), lineCap: .round))
+                        // shell
+                        var shell = Path()
+                        shell.addEllipse(in: CGRect(x: c.x - g.l(sz * 0.32), y: c.y - g.l(sz * 0.5), width: g.l(sz * 0.64), height: g.l(sz)))
+                        ctx.fill(shell.applying(t), with: .color(RGB(r: 0.16, g: 0.14, b: 0.10).color(0.95)))
+                        var sheen = Path()
+                        sheen.addEllipse(in: CGRect(x: c.x - g.l(sz * 0.18), y: c.y - g.l(sz * 0.38), width: g.l(sz * 0.22), height: g.l(sz * 0.4)))
+                        ctx.fill(sheen.applying(t), with: .color(RGB(r: 0.35, g: 0.42, b: 0.28).color(0.5)))
+                        var seam = Path()
+                        seam.move(to: CGPoint(x: c.x, y: c.y - g.l(sz * 0.45))); seam.addLine(to: CGPoint(x: c.x, y: c.y + g.l(sz * 0.45)))
+                        ctx.stroke(seam.applying(t), with: .color(ink.color(0.7)), lineWidth: g.l(0.003))
+                        var bhead = Path()
+                        bhead.addEllipse(in: CGRect(x: c.x - g.l(sz * 0.16), y: c.y - g.l(sz * 0.66), width: g.l(sz * 0.32), height: g.l(sz * 0.3)))
+                        ctx.fill(bhead.applying(t), with: .color(ink.color(0.95)))
+                    }
+                }
+
+                // Maggots: pale segmented grubs wriggling in the tissue at heavy rot.
+                if rot > 0.78 {
+                    let km = (rot - 0.78) / 0.22
+                    let count = Int(3 + 7 * km)
+                    var placed = 0, tries = 0
+                    while placed < count && tries < 60 {
+                        tries += 1
+                        let mx = rng.range(0.12, 0.88), my = rng.range(0.12, 0.62)
+                        guard cerebrum.contains(g.p(mx, my)) else { continue }
+                        placed += 1
+                        let len = rng.range(0.035, 0.055), w = rng.range(0.010, 0.014)
+                        let dir = rng.range(0, 2 * .pi)
+                        let wig = 0.25 * sin(phase * 4 * .pi + Double(placed) * 1.3)
+                        var m = Path()
+                        m.move(to: g.p(mx, my))
+                        m.addQuadCurve(to: g.p(mx + cos(dir) * len, my + sin(dir) * len),
+                                       control: g.p(mx + cos(dir + wig + 0.9) * len * 0.5, my + sin(dir + wig + 0.9) * len * 0.5))
+                        ctx.stroke(m, with: .color(RGB(r: 0.12, g: 0.12, b: 0.08).color(0.5)), style: StrokeStyle(lineWidth: g.l(w * 1.4), lineCap: .round))
+                        ctx.stroke(m, with: .color(RGB(r: 0.93, g: 0.90, b: 0.78).color(0.95)), style: StrokeStyle(lineWidth: g.l(w), lineCap: .round))
+                        // segments
+                        ctx.stroke(m, with: .color(RGB(r: 0.72, g: 0.68, b: 0.52).color(0.8)),
+                                   style: StrokeStyle(lineWidth: g.l(w * 0.9), lineCap: .butt, dash: [g.l(0.004), g.l(0.008)]))
+                        var hd = Path()
+                        let e = g.p(mx + cos(dir) * len, my + sin(dir) * len)
+                        hd.addEllipse(in: CGRect(x: e.x - g.l(0.003), y: e.y - g.l(0.003), width: g.l(0.006), height: g.l(0.006)))
+                        ctx.fill(hd, with: .color(RGB(r: 0.35, g: 0.25, b: 0.15).color))
+                    }
+                }
+            }
+
             // Drips at heavy rot (subtle)
             if rot > 0.65 {
                 let k = (rot - 0.65) / 0.35
                 var rng = SeededRandom(seed: 3)
-                for i in 0..<2 {
-                    let x = rng.range(0.22, 0.48)
+                for i in 0..<3 {
+                    let x = rng.range(0.20, 0.52)
                     let len = rng.range(0.04, 0.10) * k + 0.01 * sin(phase * 2 * .pi + Double(i))
                     let w = rng.range(0.012, 0.02)
                     var d = Path()

@@ -35,7 +35,7 @@ struct OnboardingView: View {
         VStack(spacing: 28) {
             Spacer()
             AnimatedBrainView(rot: 0.04).frame(height: 240)
-            title("Gray Matter", "See what scrolling does to your brain. Pick the apps that drain you, set a daily limit, and watch your brain health on the home screen.")
+            title("Brain Health", "See what scrolling does to your brain. Pick the apps that drain you, set a daily limit, and watch your brain health on the home screen.")
             Spacer()
             Button { withAnimation { page = 1 } } label: { Text("Continue").frame(maxWidth: .infinity) }
                 .buttonStyle(.borderedProminent).controlSize(.large)
@@ -47,7 +47,7 @@ struct OnboardingView: View {
         VStack(spacing: 28) {
             Spacer()
             Image(systemName: "hourglass").font(.system(size: 72, weight: .light)).foregroundStyle(.secondary)
-            title("Screen Time access", "Gray Matter uses Apple's Screen Time framework. Your usage stays on this device — the app only receives minute counts for the apps you choose.")
+            title("Screen Time access", "Brain Health uses Apple's Screen Time framework. Your usage stays on this device — the app only receives minute counts for the apps you choose.")
             if let err = model.screenTime.lastError, !model.screenTime.isAuthorized {
                 Text(err).font(.footnote).foregroundStyle(.red).multilineTextAlignment(.center).padding(.horizontal)
             }

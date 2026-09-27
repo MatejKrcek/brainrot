@@ -1,4 +1,4 @@
-# Gray Matter
+# Brain Health
 
 iOS app (SwiftUI, iOS 17+) that shows what short-form scrolling does to your brain. Pick the apps that drain you
 (Instagram, TikTok, YouTube…), set a daily limit, and a realistic brain on your Home Screen degrades from
@@ -48,13 +48,18 @@ Schemes:
 * **GrayMatterLite** – same code without Family Controls and without the Screen Time extensions. Installs on a free
   Personal Team; runs in demo mode (simulated minutes) with the widget.
 
-Simulator build from the CLI:
+Simulator build from the CLI (sign locally so the App Group entitlement is embedded — with `CODE_SIGNING_ALLOWED=NO`
+the app and widget can't share data and Settings → Widgets shows "Shared data: Unavailable"):
 ```bash
 export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer
-xcodebuild -project GrayMatter.xcodeproj -scheme GrayMatter \
-  -destination 'platform=iOS Simulator,name=iPhone 15 Pro' CODE_SIGNING_ALLOWED=NO build
+xcodebuild -project GrayMatter.xcodeproj -scheme GrayMatterLite \
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro' -derivedDataPath build/sim \
+  CODE_SIGN_IDENTITY="-" CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM="" build
+xcrun simctl install booted build/sim/Build/Products/Debug-iphonesimulator/GrayMatterLite.app
+xcrun simctl launch booted com.matejkrcek.graymatterlite --minutes=25
 ```
-Launch arguments for testing: `--minutes=80` (sets today's usage, skips onboarding), `--settings`.
+Widget layouts can be rendered without a device: `scripts/preview_widget.sh out.png`.
+Launch arguments for testing: `--minutes=80` (sets today's usage, skips onboarding), `--settings`, `--apps` (opens Settings → Tracked apps).
 
 ## App Store notes
 

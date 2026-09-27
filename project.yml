@@ -54,7 +54,7 @@ targets:
     info:
       path: GrayMatter/Info.plist
       properties: &appInfo
-        CFBundleDisplayName: Gray Matter
+        CFBundleDisplayName: Brain Health
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         UILaunchScreen:
@@ -83,7 +83,7 @@ targets:
     info:
       path: GrayMatterWidget/Info.plist
       properties:
-        CFBundleDisplayName: Gray Matter
+        CFBundleDisplayName: Brain Health
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         NSExtension:
@@ -106,7 +106,7 @@ targets:
     info:
       path: GrayMatterMonitor/Info.plist
       properties:
-        CFBundleDisplayName: Gray Matter Monitor
+        CFBundleDisplayName: Brain Health Monitor
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         NSExtension:
@@ -130,7 +130,7 @@ targets:
     info:
       path: GrayMatterReport/Info.plist
       properties:
-        CFBundleDisplayName: Gray Matter Report
+        CFBundleDisplayName: Brain Health Report
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         NSExtension:
@@ -153,7 +153,7 @@ targets:
     info:
       path: GrayMatterShield/Info.plist
       properties:
-        CFBundleDisplayName: Gray Matter Shield
+        CFBundleDisplayName: Brain Health Shield
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         NSExtension:
@@ -177,7 +177,7 @@ targets:
     info:
       path: GrayMatterShieldAction/Info.plist
       properties:
-        CFBundleDisplayName: Gray Matter Shield Action
+        CFBundleDisplayName: Brain Health Shield Action
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         NSExtension:
@@ -221,7 +221,7 @@ targets:
     info:
       path: GrayMatterWidget/Info-Lite.plist
       properties:
-        CFBundleDisplayName: Gray Matter
+        CFBundleDisplayName: Brain Health
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         NSExtension:

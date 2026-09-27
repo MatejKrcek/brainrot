@@ -17,6 +17,8 @@ enum SharedStore {
         static let history = "history"            // [String: Int] yyyy-MM-dd -> minutes
         static let demoMode = "demoMode"
         static let selectionCount = "selectionCount"
+        static let trackedApps = "trackedApps"          // [String] TrackedApp ids; missing = defaults
+        static let customApps = "customApps"            // [String] names the user added to the list
     }
 
     // MARK: - Day handling
@@ -104,6 +106,20 @@ enum SharedStore {
     static var selectionCount: Int {
         get { d.integer(forKey: Key.selectionCount) }
         set { d.set(newValue, forKey: Key.selectionCount) }
+    }
+
+    /// Named apps the user chose. Defaults to TrackedApp.defaultIDs until the user changes it.
+    static var trackedAppIDs: Set<String> {
+        get {
+            guard let ids = d.stringArray(forKey: Key.trackedApps) else { return TrackedApp.defaultIDs }
+            return Set(ids)
+        }
+        set { d.set(Array(newValue).sorted(), forKey: Key.trackedApps) }
+    }
+
+    static var customAppNames: [String] {
+        get { d.stringArray(forKey: Key.customApps) ?? [] }
+        set { d.set(newValue, forKey: Key.customApps) }
     }
 
     static var demoMode: Bool {

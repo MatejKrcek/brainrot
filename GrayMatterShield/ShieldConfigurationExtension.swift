@@ -8,7 +8,7 @@ final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
     private func config(name: String?) -> ShieldConfiguration {
         let snap = SharedStore.snapshot()
         let title = "\(name ?? "This app") is paused"
-        let sub = "Brain health \(snap.healthPercent)% — \(snap.minutes.asDuration) of \(snap.limit.asDuration) used today.\nOpen Gray Matter to unblock for \(SharedStore.unlockMinutes) minutes."
+        let sub = "Brain health \(snap.healthPercent)% — \(snap.minutes.asDuration) of \(snap.limit.asDuration) used today.\nOpen Brain Health to unblock for \(SharedStore.unlockMinutes) minutes."
         let icon = UIImage(systemName: "brain.head.profile",
                            withConfiguration: UIImage.SymbolConfiguration(pointSize: 40, weight: .medium))?
             .withTintColor(.white, renderingMode: .alwaysOriginal)
@@ -20,7 +20,7 @@ final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
             subtitle: ShieldConfiguration.Label(text: sub, color: UIColor.white.withAlphaComponent(0.7)),
             primaryButtonLabel: ShieldConfiguration.Label(text: "OK", color: .black),
             primaryButtonBackgroundColor: .white,
-            secondaryButtonLabel: ShieldConfiguration.Label(text: "Open Gray Matter", color: .white)
+            secondaryButtonLabel: ShieldConfiguration.Label(text: "Open Brain Health", color: .white)
         )
     }
 

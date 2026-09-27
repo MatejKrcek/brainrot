@@ -7,9 +7,13 @@ final class AppModel: ObservableObject {
     @Published var snap: RotSnapshot = SharedStore.snapshot()
     @Published var onboarded: Bool = SharedStore.onboarded
     @Published var showSettings = false
+    /// Set by `--apps`; SettingsView pushes Tracked apps on first appearance.
+    @Published var openTrackedApps = false
 
     let screenTime = ScreenTimeManager()
     private var timer: AnyCancellable?
+    /// Last snapshot pushed to WidgetKit. Reloads are budgeted per day, so only reload on change.
+    private var lastWidgetSnap: RotSnapshot?
 
     init() {
         timer = Timer.publish(every: 20, on: .main, in: .common).autoconnect()
@@ -17,13 +21,16 @@ final class AppModel: ObservableObject {
         applyLaunchArguments()
     }
 
-    /// Debug / screenshot helpers: `--minutes=80`, `--settings`.
+    /// Debug / screenshot helpers: `--minutes=80`, `--settings`, `--apps`.
     private func applyLaunchArguments() {
         let args = CommandLine.arguments
         if let arg = args.first(where: { $0.hasPrefix("--minutes=") }), let m = Int(arg.dropFirst("--minutes=".count)) {
             SharedStore.minutesToday = m; SharedStore.demoMode = true; SharedStore.onboarded = true; onboarded = true
         }
-        if args.contains("--settings") { DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in self?.showSettings = true } }
+        if args.contains("--settings") || args.contains("--apps") {
+            openTrackedApps = args.contains("--apps")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in self?.showSettings = true }
+        }
         snap = SharedStore.snapshot()
     }
 
@@ -34,12 +41,22 @@ final class AppModel: ObservableObject {
             if screenTime.isAuthorized { ShieldController.reconcile() }
         }
         snap = SharedStore.snapshot()
+        reloadWidgets()
+    }
+
+    /// Pushes the current state to the widgets. `force` skips the change check (settings edits, resets).
+    func reloadWidgets(force: Bool = false) {
+        let current = SharedStore.snapshot()
+        guard force || current != lastWidgetSnap else { return }
+        lastWidgetSnap = current
         WidgetCenter.shared.reloadAllTimelines()
     }
 
     func becameActive() {
         screenTime.refreshStatus()
+        screenTime.ensureMonitoring()
         refresh()
+        reloadWidgets(force: true)
         AppGroup.defaults.removeObject(forKey: "pendingUnlockRequest")
     }
 
