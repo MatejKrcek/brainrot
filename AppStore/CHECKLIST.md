@@ -3,6 +3,16 @@
 Everything in the repo is ready (privacy manifest, export compliance flag, icons, versions, archive script).
 These steps need the Apple developer account, not code.
 
+## 0. Apple Developer Program (blocker — nothing below works without it)
+Team `HRZTF76M9G` ("Matej Krcek") is a free **Personal Team**. Verified 27 Sep 2026: archiving fails with
+"Personal development teams … do not support the Family Controls (Development) capability". A personal team
+cannot publish to the App Store or TestFlight at all, and cannot even run the full app on a device — that is
+why the phone only ever ran the Lite scheme in demo mode.
+- Enrol at https://developer.apple.com/programs/enroll/ (99 USD/year, usually approved within 48 h).
+- After approval: Xcode → Settings → Accounts → the team changes from "Personal Team" to your name; keep the
+  same team ID or update `DEVELOPMENT_TEAM` in `project.yml` and `teamID` in `ExportOptions.plist`.
+- Then install the **GrayMatter** scheme on your iPhone: Screen Time authorisation, real tracking and blocking start working.
+
 ## 1. Family Controls distribution entitlement (blocker — do this first, Apple takes days to weeks)
 The development entitlement works for local installs; the App Store build needs the **distribution** one.
 - https://developer.apple.com/contact/request/family-controls-distribution
