@@ -4,7 +4,7 @@
 #   scripts/archive.sh --no-upload → archive only (build/BrainHealth.xcarchive)
 # Needs: Xcode signed in to the Apple ID of team Q6PTKMW725, and the Family Controls (Distribution)
 # entitlement approved for cz.krcek.greymatter + the 4 Screen Time extensions (see AppStore/CHECKLIST.md).
-set -e
+set -eo pipefail
 cd "$(dirname "$0")/.."
 export DEVELOPER_DIR=${DEVELOPER_DIR:-/Applications/Xcode.app/Contents/Developer}
 ARCHIVE=build/BrainHealth.xcarchive
