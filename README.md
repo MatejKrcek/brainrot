@@ -27,7 +27,7 @@ scripts/preview_brain.swift  renders BrainView at several health levels to a PNG
 3. **Brain health** = 100 % − minutes/limit. Stages: Sharp → Foggy → Fading → Failing → Flatlined. `Shared/BrainView.swift`
    draws a lateral-view brain (gyri tubes on a flow field, cerebellum, stem, inner shadow, sheen) and degrades it:
    pink → olive → necrotic patches, veins, mould, darkening, drips.
-4. **Blocking (optional).** Over the limit the selected apps are shielded. "Unblock for 15/30/45 min" lifts the shield;
+4. **Blocking (optional).** Over the limit the selected apps are shielded. "Unblock for 15/30/45 min" (after tapping a circle 10 times) lifts the shield;
    a one-shot `DeviceActivity` schedule re-applies it (`intervalDidEnd`), plus a check on app foreground. iOS minimum is 15 min.
 5. **Widget** shows only the brain (system background, adapts to light/dark, accentable on tinted Home Screens).
 

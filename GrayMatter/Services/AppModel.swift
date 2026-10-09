@@ -1,6 +1,7 @@
 import SwiftUI
 import WidgetKit
 import Combine
+import UserNotifications
 
 @MainActor
 final class AppModel: ObservableObject {
@@ -13,6 +14,8 @@ final class AppModel: ObservableObject {
     @Published var storeMode = false
     /// The "instead" quote on Home. Re-rolled every time the app comes to the foreground.
     @Published var alternative: Alternative?
+    /// Home's tap-to-unblock challenge. Also raised when the user arrives from the shield's Unblock button.
+    @Published var showUnblockChallenge = false
 
     let screenTime = ScreenTimeManager()
     private var timer: AnyCancellable?
@@ -69,7 +72,28 @@ final class AppModel: ObservableObject {
         refresh()
         rollAlternative()
         reloadWidgets(force: true)
-        AppGroup.defaults.removeObject(forKey: "pendingUnlockRequest")
+        requestNotificationsIfNeeded()
+        consumeUnblockRequest()
+    }
+
+    /// Before iOS 26.5 the shield's Unblock button can only post a notification, so blocking needs permission to show one.
+    func requestNotificationsIfNeeded() {
+        if #available(iOS 26.5, *) { return }
+        guard SharedStore.lockEnabled, screenTime.isAuthorized else { return }
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) { _, _ in }
+    }
+
+    /// Offers the unblock if the user just tapped Unblock on the shield (see `UnblockRequest`).
+    private func consumeUnblockRequest() {
+        let d = AppGroup.defaults
+        let requested = d.object(forKey: UnblockRequest.key) as? Date
+        d.removeObject(forKey: UnblockRequest.key)
+        UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: [UnblockRequest.notificationID])
+        guard let requested, Date().timeIntervalSince(requested) < UnblockRequest.ttl,
+              snap.isShielded, !snap.isUnlocked else { return }
+        showSettings = false
+        // Give Home a moment to be on screen after a cold launch from the notification.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { [weak self] in self?.showUnblockChallenge = true }
     }
 
     func handle(url: URL) {
@@ -80,6 +104,7 @@ final class AppModel: ObservableObject {
     func completeOnboarding() {
         SharedStore.onboarded = true
         onboarded = true
+        requestNotificationsIfNeeded()
         refresh()
     }
 
@@ -97,6 +122,7 @@ final class AppModel: ObservableObject {
 
     func applyRules() {
         if screenTime.isAuthorized && SharedStore.isMonitoring { ShieldController.reconcile() }
+        requestNotificationsIfNeeded()
         refresh()
     }
 

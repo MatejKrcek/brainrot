@@ -58,37 +58,46 @@ struct TodayReport: DeviceActivityReportScene {
 
 struct TodayReportView: View {
     let model: TodayReportModel
+    /// Fixed row height: the app sizes this remote view from the same metric (see `ReportLayout`).
+    @ScaledMetric(relativeTo: .body) private var rowHeight = ReportLayout.rowHeight
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: 0) {
             if model.apps.isEmpty {
                 Text("No usage of tracked apps yet today.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
+                    .frame(height: rowHeight)
             } else {
-                ForEach(model.apps.prefix(6)) { app in
-                    HStack(spacing: 10) {
-                        if let token = app.token {
-                            Label(token).labelStyle(.iconOnly).frame(width: 24, height: 24)
-                        } else {
-                            Image(systemName: "app.fill").foregroundStyle(.white.opacity(0.4))
-                        }
-                        Text(app.name)
-                            .font(.body)
-                            .lineLimit(1)
-                        Spacer()
-                        let minutes = Int(app.seconds / 60)
-                        Text(minutes == 0 ? "<1 min" : minutes.asDuration)
-                            .font(.body.monospacedDigit())
-                            .foregroundStyle(.secondary)
-                    }
-                    .padding(.vertical, 8)
-                    ProgressView(value: model.totalSeconds > 0 ? app.seconds / model.totalSeconds : 0)
-                        .tint(.accentColor)
+                ForEach(model.apps.prefix(ReportLayout.maxRows)) { app in
+                    row(app).frame(height: rowHeight)
                 }
             }
         }
-        .padding(.horizontal, 16).padding(.vertical, 8)
+        .padding(.horizontal, 16).padding(.vertical, ReportLayout.verticalPadding)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(Color(.secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+    }
+
+    private func row(_ app: AppUsage) -> some View {
+        VStack(spacing: 6) {
+            HStack(spacing: 10) {
+                if let token = app.token {
+                    Label(token).labelStyle(.iconOnly).frame(width: 24, height: 24)
+                } else {
+                    Image(systemName: "app.fill").foregroundStyle(.secondary).frame(width: 24, height: 24)
+                }
+                Text(app.name)
+                    .font(.body)
+                    .lineLimit(1)
+                Spacer()
+                let minutes = Int(app.seconds / 60)
+                Text(minutes == 0 ? "<1 min" : minutes.asDuration)
+                    .font(.body.monospacedDigit())
+                    .foregroundStyle(.secondary)
+            }
+            ProgressView(value: model.totalSeconds > 0 ? app.seconds / model.totalSeconds : 0)
+                .tint(.accentColor)
+        }
     }
 }

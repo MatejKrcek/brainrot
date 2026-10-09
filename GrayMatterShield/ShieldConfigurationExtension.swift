@@ -8,7 +8,11 @@ final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
     private func config(name: String?) -> ShieldConfiguration {
         let snap = SharedStore.snapshot()
         let title = "\(name ?? "This app") is paused"
-        let sub = "\(snap.minutes.asDuration) of scrolling today, limit \(snap.limit.asDuration). Your brain is \(snap.stage.title.lowercased()).\nOpen Brain Health to unblock for \(SharedStore.unlockMinutes) minutes."
+        var sub = "\(snap.minutes.asDuration) of scrolling today, limit \(snap.limit.asDuration). Your brain is \(snap.stage.title.lowercased())."
+        if #unavailable(iOS 26.5) {
+            // The Unblock button can't open Brain Health here; it posts a notification instead.
+            sub += "\nNeed it? Tap Unblock, then the Brain Health notification."
+        }
         let icon = UIImage(systemName: "brain.head.profile",
                            withConfiguration: UIImage.SymbolConfiguration(pointSize: 40, weight: .medium))?
             .withTintColor(.white, renderingMode: .alwaysOriginal)
@@ -20,7 +24,7 @@ final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
             subtitle: ShieldConfiguration.Label(text: sub, color: UIColor.white.withAlphaComponent(0.7)),
             primaryButtonLabel: ShieldConfiguration.Label(text: "OK", color: .black),
             primaryButtonBackgroundColor: .white,
-            secondaryButtonLabel: ShieldConfiguration.Label(text: "Open Brain Health", color: .white)
+            secondaryButtonLabel: ShieldConfiguration.Label(text: "Unblock for \(SharedStore.unlockMinutes) min", color: .white)
         )
     }
 

@@ -4,7 +4,8 @@ import FamilyControls
 
 struct HomeView: View {
     @EnvironmentObject var model: AppModel
-    @State private var confirmUnblock = false
+    /// Height of one row in the usage report; the report extension uses the same metric.
+    @ScaledMetric(relativeTo: .body) private var reportRowHeight = ReportLayout.rowHeight
 
     private var snap: RotSnapshot { model.snap }
 
@@ -34,6 +35,7 @@ struct HomeView: View {
             }
             .refreshable { model.refresh() }
             .sheet(isPresented: $model.showSettings) { SettingsView().environmentObject(model) }
+            .sheet(isPresented: $model.showUnblockChallenge) { UnblockChallengeView().environmentObject(model) }
         }
         .onAppear { model.refresh(); if model.alternative == nil { model.rollAlternative() } }
     }
@@ -138,11 +140,8 @@ struct HomeView: View {
                 } else {
                     Text("Selected apps are blocked because you're over the limit.")
                         .font(.subheadline).foregroundStyle(.secondary)
-                    Button("Unblock for \(SharedStore.unlockMinutes) minutes") { confirmUnblock = true }
+                    Button("Unblock for \(SharedStore.unlockMinutes) minutes") { model.showUnblockChallenge = true }
                         .buttonStyle(.bordered)
-                        .confirmationDialog("Unblock apps?", isPresented: $confirmUnblock, titleVisibility: .visible) {
-                            Button("Unblock for \(SharedStore.unlockMinutes) minutes") { model.unblock() }
-                        } message: { Text("The extra time counts against today's brain health.") }
                 }
             }
             .padding(.vertical, 10)
@@ -150,6 +149,15 @@ struct HomeView: View {
     }
 
     // MARK: Per-app report (sandboxed extension renders exact numbers)
+
+    /// The report is a remote view that can't size itself to its content, so it gets an explicit height:
+    /// one row before any usage, otherwise a row per picked app (a picked category can hold any number).
+    private var reportRows: Int {
+        guard snap.minutes > 0 else { return 1 }
+        let sel = model.screenTime.selection
+        let apps = sel.categoryTokens.isEmpty ? sel.applicationTokens.count : ReportLayout.maxRows
+        return min(ReportLayout.maxRows, max(1, apps))
+    }
 
     private var exactUsage: some View {
         let sel = model.screenTime.selection
@@ -162,7 +170,7 @@ struct HomeView: View {
             categories: sel.categoryTokens,
             webDomains: sel.webDomainTokens)
         return DeviceActivityReport(DeviceActivityReport.Context("Today"), filter: filter)
-            .frame(minHeight: 100)
+            .frame(height: CGFloat(reportRows) * reportRowHeight + 2 * ReportLayout.verticalPadding)
             .padding(.horizontal, -16).padding(.vertical, -4)
     }
 
@@ -173,8 +181,10 @@ struct HomeView: View {
                      ? "Tracking is off. Turn it on in Settings."
                      : "Screen Time isn't authorised on this device, so usage is simulated.")
                     .font(.subheadline).foregroundStyle(.secondary)
-                Text("Tracking: " + TrackedApp.named(SharedStore.trackedAppIDs).map(\.name).joined(separator: ", "))
-                    .font(.footnote).foregroundStyle(.secondary)
+                if !model.screenTime.isAuthorized {
+                    Text("Tracking: " + TrackedApp.named(SharedStore.trackedAppIDs).map(\.name).joined(separator: ", "))
+                        .font(.footnote).foregroundStyle(.secondary)
+                }
                 HStack {
                     ForEach([5, 15, 30], id: \.self) { m in
                         Button("+\(m) min") { model.demoAddMinutes(m) }.buttonStyle(.bordered)
@@ -185,5 +195,60 @@ struct HomeView: View {
             }
             .padding(.vertical, 10)
         }
+    }
+}
+
+/// Friction before an unblock: the button has to be tapped `taps` times.
+struct UnblockChallengeView: View {
+    static let taps = 10
+
+    @EnvironmentObject var model: AppModel
+    @Environment(\.dismiss) private var dismiss
+    @State private var left = Self.taps
+
+    private var progress: Double { Double(Self.taps - left) / Double(Self.taps) }
+
+    var body: some View {
+        VStack(spacing: 28) {
+            VStack(spacing: 6) {
+                Text("Unblock for \(SharedStore.unlockMinutes) minutes?")
+                    .font(.title2.bold())
+                Text("Tap the circle \(Self.taps) times. The extra time counts against today's brain health.")
+                    .font(.subheadline).foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+            }
+            Button(action: tap) {
+                ZStack {
+                    Circle().stroke(Color.secondary.opacity(0.2), lineWidth: 8)
+                    Circle().trim(from: 0, to: progress)
+                        .stroke(Theme.rotColor(model.snap.rot), style: StrokeStyle(lineWidth: 8, lineCap: .round))
+                        .rotationEffect(.degrees(-90))
+                    VStack(spacing: 0) {
+                        Text("\(left)")
+                            .font(.system(size: 56, weight: .semibold).monospacedDigit())
+                            .contentTransition(.numericText(countsDown: true))
+                        Text(left == 1 ? "tap left" : "taps left")
+                            .font(.footnote).foregroundStyle(.secondary)
+                    }
+                }
+                .frame(width: 170, height: 170)
+                .contentShape(Circle())
+            }
+            .buttonStyle(.plain)
+            .sensoryFeedback(.impact(weight: .light), trigger: left)
+            .accessibilityLabel("Tap to unblock")
+            .accessibilityValue("\(left) taps left")
+            Button("Keep blocked") { dismiss() }
+        }
+        .padding(24)
+        .presentationDetents([.medium])
+    }
+
+    private func tap() {
+        guard left > 0 else { return }
+        withAnimation(.spring(duration: 0.25)) { left -= 1 }
+        guard left == 0 else { return }
+        model.unblock()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { dismiss() }
     }
 }

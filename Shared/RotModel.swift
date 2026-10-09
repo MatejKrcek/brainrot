@@ -61,6 +61,13 @@ enum Theme {
     static func rotColor(_ rot: Double) -> Color { BrainPalette.base(rot).lighter(0.1).color }
 }
 
+/// Shared by the report extension (draws the rows) and Home (sizes the remote report view, which can't size itself).
+enum ReportLayout {
+    static let maxRows = 5
+    static let rowHeight: CGFloat = 52
+    static let verticalPadding: CGFloat = 6
+}
+
 extension Int {
     /// 95 -> "1 h 35 min", 40 -> "40 min"
     var asDuration: String {

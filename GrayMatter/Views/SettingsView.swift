@@ -14,6 +14,13 @@ struct SettingsView: View {
 
     private enum Route: Hashable { case trackedApps }
 
+    /// What the Tracked apps row shows: the real picker selection, or the demo list without Screen Time.
+    private var trackedSummary: String {
+        guard model.screenTime.isAuthorized else { return TrackedApp.summary(trackedIDs) }
+        let n = SharedStore.selectionCount
+        return n == 0 ? "None" : "\(n) selected"
+    }
+
     var body: some View {
         NavigationStack(path: $path) {
             Form {
@@ -22,14 +29,14 @@ struct SettingsView: View {
                         HStack {
                             Label("Tracked apps", systemImage: "square.grid.2x2")
                             Spacer()
-                            Text(TrackedApp.summary(trackedIDs, extra: SharedStore.selectionCount)).foregroundStyle(.secondary)
+                            Text(trackedSummary).foregroundStyle(.secondary)
                         }
                     }
                 } header: {
                     Text("Apps")
                 } footer: {
                     Text(model.screenTime.isAuthorized
-                         ? "Confirm the same apps in Apple's Screen Time picker inside Tracked apps."
+                         ? "Only the apps you pick are counted and blocked."
                          : "Screen Time isn't authorised here, so usage of these apps is simulated.")
                 }
 
@@ -121,7 +128,8 @@ struct SettingsView: View {
                 if model.openTrackedApps { model.openTrackedApps = false; path.append(Route.trackedApps) }
             }
         }
-        .familyActivityPicker(isPresented: $showPicker,
+        .familyActivityPicker(headerText: "Pick the apps that count against your brain",
+                              isPresented: $showPicker,
                               selection: Binding(get: { model.screenTime.selection }, set: { model.screenTime.selection = $0 }))
         .onChange(of: showPicker) { _, shown in if !shown { model.screenTime.saveSelection(); model.refresh() } }
         .onChange(of: limit) { _, v in SharedStore.dailyLimit = v; model.applyRules(); model.reloadWidgets(force: true) }
