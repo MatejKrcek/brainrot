@@ -28,13 +28,16 @@ Every time you open the app it tells you what the minutes could have been: a run
 OPTIONAL BLOCKING
 Over the limit? The selected apps get a pause screen. Unblock for 15, 30 or 45 minutes when you really need to — the extra time still counts.
 
+BLOCKED WEBSITES
+Type in the sites you never want to open on your phone — instagram.com, youtube.com, anything — and they stay blocked all day in Safari, Chrome and every other browser, no matter the limit.
+
 PRIVATE BY DESIGN
 Built on Apple's Screen Time framework. Your usage never leaves your iPhone: no account, no server, no analytics, no ads. Ever.
 
 Brain Health is not a medical app. It just makes the cost of scrolling visible.
 
 ## Keywords (100)
-screen time,brain rot,digital detox,focus,app limit,social media,tiktok,instagram,widget,habit,doomscroll
+screen time,brain rot,digital detox,focus,app limit,website blocker,social media,tiktok,instagram,widget,habit
 
 ## What's New (1.0)
 First release.
@@ -48,7 +51,7 @@ First release.
 Launch with `--minutes=15` / `--minutes=95` on the simulator for 1–2.
 
 ## App Review — notes
-Brain Health uses the Family Controls / Screen Time API (individual authorisation only, never parental). On first launch the app asks for Screen Time access; after that, use "Tracked apps" to pick apps in Apple's picker. Minute counts are delivered by a DeviceActivityMonitor extension when usage thresholds are crossed; exact per-app numbers are rendered by the DeviceActivityReport extension.
+Brain Health uses the Family Controls / Screen Time API (individual authorisation only, never parental). On first launch the app asks for Screen Time access; after that, use "Tracked apps" to pick apps in Apple's picker. Minute counts are delivered by a DeviceActivityMonitor extension when usage thresholds are crossed; exact per-app numbers are rendered by the DeviceActivityReport extension. Settings → Blocked websites applies a ManagedSettings web content filter to domains the user types in; it is independent of the daily limit.
 
 To see the brain change without waiting: on a device where Screen Time is not authorised the app runs in demo mode with "+5 / +15 / +30 min" buttons under "Demo" on the Home screen. No login is needed. The app makes no network requests.
 

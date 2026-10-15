@@ -1,6 +1,6 @@
 # Brain Health — Privacy Policy
 
-_Last updated: 27 September 2026_
+_Last updated: 14 October 2026_
 
 Brain Health is an iOS app by Matěj Krček that shows how much time you spend in the apps you choose and turns it into a picture of a brain.
 
@@ -16,13 +16,14 @@ The app stores on your device, in a container shared only with its own widgets a
 
 - today's minute count and a per-day history of minute counts,
 - the apps and categories you selected,
-- your daily limit and blocking preferences.
+- your daily limit and blocking preferences,
+- the list of websites you chose to block.
 
 You can delete all of it at any time with **Settings → Reset all data**, or by deleting the app.
 
 ## Blocking
 
-If you turn on blocking, the app uses Apple's ManagedSettings to show a pause screen over your selected apps when you pass your limit. This works entirely on the device.
+If you turn on blocking, the app uses Apple's ManagedSettings to show a pause screen over your selected apps when you pass your limit. Websites you add under Settings → Blocked websites are blocked in browsers through the same framework's web content filter. This works entirely on the device; the list of blocked websites is never sent anywhere.
 
 ## Children
 

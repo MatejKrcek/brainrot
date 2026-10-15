@@ -22,8 +22,12 @@ The development entitlement works for local installs; the App Store build needs 
 - App IDs for the 5 bundle IDs above with capabilities: App Groups (`group.cz.krcek.brainhealth`) on all,
   Family Controls on all five. Open the project in Xcode once with the team selected and let it register them.
 
-## 3. App Store Connect
-- New app: name **Brain Health**, bundle ID `cz.krcek.greymatter`, SKU `brainhealth`.
+## 3. App Store Connect (current blocker as of 14 Oct 2026)
+`scripts/archive.sh` archives fine (store profiles with Family Controls exist for all 5 bundle IDs), but the upload
+fails with `App record with bundle identifier "cz.krcek.greymatter" not found on App Store Connect`. Create the record:
+- https://appstoreconnect.apple.com → My Apps → **+** → New App: iOS, name **Brain Health**, primary language English (UK),
+  bundle ID `cz.krcek.greymatter`, SKU `brainhealth`, full access.
+- Xcode → Settings → Accounts must be signed in with the Apple ID of team `Q6PTKMW725` (only the Personal Team is signed in now).
 - Paste listing text from `AppStore/METADATA.md`; privacy policy URL points at `AppStore/PRIVACY.md` in this repo
   (or host it on matejkrcek.com if you prefer a nicer URL).
 - App Privacy: "Data not collected". Age rating questionnaire: all "None" → 4+.
