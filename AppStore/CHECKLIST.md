@@ -22,12 +22,8 @@ The development entitlement works for local installs; the App Store build needs 
 - App IDs for the 5 bundle IDs above with capabilities: App Groups (`group.cz.krcek.brainhealth`) on all,
   Family Controls on all five. Open the project in Xcode once with the team selected and let it register them.
 
-## 3. App Store Connect (current blocker as of 14 Oct 2026)
-`scripts/archive.sh` archives fine (store profiles with Family Controls exist for all 5 bundle IDs), but the upload
-fails with `App record with bundle identifier "cz.krcek.greymatter" not found on App Store Connect`. Create the record:
-- https://appstoreconnect.apple.com → My Apps → **+** → New App: iOS, name **Brain Health**, primary language English (UK),
-  bundle ID `cz.krcek.greymatter`, SKU `brainhealth`, full access.
-- Xcode → Settings → Accounts must be signed in with the Apple ID of team `Q6PTKMW725` (only the Personal Team is signed in now).
+## 3. App Store Connect
+- App record **Brain Health** / `cz.krcek.greymatter` exists (created 14 Oct 2026); first build uploaded the same day.
 - Paste listing text from `AppStore/METADATA.md`; privacy policy URL points at `AppStore/PRIVACY.md` in this repo
   (or host it on matejkrcek.com if you prefer a nicer URL).
 - App Privacy: "Data not collected". Age rating questionnaire: all "None" → 4+.
@@ -38,7 +34,9 @@ fails with `App record with bundle identifier "cz.krcek.greymatter" not found on
 scripts/archive.sh              # archive Release + upload to App Store Connect
 scripts/archive.sh --no-upload  # archive only
 ```
-Xcode must be signed in with the team's Apple ID (Xcode → Settings → Accounts). `manageAppVersionAndBuildNumber`
+Xcode must be signed in with the team's Apple ID (Xcode → Settings → Accounts). The DeviceActivityReport extension
+has to be an ExtensionKit extension (`type: extensionkit-extension`, `EXAppExtensionAttributes` in its Info.plist);
+packaged as an NSExtension, App Store Connect rejects the upload with "Invalid extension". `manageAppVersionAndBuildNumber`
 is on, so App Store Connect bumps the build number for you; bump `MARKETING_VERSION` in `project.yml` for new versions.
 
 ## 5. Submit

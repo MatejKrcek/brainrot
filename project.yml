@@ -121,8 +121,11 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: cz.krcek.greymatter.monitor
 
+  # DeviceActivityReport is an ExtensionKit extension (Extensions/ dir, EXAppExtensionAttributes);
+  # App Store Connect rejects it when packaged as an NSExtension in PlugIns/.
   GrayMatterReport:
     templates: [Extension]
+    type: extensionkit-extension
     sources:
       - path: GrayMatterReport
         excludes: ["Info*.plist", "*.entitlements"]
@@ -133,8 +136,8 @@ targets:
         CFBundleDisplayName: Brain Health Report
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
-        NSExtension:
-          NSExtensionPointIdentifier: com.apple.deviceactivityui.report-extension
+        EXAppExtensionAttributes:
+          EXExtensionPointIdentifier: com.apple.deviceactivityui.report-extension
     entitlements:
       path: GrayMatterReport/GrayMatterReport.entitlements
       properties:

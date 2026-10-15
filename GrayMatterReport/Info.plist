@@ -14,15 +14,13 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>$(PRODUCT_NAME)</string>
-	<key>CFBundlePackageType</key>
-	<string>XPC!</string>
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
-	<key>NSExtension</key>
+	<key>EXAppExtensionAttributes</key>
 	<dict>
-		<key>NSExtensionPointIdentifier</key>
+		<key>EXExtensionPointIdentifier</key>
 		<string>com.apple.deviceactivityui.report-extension</string>
 	</dict>
 </dict>
