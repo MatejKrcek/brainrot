@@ -29,7 +29,10 @@ scripts/preview_brain.swift  renders BrainView at several health levels to a PNG
    pink → olive → necrotic patches, veins, mould, darkening, drips.
 4. **Blocking (optional).** Over the limit the selected apps are shielded. "Unblock for 15/30/45 min" (after tapping a circle 10 times) lifts the shield;
    a one-shot `DeviceActivity` schedule re-applies it (`intervalDidEnd`), plus a check on app foreground. iOS minimum is 15 min.
-5. **Widget** shows only the brain (system background, adapts to light/dark, accentable on tinted Home Screens).
+5. **Blocked websites.** Settings → Blocked websites takes typed domains or pasted links (`BlockedSites`) and blocks them
+   all day in every browser via Screen Time's web content filter (`WebsiteBlocker`, own `ManagedSettingsStore`), independent
+   of the daily limit and the unblock window. Max 25 sites (the filter takes 50 domains; each site adds bare + `www.`).
+6. **Widget** shows only the brain (system background, adapts to light/dark, accentable on tinted Home Screens).
 
 ## Build & run
 

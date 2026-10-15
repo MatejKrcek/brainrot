@@ -25,6 +25,17 @@ enum SelectionStore {
     static var isEmpty: Bool { SharedStore.selectionCount == 0 }
 }
 
+/// Blocks the sites in `BlockedSites` in every browser, all day. Uses its own store so the daily-limit
+/// shield and its unblock window never touch it; the only way back to a site is removing it from the list.
+enum WebsiteBlocker {
+    static let store = ManagedSettingsStore(named: .websites)
+
+    static func apply() {
+        let domains = BlockedSites.all.flatMap { [WebDomain(domain: $0), WebDomain(domain: "www." + $0)] }
+        store.webContent.blockedByFilter = domains.isEmpty ? nil : .specific(Set(domains))
+    }
+}
+
 /// Applies / removes the shield. Safe to call from the app and from extensions.
 enum ShieldController {
     static let store = ManagedSettingsStore(named: .graymatter)

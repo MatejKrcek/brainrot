@@ -11,8 +11,9 @@ struct SettingsView: View {
     @State private var confirmReset = false
     @State private var trackedIDs: Set<String> = SharedStore.trackedAppIDs
     @State private var path = NavigationPath()
+    @State private var blockedSitesCount = BlockedSites.all.count
 
-    private enum Route: Hashable { case trackedApps }
+    private enum Route: Hashable { case trackedApps, blockedSites }
 
     /// What the Tracked apps row shows: the real picker selection, or the demo list without Screen Time.
     private var trackedSummary: String {
@@ -73,6 +74,13 @@ struct SettingsView: View {
                     Picker("Unblock window", selection: $unlockMinutes) {
                         ForEach([15, 30, 45], id: \.self) { Text("\($0) min").tag($0) }
                     }
+                    NavigationLink(value: Route.blockedSites) {
+                        HStack {
+                            Label("Blocked websites", systemImage: "globe")
+                            Spacer()
+                            Text(blockedSitesCount == 0 ? "None" : "\(blockedSitesCount)").foregroundStyle(.secondary)
+                        }
+                    }
                 } header: {
                     Text("Blocking")
                 } footer: {
@@ -122,9 +130,11 @@ struct SettingsView: View {
             .navigationDestination(for: Route.self) { route in
                 switch route {
                 case .trackedApps: TrackedAppsView(ids: $trackedIDs, showPicker: $showPicker).environmentObject(model)
+                case .blockedSites: BlockedSitesView().environmentObject(model)
                 }
             }
             .onAppear {
+                blockedSitesCount = BlockedSites.all.count
                 if model.openTrackedApps { model.openTrackedApps = false; path.append(Route.trackedApps) }
             }
         }
@@ -140,10 +150,11 @@ struct SettingsView: View {
             Button("Reset", role: .destructive) {
                 model.screenTime.stopMonitoring()
                 SharedStore.resetAll()
+                WebsiteBlocker.apply()
                 model.onboarded = false
                 model.refresh()
                 dismiss()
             }
-        } message: { Text("Usage history, limit and app selection will be removed.") }
+        } message: { Text("Usage history, limit, app selection and blocked websites will be removed.") }
     }
 }

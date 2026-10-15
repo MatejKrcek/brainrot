@@ -20,6 +20,8 @@ extension DeviceActivityEvent.Name {
 
 extension ManagedSettingsStore.Name {
     static let graymatter = ManagedSettingsStore.Name("graymatter")
+    /// Always-on website blocklist, kept apart from the daily-limit shield.
+    static let websites = ManagedSettingsStore.Name("graymatter.websites")
 }
 
 /// Minute marks at which the monitor extension is woken. Minute resolution for the first
