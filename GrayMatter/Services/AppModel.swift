@@ -28,7 +28,7 @@ final class AppModel: ObservableObject {
         applyLaunchArguments()
     }
 
-    /// Debug / screenshot helpers: `--minutes=80`, `--settings`, `--apps`, `--store`.
+    /// Debug / screenshot helpers: `--minutes=80`, `--settings`, `--apps`, `--store`, `--step=N` (onboarding step).
     private func applyLaunchArguments() {
         let args = CommandLine.arguments
         if let arg = args.first(where: { $0.hasPrefix("--minutes=") }), let m = Int(arg.dropFirst("--minutes=".count)) {

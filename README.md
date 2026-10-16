@@ -20,7 +20,7 @@ scripts/preview_brain.swift  renders BrainView at several health levels to a PNG
 
 ## How it works
 
-1. **Onboarding** → Screen Time permission → choose apps/categories (`FamilyActivityPicker`) → daily limit, optional blocking.
+1. **Onboarding** wizard: Screen Time permission (required) → choose apps/categories (`FamilyActivityPicker`, at least one) → optional blocked websites → daily limit, optional blocking → how to add the widgets.
 2. **Tracking.** The app schedules an all-day `DeviceActivity` with ~150 threshold events (every minute to 90 min, then every 5 min).
    Each threshold wakes `GrayMatterMonitor`, which writes `minutesToday` into the App Group and reloads widgets.
    Apple doesn't let apps read raw usage; the sandboxed `GrayMatterReport` extension shows exact per-app numbers in-app.

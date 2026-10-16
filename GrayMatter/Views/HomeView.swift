@@ -6,6 +6,7 @@ struct HomeView: View {
     @EnvironmentObject var model: AppModel
     /// Height of one row in the usage report; the report extension uses the same metric.
     @ScaledMetric(relativeTo: .body) private var reportRowHeight = ReportLayout.rowHeight
+    @ScaledMetric(relativeTo: .footnote) private var reportFooterHeight = ReportLayout.footerHeight
 
     private var snap: RotSnapshot { model.snap }
 
@@ -151,11 +152,11 @@ struct HomeView: View {
     // MARK: Per-app report (sandboxed extension renders exact numbers)
 
     /// The report is a remote view that can't size itself to its content, so it gets an explicit height:
-    /// one row before any usage, otherwise a row per picked app (a picked category can hold any number).
+    /// a row per picked app (a picked category can hold any number, so it gets the maximum). The extension
+    /// fits whatever it has into that height and folds the overflow into a "+N more" row.
     private var reportRows: Int {
-        guard snap.minutes > 0 else { return 1 }
         let sel = model.screenTime.selection
-        let apps = sel.categoryTokens.isEmpty ? sel.applicationTokens.count : ReportLayout.maxRows
+        let apps = sel.categoryTokens.isEmpty ? sel.applicationTokens.count + sel.webDomainTokens.count : ReportLayout.maxRows
         return min(ReportLayout.maxRows, max(1, apps))
     }
 
@@ -169,8 +170,9 @@ struct HomeView: View {
             applications: sel.applicationTokens,
             categories: sel.categoryTokens,
             webDomains: sel.webDomainTokens)
+        let height = CGFloat(reportRows) * reportRowHeight + reportFooterHeight + 2 * ReportLayout.verticalPadding
         return DeviceActivityReport(DeviceActivityReport.Context("Today"), filter: filter)
-            .frame(height: CGFloat(reportRows) * reportRowHeight + 2 * ReportLayout.verticalPadding)
+            .frame(height: height)
             .padding(.horizontal, -16).padding(.vertical, -4)
     }
 

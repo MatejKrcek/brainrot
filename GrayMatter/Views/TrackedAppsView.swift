@@ -4,11 +4,9 @@ import ManagedSettings
 
 /// Tracked apps: whatever the user picked from the apps installed on this iPhone. Apple's Screen Time picker
 /// is the only way to list them; it hands back opaque tokens that `Label(token)` renders with the real icon
-/// and name, and exactly these tokens are counted and blocked. Without Screen Time (Lite build, simulator)
-/// the built-in list drives the simulated usage instead.
+/// and name, and exactly these tokens are counted and blocked.
 struct TrackedAppsView: View {
     @EnvironmentObject var model: AppModel
-    @Binding var ids: Set<String>
     @Binding var showPicker: Bool
     @State private var requesting = false
     @State private var unavailable = false
@@ -50,16 +48,6 @@ struct TrackedAppsView: View {
                      ? "Only these apps are counted and blocked. A whole category like Social includes every app in it; to leave one out, pick apps one by one. Swipe left to remove."
                      : "Opens the list of apps on this iPhone. The first time, iOS asks for Screen Time access.")
             }
-
-            if !authorized {
-                Section {
-                    ForEach(TrackedApp.builtIn) { app in toggle(app) }
-                } header: {
-                    Text("Demo")
-                } footer: {
-                    Text("Without Screen Time access, usage of these apps is simulated.")
-                }
-            }
         }
         .navigationTitle("Tracked apps")
         .navigationBarTitleDisplayMode(.inline)
@@ -67,14 +55,6 @@ struct TrackedAppsView: View {
             Button("OK", role: .cancel) {}
         } message: {
             Text("This build or device can't use Apple's Screen Time picker. On an iPhone with the full app, allow Screen Time access and try again.")
-        }
-    }
-
-    private func toggle(_ app: TrackedApp) -> some View {
-        Toggle(isOn: Binding(
-            get: { ids.contains(app.id) },
-            set: { on in if on { ids.insert(app.id) } else { ids.remove(app.id) } })) {
-            Label(app.name, systemImage: app.symbol)
         }
     }
 

@@ -9,15 +9,13 @@ struct SettingsView: View {
     @State private var unlockMinutes: Int = SharedStore.unlockMinutes
     @State private var showPicker = false
     @State private var confirmReset = false
-    @State private var trackedIDs: Set<String> = SharedStore.trackedAppIDs
     @State private var path = NavigationPath()
     @State private var blockedSitesCount = BlockedSites.all.count
 
     private enum Route: Hashable { case trackedApps, blockedSites }
 
-    /// What the Tracked apps row shows: the real picker selection, or the demo list without Screen Time.
+    /// What the Tracked apps row shows: how many apps the user picked.
     private var trackedSummary: String {
-        guard model.screenTime.isAuthorized else { return TrackedApp.summary(trackedIDs) }
         let n = SharedStore.selectionCount
         return n == 0 ? "None" : "\(n) selected"
     }
@@ -36,9 +34,7 @@ struct SettingsView: View {
                 } header: {
                     Text("Apps")
                 } footer: {
-                    Text(model.screenTime.isAuthorized
-                         ? "Only the apps you pick are counted and blocked."
-                         : "Screen Time isn't authorised here, so usage of these apps is simulated.")
+                    Text("Only the apps you pick are counted and blocked.")
                 }
 
                 Section("Screen Time") {
@@ -74,6 +70,13 @@ struct SettingsView: View {
                     Picker("Unblock window", selection: $unlockMinutes) {
                         ForEach([15, 30, 45], id: \.self) { Text("\($0) min").tag($0) }
                     }
+                } header: {
+                    Text("Blocking")
+                } footer: {
+                    Text("When blocked, selected apps show a Brain Health screen. You can unblock temporarily from the app; iOS requires a minimum window of 15 minutes.")
+                }
+
+                Section {
                     NavigationLink(value: Route.blockedSites) {
                         HStack {
                             Label("Blocked websites", systemImage: "globe")
@@ -82,9 +85,9 @@ struct SettingsView: View {
                         }
                     }
                 } header: {
-                    Text("Blocking")
+                    Text("Websites")
                 } footer: {
-                    Text("When blocked, selected apps show a Brain Health screen. You can unblock temporarily from the app; iOS requires a minimum window of 15 minutes.")
+                    Text("Blocked all day in every browser: zero minutes, no unblock window, independent of the daily limit. The only way back to a site is removing it from the list.")
                 }
 
                 Section {
@@ -129,7 +132,7 @@ struct SettingsView: View {
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
             .navigationDestination(for: Route.self) { route in
                 switch route {
-                case .trackedApps: TrackedAppsView(ids: $trackedIDs, showPicker: $showPicker).environmentObject(model)
+                case .trackedApps: TrackedAppsView(showPicker: $showPicker).environmentObject(model)
                 case .blockedSites: BlockedSitesView().environmentObject(model)
                 }
             }
@@ -145,7 +148,6 @@ struct SettingsView: View {
         .onChange(of: limit) { _, v in SharedStore.dailyLimit = v; model.applyRules(); model.reloadWidgets(force: true) }
         .onChange(of: lock) { _, v in SharedStore.lockEnabled = v; model.applyRules() }
         .onChange(of: unlockMinutes) { _, v in SharedStore.unlockMinutes = v }
-        .onChange(of: trackedIDs) { _, v in SharedStore.trackedAppIDs = v; model.refresh() }
         .confirmationDialog("Reset all data?", isPresented: $confirmReset, titleVisibility: .visible) {
             Button("Reset", role: .destructive) {
                 model.screenTime.stopMonitoring()
