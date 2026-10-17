@@ -68,12 +68,12 @@ struct SettingsView: View {
                 Section {
                     Toggle("Block apps over the limit", isOn: $lock)
                     Picker("Unblock window", selection: $unlockMinutes) {
-                        ForEach([15, 30, 45], id: \.self) { Text("\($0) min").tag($0) }
+                        ForEach([5, 10, 15, 30], id: \.self) { Text("\($0) min").tag($0) }
                     }
                 } header: {
                     Text("Blocking")
                 } footer: {
-                    Text("When blocked, selected apps show a Brain Health screen. You can unblock temporarily from the app; iOS requires a minimum window of 15 minutes.")
+                    Text("When blocked, selected apps show a Brain Health screen. You can unblock them for a few minutes from the app; they lock again on their own.")
                 }
 
                 Section {

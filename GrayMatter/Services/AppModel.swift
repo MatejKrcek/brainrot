@@ -28,12 +28,13 @@ final class AppModel: ObservableObject {
         applyLaunchArguments()
     }
 
-    /// Debug / screenshot helpers: `--minutes=80`, `--settings`, `--apps`, `--store`, `--step=N` (onboarding step).
+    /// Debug / screenshot helpers: `--minutes=80`, `--blocked`, `--settings`, `--apps`, `--store`, `--step=N` (onboarding step).
     private func applyLaunchArguments() {
         let args = CommandLine.arguments
         if let arg = args.first(where: { $0.hasPrefix("--minutes=") }), let m = Int(arg.dropFirst("--minutes=".count)) {
             SharedStore.minutesToday = m; SharedStore.demoMode = true; SharedStore.onboarded = true; onboarded = true
         }
+        if args.contains("--blocked") { SharedStore.lockEnabled = true; SharedStore.isShielded = true }
         storeMode = args.contains("--store")
         if args.contains("--settings") || args.contains("--apps") {
             openTrackedApps = args.contains("--apps")

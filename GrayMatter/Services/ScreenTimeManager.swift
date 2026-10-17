@@ -14,6 +14,8 @@ final class ScreenTimeManager: ObservableObject {
     private var bag = Set<AnyCancellable>()
 
     var isAuthorized: Bool { status == .approved }
+    /// Bump when the daily schedule's events change, so installs already monitoring re-register.
+    private static let schema = 2
 
     init() {
         AuthorizationCenter.shared.$authorizationStatus
@@ -39,6 +41,8 @@ final class ScreenTimeManager: ObservableObject {
 
     func saveSelection() {
         SelectionStore.save(selection)
+        // Indices into the picked apps change with the selection, so the per-app marks start over.
+        SharedStore.usedAppsToday = []
         // Anything picked in Screen Time should be counted straight away.
         if isAuthorized && !SelectionStore.isEmpty { startMonitoring() } else if SelectionStore.isEmpty { stopMonitoring() }
     }
@@ -48,7 +52,7 @@ final class ScreenTimeManager: ObservableObject {
     func ensureMonitoring() {
         guard isAuthorized else { return }
         let active = center.activities
-        if SharedStore.isMonitoring, !active.contains(.daily) {
+        if SharedStore.isMonitoring, !active.contains(.daily) || SharedStore.monitorSchema != Self.schema {
             startMonitoring()
         } else if !SharedStore.isMonitoring, SharedStore.onboarded, !SelectionStore.isEmpty, !SharedStore.demoMode {
             startMonitoring()
@@ -71,9 +75,14 @@ final class ScreenTimeManager: ObservableObject {
                 webDomains: selection.webDomainTokens,
                 threshold: DateComponents(hour: m / 60, minute: m % 60))
         }
+        // One event per picked app so the app knows how many apps were used today (see `SharedStore.usedAppsToday`).
+        for (i, token) in SelectionStore.orderedApplications(selection).enumerated() {
+            events[.app(i)] = DeviceActivityEvent(applications: [token], threshold: DateComponents(minute: 1))
+        }
         do {
             try center.startMonitoring(.daily, during: schedule, events: events)
             SharedStore.isMonitoring = true
+            SharedStore.monitorSchema = Self.schema
             ShieldController.reconcile()
             lastError = nil
         } catch {
@@ -89,14 +98,23 @@ final class ScreenTimeManager: ObservableObject {
         SharedStore.unlockUntil = nil
     }
 
-    /// Schedules a one-shot DeviceActivity interval ending at `until`; the monitor extension
-    /// re-applies the shield in `intervalDidEnd`. (System minimum is 15 minutes.)
+    /// Schedules a one-shot DeviceActivity interval so the monitor extension re-applies the shield at `until`.
+    /// The system won't take an interval shorter than 15 minutes, so a shorter window gets a 15-minute interval
+    /// with a warning timed to fire at `until`; the extension relocks in `intervalWillEndWarning` and
+    /// `intervalDidEnd` is the backstop.
     func scheduleRelock(at until: Date) {
         let cal = Calendar.current
         let now = Date()
-        let start = cal.dateComponents([.hour, .minute, .second], from: now)
-        let end = cal.dateComponents([.hour, .minute, .second], from: until)
-        let schedule = DeviceActivitySchedule(intervalStart: start, intervalEnd: end, repeats: false)
+        let minimum: TimeInterval = 15 * 60
+        let length = max(minimum, until.timeIntervalSince(now))
+        let end = now.addingTimeInterval(length)
+        let early = end.timeIntervalSince(until)
+        let warning = early >= 60 ? DateComponents(minute: Int(early / 60), second: Int(early) % 60) : nil
+        let schedule = DeviceActivitySchedule(
+            intervalStart: cal.dateComponents([.hour, .minute, .second], from: now),
+            intervalEnd: cal.dateComponents([.hour, .minute, .second], from: end),
+            repeats: false,
+            warningTime: warning)
         center.stopMonitoring([.unlock])
         do { try center.startMonitoring(.unlock, during: schedule) }
         catch { lastError = "Relock schedule failed: \(error.localizedDescription)" }

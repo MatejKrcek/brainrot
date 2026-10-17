@@ -16,6 +16,14 @@ extension DeviceActivityEvent.Name {
         guard rawValue.hasPrefix(Self.tickPrefix) else { return nil }
         return Int(rawValue.dropFirst(Self.tickPrefix.count))
     }
+
+    /// Fires once an individual picked app reaches one minute today; `i` indexes `SelectionStore.orderedApplications`.
+    static let appPrefix = "graymatter.app."
+    static func app(_ i: Int) -> DeviceActivityEvent.Name { .init(appPrefix + String(i)) }
+    var appIndex: Int? {
+        guard rawValue.hasPrefix(Self.appPrefix) else { return nil }
+        return Int(rawValue.dropFirst(Self.appPrefix.count))
+    }
 }
 
 extension ManagedSettingsStore.Name {

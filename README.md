@@ -28,7 +28,9 @@ scripts/preview_brain.swift  renders BrainView at several health levels to a PNG
    draws a lateral-view brain (gyri tubes on a flow field, cerebellum, stem, inner shadow, sheen) and degrades it:
    pink → olive → necrotic patches, veins, mould, darkening, drips.
 4. **Blocking (optional).** Over the limit the selected apps are shielded. "Unblock for 15/30/45 min" (after tapping a circle 10 times) lifts the shield;
-   a one-shot `DeviceActivity` schedule re-applies it (`intervalDidEnd`), plus a check on app foreground. iOS minimum is 15 min.
+   a one-shot `DeviceActivity` schedule re-applies it, plus a check on app foreground. Default window is 5 min: the system
+   won't take an interval under 15 min, so short windows use a 15-min interval whose `intervalWillEndWarning` fires at the
+   real end (`intervalDidEnd` is the backstop).
 5. **Blocked websites.** Settings → Blocked websites takes typed domains or pasted links (`BlockedSites`) and blocks them
    all day in every browser via Screen Time's web content filter (`WebsiteBlocker`, own `ManagedSettingsStore`), independent
    of the daily limit and the unblock window. Max 25 sites (the filter takes 50 domains; each site adds bare + `www.`).

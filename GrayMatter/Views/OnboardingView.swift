@@ -273,7 +273,7 @@ struct OnboardingView: View {
                     }
                     Toggle("Block apps over the limit", isOn: $lock)
                 } footer: {
-                    Text("With blocking on, the apps you picked show a Brain Health screen once the limit is reached. You can unblock for 15 minutes from the app if you really need to.")
+                    Text("With blocking on, the apps you picked show a Brain Health screen once the limit is reached. You can unblock for 5 minutes from the app if you really need to.")
                 }
             }
             .scrollContentBackground(.hidden)

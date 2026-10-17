@@ -63,7 +63,10 @@ enum Theme {
 
 /// Sizing shared by the app (which sets the remote report's frame) and the report extension (which fills it).
 enum ReportLayout {
-    static let maxRows = 5
+    /// Hard cap on rows; the card grows with the number of apps used today up to this.
+    static let maxRows = 12
+    /// A picked category can hold any number of apps and the monitor can't count them, so it gets this many rows.
+    static let categoryRows = 6
     static let rowHeight: CGFloat = 52
     /// "Total · N apps" line at the bottom of the report.
     static let footerHeight: CGFloat = 26

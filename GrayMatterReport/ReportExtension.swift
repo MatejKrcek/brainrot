@@ -51,7 +51,8 @@ struct TodayReport: DeviceActivityReportScene {
                 }
             }
         }
-        model.apps = byName.values.sorted { $0.seconds > $1.seconds }
+        // Under a minute doesn't count: the monitor marks an app as used at one minute, and Home sizes the list from that.
+        model.apps = byName.values.filter { $0.seconds >= 60 }.sorted { $0.seconds > $1.seconds }
         return model
     }
 }
@@ -70,7 +71,8 @@ struct TodayReportView: View {
             // Leave the last row for "+N more" when not everything fits.
             let shown = apps.count > fit ? Array(apps.prefix(max(0, fit - 1))) : apps
             let rest = apps.dropFirst(shown.count)
-            let top = apps.first?.seconds ?? 0
+            // Bars share the Today card's scale: full width is the daily limit.
+            let limitSeconds = Double(SharedStore.dailyLimit) * 60
 
             VStack(alignment: .leading, spacing: 0) {
                 if apps.isEmpty {
@@ -81,7 +83,7 @@ struct TodayReportView: View {
                     .frame(height: rowHeight)
                 }
                 ForEach(shown) { app in
-                    row(app, share: top > 0 ? app.seconds / top : 0).frame(height: rowHeight)
+                    row(app, share: min(1, app.seconds / limitSeconds)).frame(height: rowHeight)
                 }
                 if !rest.isEmpty {
                     moreRow(Array(rest), label: shown.isEmpty ? "\(rest.count) apps" : "\(rest.count) more").frame(height: rowHeight)
@@ -113,7 +115,7 @@ struct TodayReportView: View {
                 GeometryReader { bar in
                     ZStack(alignment: .leading) {
                         Capsule().fill(Color(.tertiarySystemFill))
-                        Capsule().fill(Color.accentColor).frame(width: max(6, bar.size.width * share))
+                        Capsule().fill(Theme.rotColor(min(1, share))).frame(width: max(6, bar.size.width * share))
                     }
                 }
                 .frame(height: 5)

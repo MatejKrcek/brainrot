@@ -141,8 +141,13 @@ struct HomeView: View {
                 } else {
                     Text("Selected apps are blocked because you're over the limit.")
                         .font(.subheadline).foregroundStyle(.secondary)
-                    Button("Unblock for \(SharedStore.unlockMinutes) minutes") { model.showUnblockChallenge = true }
-                        .buttonStyle(.bordered)
+                    Button { model.showUnblockChallenge = true } label: {
+                        Label("Unblock for \(SharedStore.unlockMinutes) minutes", systemImage: "lock.open")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.bordered)
+                    .controlSize(.large)
+                    .padding(.top, 4)
                 }
             }
             .padding(.vertical, 10)
@@ -152,12 +157,14 @@ struct HomeView: View {
     // MARK: Per-app report (sandboxed extension renders exact numbers)
 
     /// The report is a remote view that can't size itself to its content, so it gets an explicit height:
-    /// a row per picked app (a picked category can hold any number, so it gets the maximum). The extension
-    /// fits whatever it has into that height and folds the overflow into a "+N more" row.
+    /// a row per app used today (the monitor extension counts them, see `SharedStore.usedAppsToday`).
+    /// A picked category can hold any number of apps the monitor can't count, so it gets a fixed number of rows;
+    /// the extension folds anything beyond the rows it has into a "N more" row.
     private var reportRows: Int {
         let sel = model.screenTime.selection
-        let apps = sel.categoryTokens.isEmpty ? sel.applicationTokens.count + sel.webDomainTokens.count : ReportLayout.maxRows
-        return min(ReportLayout.maxRows, max(1, apps))
+        var rows = SharedStore.usedAppsToday.count
+        if !sel.categoryTokens.isEmpty { rows = max(rows, ReportLayout.categoryRows) }
+        return min(ReportLayout.maxRows, max(1, rows))
     }
 
     private var exactUsage: some View {

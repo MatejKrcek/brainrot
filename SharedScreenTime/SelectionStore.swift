@@ -23,6 +23,16 @@ enum SelectionStore {
     }
 
     static var isEmpty: Bool { SharedStore.selectionCount == 0 }
+
+    /// Picked apps in an order that is the same in every process (sorted by their encoded bytes),
+    /// so the monitor extension and the app agree on which index means which app.
+    static func orderedApplications(_ selection: FamilyActivitySelection) -> [ApplicationToken] {
+        let encoder = JSONEncoder()
+        return selection.applicationTokens
+            .map { ($0, (try? encoder.encode($0)) ?? Data()) }
+            .sorted { $0.1.lexicographicallyPrecedes($1.1) }
+            .map(\.0)
+    }
 }
 
 /// Blocks the sites in `BlockedSites` in every browser, all day. Uses its own store so the daily-limit

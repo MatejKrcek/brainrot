@@ -39,7 +39,9 @@ final class DeviceActivityMonitorExtension: DeviceActivityMonitor {
 
     override func eventDidReachThreshold(_ event: DeviceActivityEvent.Name, activity: DeviceActivityName) {
         super.eventDidReachThreshold(event, activity: activity)
-        guard activity == .daily, let minutes = event.tickMinutes else { return }
+        guard activity == .daily else { return }
+        if let i = event.appIndex { SharedStore.markAppUsed(i); return }
+        guard let minutes = event.tickMinutes else { return }
         SharedStore.minutesToday = max(SharedStore.minutesToday, minutes)
         if SharedStore.lockEnabled, minutes >= SharedStore.dailyLimit, !SharedStore.isUnlocked {
             ShieldController.lock()
@@ -51,8 +53,13 @@ final class DeviceActivityMonitorExtension: DeviceActivityMonitor {
         super.intervalWillStartWarning(for: activity)
     }
 
+    /// An unblock window shorter than the 15-minute minimum interval ends here (see `scheduleRelock`).
     override func intervalWillEndWarning(for activity: DeviceActivityName) {
         super.intervalWillEndWarning(for: activity)
+        guard activity == .unlock else { return }
+        SharedStore.unlockUntil = nil
+        ShieldController.reconcile()
+        WidgetCenter.shared.reloadAllTimelines()
     }
 
     override func eventWillReachThresholdWarning(_ event: DeviceActivityEvent.Name, activity: DeviceActivityName) {

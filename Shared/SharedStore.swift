@@ -7,6 +7,8 @@ enum SharedStore {
     enum Key {
         static let onboarded = "onboarded"
         static let dayKey = "dayKey"
+        static let usedApps = "usedApps"
+        static let monitorSchema = "monitorSchema"
         static let minutesToday = "minutesToday"
         static let dailyLimit = "dailyLimit"
         static let lockEnabled = "lockEnabled"
@@ -46,6 +48,7 @@ enum SharedStore {
         }
         d.set(today, forKey: Key.dayKey)
         d.set(0, forKey: Key.minutesToday)
+        d.removeObject(forKey: Key.usedApps)
         return true
     }
 
@@ -78,7 +81,7 @@ enum SharedStore {
     }
 
     static var unlockMinutes: Int {
-        get { let v = d.integer(forKey: Key.unlockMinutes); return v == 0 ? 15 : v }
+        get { let v = d.integer(forKey: Key.unlockMinutes); return v == 0 ? 5 : v }
         set { d.set(newValue, forKey: Key.unlockMinutes) }
     }
 
@@ -105,6 +108,26 @@ enum SharedStore {
     static var selectionCount: Int {
         get { d.integer(forKey: Key.selectionCount) }
         set { d.set(newValue, forKey: Key.selectionCount) }
+    }
+
+    /// Indices (into the ordered picked apps) of apps that reached a minute of use today. Written by the
+    /// monitor extension; Home sizes the per-app report from the count. Cleared by the day rollover.
+    static var usedAppsToday: Set<Int> {
+        get { rollOverIfNeeded(); return Set(d.array(forKey: Key.usedApps) as? [Int] ?? []) }
+        set { rollOverIfNeeded(); d.set(Array(newValue).sorted(), forKey: Key.usedApps) }
+    }
+
+    /// Which set of events the running daily schedule was registered with; bumped when the events change
+    /// so an updated app re-registers once (see `ScreenTimeManager.ensureMonitoring`).
+    static var monitorSchema: Int {
+        get { d.integer(forKey: Key.monitorSchema) }
+        set { d.set(newValue, forKey: Key.monitorSchema) }
+    }
+
+    static func markAppUsed(_ index: Int) {
+        var used = usedAppsToday
+        used.insert(index)
+        usedAppsToday = used
     }
 
     /// Named apps the user chose. Defaults to TrackedApp.defaultIDs until the user changes it.
