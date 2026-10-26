@@ -9,6 +9,8 @@ struct HomeView: View {
     @ScaledMetric(relativeTo: .footnote) private var reportFooterHeight = ReportLayout.footerHeight
 
     private var snap: RotSnapshot { model.snap }
+    @State private var routines: [Routine] = Routines.all
+    @State private var showRoutines = false
 
     var body: some View {
         NavigationStack {
@@ -18,6 +20,7 @@ struct HomeView: View {
                     usageCard
                     if model.alternative != nil { insteadCard }
                     if snap.isShielded || snap.isUnlocked { blockCard }
+                    routinesCard
                     if model.screenTime.isAuthorized && SharedStore.isMonitoring {
                         Card(title: "Apps") { exactUsage }
                     } else if !model.storeMode {
@@ -37,8 +40,16 @@ struct HomeView: View {
             .refreshable { model.refresh() }
             .sheet(isPresented: $model.showSettings) { SettingsView().environmentObject(model) }
             .sheet(isPresented: $model.showUnblockChallenge) { UnblockChallengeView().environmentObject(model) }
+            .sheet(isPresented: $showRoutines, onDismiss: { routines = Routines.all }) {
+                NavigationStack {
+                    RoutinesView()
+                        .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { showRoutines = false } } }
+                }
+                .environmentObject(model)
+            }
         }
-        .onAppear { model.refresh(); if model.alternative == nil { model.rollAlternative() } }
+        .onAppear { model.refresh(); routines = Routines.all; if model.alternative == nil { model.rollAlternative() } }
+        .onChange(of: model.showSettings) { _, _ in routines = Routines.all }
     }
 
     // MARK: Hero
@@ -128,6 +139,46 @@ struct HomeView: View {
         .font(.footnote)
         .foregroundStyle(.secondary)
         .labelStyle(.titleAndIcon)
+    }
+
+    // MARK: Routines
+
+    /// The reminders set for later today and what each one does; tapping opens the routine list.
+    private var routinesCard: some View {
+        Card(title: "Routines") {
+            Button { showRoutines = true } label: {
+                VStack(alignment: .leading, spacing: 0) {
+                    if routines.isEmpty {
+                        Row(title: "Remind me to read at 23:00", systemImage: "alarm") {
+                            Image(systemName: "plus.circle.fill").foregroundStyle(Color.accentColor)
+                        }
+                    }
+                    ForEach(routines) { routine in
+                        if routine.id != routines.first?.id { Divider2() }
+                        HStack(spacing: 12) {
+                            Text(routine.startText)
+                                .font(.title3.monospacedDigit().weight(.semibold))
+                                .frame(minWidth: 64, alignment: .leading)
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(routine.title)
+                                Text(routine.blocks && routine.isBlockValid
+                                     ? "Notify and block until \(routine.endText) · \(routine.daysText)"
+                                     : "Notify · \(routine.daysText)")
+                                    .font(.footnote).foregroundStyle(.secondary)
+                            }
+                            Spacer()
+                            if Routines.activeIDs.contains(routine.id) {
+                                Image(systemName: "lock.fill").foregroundStyle(.secondary)
+                            }
+                        }
+                        .padding(.vertical, 10)
+                        .opacity(routine.enabled ? 1 : 0.45)
+                    }
+                }
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+        }
     }
 
     // MARK: Blocking

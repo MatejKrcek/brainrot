@@ -110,6 +110,7 @@ private struct RoutineEditor: View {
     @State private var siteInput = ""
     @State private var siteError: String?
     @State private var requesting = false
+    @State private var chosenTemplate: String?
 
     private static let maxSites = 10
     private var authorized: Bool { model.screenTime.isAuthorized }
@@ -120,22 +121,61 @@ private struct RoutineEditor: View {
     var body: some View {
         NavigationStack {
             Form {
+                if isNew {
+                    Section {
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 8) {
+                                ForEach(RoutineTemplate.all) { template in
+                                    Button { apply(template) } label: {
+                                        Label(template.name, systemImage: template.icon)
+                                            .font(.subheadline.weight(.medium))
+                                            .padding(.horizontal, 12).padding(.vertical, 8)
+                                            .background(chosenTemplate == template.id ? Color.accentColor : Color(.tertiarySystemFill),
+                                                        in: Capsule())
+                                            .foregroundStyle(chosenTemplate == template.id ? Color.white : Color.primary)
+                                    }
+                                    .buttonStyle(.plain)
+                                }
+                            }
+                            .padding(.vertical, 4)
+                        }
+                    } header: {
+                        Text("Start from")
+                    }
+                }
+
+                Section {
+                    DatePicker("Notify me at", selection: time(\.hour, \.minute), displayedComponents: .hourAndMinute)
+                    WeekdayPicker(weekdays: $routine.weekdays)
+                    if !isNew { Toggle("On", isOn: $routine.enabled) }
+                } header: {
+                    Text("When")
+                }
+
+                Section {
+                    Picker("What happens", selection: $routine.blocks) {
+                        Text("Just remind me").tag(false)
+                        Text("Remind and block").tag(true)
+                    }
+                    .pickerStyle(.segmented)
+                    .listRowBackground(Color.clear)
+                    .listRowInsets(EdgeInsets())
+                } header: {
+                    Text("What happens at \(routine.startText)")
+                } footer: {
+                    Text(routine.blocks
+                         ? "You get the notification and the apps and websites below close until \(routine.endText)."
+                         : "You get the notification. Nothing is blocked.")
+                }
+
                 Section {
                     TextField("Title", text: $routine.title)
                     TextField("Message", text: $routine.message, axis: .vertical)
                         .lineLimit(1...4)
                 } header: {
-                    Text("Reminder")
+                    Text("Notification")
                 } footer: {
-                    Text("This is what the notification says.")
-                }
-
-                Section {
-                    DatePicker("Time", selection: time(\.hour, \.minute), displayedComponents: .hourAndMinute)
-                    WeekdayPicker(weekdays: $routine.weekdays)
-                    if !isNew { Toggle("On", isOn: $routine.enabled) }
-                } header: {
-                    Text("When")
+                    Text("This is exactly what pops up on your iPhone.")
                 }
 
                 blockSection
@@ -161,10 +201,9 @@ private struct RoutineEditor: View {
     }
 
     @ViewBuilder private var blockSection: some View {
-        Section {
-            Toggle("Block apps and websites", isOn: $routine.blocks)
-            if routine.blocks {
-                DatePicker("Until", selection: time(\.endHour, \.endMinute), displayedComponents: .hourAndMinute)
+        if routine.blocks {
+            Section {
+                DatePicker("Block until", selection: time(\.endHour, \.endMinute), displayedComponents: .hourAndMinute)
                 if !routine.isBlockValid {
                     Text("The block needs to last at least \(Routine.minimumBlockMinutes) minutes.")
                         .font(.footnote).foregroundStyle(.red)
@@ -182,11 +221,9 @@ private struct RoutineEditor: View {
                     Button(requesting ? "Opening…" : "Allow Screen Time access") { requestAccess() }
                         .disabled(requesting)
                 }
-            }
-        } header: {
-            Text("Block")
-        } footer: {
-            if routine.blocks {
+            } header: {
+                Text("Block")
+            } footer: {
                 Text(authorized
                      ? "From \(routine.startText) until \(routine.endText) the apps and websites you pick stay closed, with no unblock. Turn the routine off to get them back sooner."
                      : "iOS only lets Brain Health block apps and websites with Screen Time access.")
@@ -232,6 +269,16 @@ private struct RoutineEditor: View {
                 routine[keyPath: hour] = c.hour ?? 0
                 routine[keyPath: minute] = c.minute ?? 0
             })
+    }
+
+    private func apply(_ template: RoutineTemplate) {
+        chosenTemplate = template.id
+        routine.title = template.title
+        routine.message = template.message
+        (routine.hour, routine.minute) = (template.start / 60, template.start % 60)
+        routine.blocks = template.end != nil
+        if let end = template.end { (routine.endHour, routine.endMinute) = (end / 60, end % 60) }
+        routine.weekdays = template.weekdays
     }
 
     private func addSite() {
@@ -293,4 +340,30 @@ private struct WeekdayPicker: View {
         }
         .padding(.vertical, 4)
     }
+}
+
+/// Ready-made routines the editor offers for a new one; every field stays editable.
+struct RoutineTemplate: Identifiable {
+    let id: String
+    let name: String
+    let icon: String
+    let title: String
+    let message: String
+    /// Minutes after midnight. `end` nil means remind only.
+    let start: Int
+    let end: Int?
+    var weekdays: Set<Int> = Set(1...7)
+
+    static let all: [RoutineTemplate] = [
+        .init(id: "read", name: "Read", icon: "book.fill", title: "Time to read",
+              message: "Put the phone down and read a few pages.", start: 23 * 60, end: 7 * 60),
+        .init(id: "sleep", name: "Sleep", icon: "moon.zzz.fill", title: "Time to wind down",
+              message: "Screens off. Tomorrow's brain will thank you.", start: 22 * 60 + 30, end: 7 * 60),
+        .init(id: "morning", name: "Phone-free morning", icon: "sunrise.fill", title: "Good morning",
+              message: "First hour without scrolling. Coffee, light, plans.", start: 7 * 60, end: 8 * 60),
+        .init(id: "focus", name: "Deep work", icon: "brain.head.profile", title: "Focus time",
+              message: "Two hours on the thing that matters.", start: 9 * 60, end: 11 * 60, weekdays: Set(2...6)),
+        .init(id: "walk", name: "Walk", icon: "figure.walk", title: "Go for a walk",
+              message: "20 minutes outside, phone in your pocket.", start: 18 * 60, end: nil),
+    ]
 }
