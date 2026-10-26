@@ -107,6 +107,8 @@ private struct RoutineEditor: View {
 
     @State private var selection = FamilyActivitySelection(includeEntireCategory: true)
     @State private var showPicker = false
+    /// True once the user picked apps for this routine; until then it follows the tracked apps.
+    @State private var ownSelection = false
     @State private var siteInput = ""
     @State private var siteError: String?
     @State private var requesting = false
@@ -197,7 +199,11 @@ private struct RoutineEditor: View {
         }
         .familyActivityPicker(headerText: "Pick the apps to block during this routine",
                               isPresented: $showPicker, selection: $selection)
-        .onAppear { selection = RoutineSelections.load(routine.id) }
+        .onAppear {
+            selection = RoutineSelections.load(routine.id)
+            ownSelection = RoutineSelections.hasOwn(routine.id)
+        }
+        .onChange(of: showPicker) { _, shown in if !shown { ownSelection = true } }
     }
 
     @ViewBuilder private var blockSection: some View {
@@ -213,7 +219,8 @@ private struct RoutineEditor: View {
                         HStack {
                             Label("Apps", systemImage: "square.grid.2x2")
                             Spacer()
-                            Text(pickedCount == 0 ? "Choose" : "\(pickedCount) selected").foregroundStyle(.secondary)
+                            Text(pickedCount == 0 ? "Choose" : ownSelection ? "\(pickedCount) selected" : "Tracked apps")
+                                .foregroundStyle(.secondary)
                         }
                     }
                     .foregroundStyle(.primary)
@@ -279,6 +286,7 @@ private struct RoutineEditor: View {
         routine.blocks = template.end != nil
         if let end = template.end { (routine.endHour, routine.endMinute) = (end / 60, end % 60) }
         routine.weekdays = template.weekdays
+        routine.sites = template.end == nil ? [] : Routine.defaultSites
     }
 
     private func addSite() {
@@ -300,7 +308,7 @@ private struct RoutineEditor: View {
     private func save() {
         routine.title = routine.title.trimmingCharacters(in: .whitespacesAndNewlines)
         routine.message = routine.message.trimmingCharacters(in: .whitespacesAndNewlines)
-        RoutineSelections.save(selection, for: routine.id)
+        if ownSelection { RoutineSelections.save(selection, for: routine.id) }
         onSave(routine)
         dismiss()
     }

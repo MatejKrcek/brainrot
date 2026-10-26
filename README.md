@@ -36,7 +36,7 @@ scripts/preview_brain.swift  renders BrainView at several health levels to a PNG
    of the daily limit and the unblock window. Max 25 sites (the filter takes 50 domains; each site adds bare + `www.`).
 6. **Routines.** Home → Routines card (or Settings → Routines), with templates (Read, Sleep, Phone-free morning, Deep work, Walk): a reminder at a set time on chosen days ("Time to read" at 23:00) via a repeating
    local notification (`RoutineNotifications`), and a choice of what happens, just the reminder or also blocking picked apps and typed websites until a set time
-   (07:00). Each blocking routine is a repeating `DeviceActivity` schedule (`graymatter.routine.<id>`); the monitor
+   (07:00). After onboarding a default "Time to read" routine blocks the tracked apps and instagram.com from 23:00 to 07:00. Each blocking routine is a repeating `DeviceActivity` schedule (`graymatter.routine.<id>`); the monitor
    extension shields its apps in the routine's own `ManagedSettingsStore` and adds its sites to the web filter
    (`RoutineBlocker`). Windows can cross midnight, must last at least 15 min, have no unblock. Max 8 routines.
 7. **Widget** shows only the brain (system background, adapts to light/dark, accentable on tinted Home Screens).

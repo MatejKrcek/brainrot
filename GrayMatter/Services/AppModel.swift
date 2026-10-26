@@ -81,6 +81,9 @@ final class AppModel: ObservableObject {
     /// Re-registers routine schedules and notifications (iOS drops schedules on reinstall/restore) and
     /// applies any block that should be on right now.
     func syncRoutines() {
+        if Routines.seedDefaultIfNeeded() {
+            Task { _ = await RoutineNotifications.requestPermission() }
+        }
         if screenTime.isAuthorized { RoutineScheduler.sync() }
         RoutineNotifications.reschedule()
     }
@@ -114,6 +117,7 @@ final class AppModel: ObservableObject {
         SharedStore.onboarded = true
         onboarded = true
         requestNotificationsIfNeeded()
+        syncRoutines()
         refresh()
     }
 

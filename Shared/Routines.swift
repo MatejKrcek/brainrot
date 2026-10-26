@@ -16,7 +16,10 @@ struct Routine: Codable, Identifiable, Equatable {
     var endHour = 7
     var endMinute = 0
     /// Bare domains like "youtube.com", blocked in every browser during the window.
-    var sites: [String] = []
+    var sites: [String] = Routine.defaultSites
+
+    /// Instagram on the web is blocked by default; the app itself comes from the tracked apps (`RoutineSelections`).
+    static let defaultSites = ["instagram.com"]
 
     /// The system won't run a DeviceActivity interval shorter than this.
     static let minimumBlockMinutes = 15
@@ -107,6 +110,20 @@ enum Routines {
 
     static func remove(_ id: UUID) {
         all = all.filter { $0.id != id }
+    }
+
+    private static let seededKey = "routinesSeeded"
+
+    /// Adds the default "Time to read" routine (23:00, blocks until 07:00) once, after onboarding.
+    /// Returns true when it did. Deleting it later doesn't bring it back.
+    @discardableResult
+    static func seedDefaultIfNeeded() -> Bool {
+        let d = AppGroup.defaults
+        guard SharedStore.onboarded, !d.bool(forKey: seededKey) else { return false }
+        d.set(true, forKey: seededKey)
+        guard all.isEmpty else { return false }
+        all = [Routine()]
+        return true
     }
 
     /// Routines whose block is on right now, as last applied by `RoutineBlocker.reconcile`.

@@ -14,17 +14,20 @@ extension DeviceActivityName {
 }
 
 /// The apps a routine blocks, picked with Apple's Screen Time picker. Kept apart from `Routine`
-/// because the widget doesn't link FamilyControls.
+/// because the widget doesn't link FamilyControls. Until the user picks apps for a routine it blocks
+/// the tracked apps (Instagram, TikTok… whatever was picked in onboarding), following later changes.
 enum RoutineSelections {
     private static func key(_ id: UUID) -> String { "routineSelection." + id.uuidString }
 
     static func load(_ id: UUID) -> FamilyActivitySelection {
         guard let data = AppGroup.defaults.data(forKey: key(id)),
               let sel = try? JSONDecoder().decode(FamilyActivitySelection.self, from: data) else {
-            return FamilyActivitySelection(includeEntireCategory: true)
+            return SelectionStore.load()
         }
         return sel
     }
+
+    static func hasOwn(_ id: UUID) -> Bool { AppGroup.defaults.data(forKey: key(id)) != nil }
 
     static func save(_ selection: FamilyActivitySelection, for id: UUID) {
         if let data = try? JSONEncoder().encode(selection) { AppGroup.defaults.set(data, forKey: key(id)) }
