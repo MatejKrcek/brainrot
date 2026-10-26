@@ -11,9 +11,11 @@
 		054DA6ED0E82E905D597FAF0 /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7251C9C15F84448F80DB63 /* AppGroup.swift */; };
 		06F8649A5690D59B19CB244E /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 482CA212E4FCBAD50C8505F4 /* PrivacyInfo.xcprivacy */; };
 		0B4F1BCCD201D2C41BAEF08F /* BlockedSites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD4D1598013C0F4A42FCF8E /* BlockedSites.swift */; };
+		71CCA3D52A0C05E2FF76106A /* Routines.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35B65A7A7EEF60143C1CA9A /* Routines.swift */; };
 		0E8A4C033BA782D15D94B1FC /* SharedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3653CE8A9DA83F6C2637834F /* SharedStore.swift */; };
 		1186DE634ACDA391B889F093 /* SharedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3653CE8A9DA83F6C2637834F /* SharedStore.swift */; };
 		12CDB66FB0ED6925799C88C7 /* SelectionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790833A766AAAF7D15D31E07 /* SelectionStore.swift */; };
+		B59CF38ED115D3601E5309B2 /* RoutineScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21955BBB039D967827FB7E3 /* RoutineScheduler.swift */; };
 		1575EEA063A46D9DC8D3BBFB /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7251C9C15F84448F80DB63 /* AppGroup.swift */; };
 		176EAF26E863F761820CC84B /* TrackedApps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCF6244ACC986E283F86EB7 /* TrackedApps.swift */; };
 		187BD0ED4CD538E1454E12DD /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7251C9C15F84448F80DB63 /* AppGroup.swift */; };
@@ -22,6 +24,7 @@
 		1A477C5D3253D6C02CA9AE0E /* ScreenTimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AAB17F2B5DF6870BF704C22 /* ScreenTimeManager.swift */; };
 		22A094C769C630D68E022264 /* BrainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B308FEAC2127F1F1A709C2 /* BrainView.swift */; };
 		23E83D9496BED4DE00D17D6F /* BlockedSitesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E34A0E389E8B22B84ED36B45 /* BlockedSitesView.swift */; };
+		5C81AD50A85B4F4762410EBA /* RoutinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38654E4434AF938F150687E /* RoutinesView.swift */; };
 		25223495F4C9BE6BC0D91417 /* GrayMatterReport.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = 75FE3CACE6F7BE364D57C10F /* GrayMatterReport.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		259799675718C96D7E2E8FB1 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B973205C0BB00DCFC0EB5E71 /* OnboardingView.swift */; };
 		25D768529E60218B16BCA9BE /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 482CA212E4FCBAD50C8505F4 /* PrivacyInfo.xcprivacy */; };
@@ -37,10 +40,13 @@
 		462F98EFA9E315DC52996EDB /* ReportExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1854E5792EBA23577D37DDDF /* ReportExtension.swift */; };
 		47645232DCDA907BC699367C /* TrackedApps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCF6244ACC986E283F86EB7 /* TrackedApps.swift */; };
 		487F39BCF3280E40FEF6BAE1 /* BlockedSites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD4D1598013C0F4A42FCF8E /* BlockedSites.swift */; };
+		2BA5BAABBCCBA67D8F4BFF03 /* Routines.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35B65A7A7EEF60143C1CA9A /* Routines.swift */; };
 		4A85D3A1F99D42AD528A84E6 /* BlockedSites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD4D1598013C0F4A42FCF8E /* BlockedSites.swift */; };
+		D6B79174C8B3394D3507EA00 /* Routines.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35B65A7A7EEF60143C1CA9A /* Routines.swift */; };
 		4AF424194891E9FA7AEA8774 /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7251C9C15F84448F80DB63 /* AppGroup.swift */; };
 		4B5251FFCD8D128643FC839E /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA933C107E7E3A9D3818EB2 /* RootView.swift */; };
 		4BF150E3A90E3AC5E95A0F38 /* BlockedSitesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E34A0E389E8B22B84ED36B45 /* BlockedSitesView.swift */; };
+		8295FE59A3274FCB96913DE5 /* RoutinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38654E4434AF938F150687E /* RoutinesView.swift */; };
 		4D33C2AAB6276BB6C9429DE7 /* RotModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD09BF162F2320D0435FAD0D /* RotModel.swift */; };
 		526ECE67612152857959ED2A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42958A3A61CDE1EB76558A1D /* HomeView.swift */; };
 		579F2B60127B9BFC2CB717EC /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7251C9C15F84448F80DB63 /* AppGroup.swift */; };
@@ -55,6 +61,7 @@
 		6DA1007F6C8B626E54966B2C /* TrackedAppsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5962FA6DD05D67B39F82188C /* TrackedAppsView.swift */; };
 		70D4CB702F372C1B13878126 /* BrainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B308FEAC2127F1F1A709C2 /* BrainView.swift */; };
 		72B555BE22187EC77D6812D1 /* BlockedSites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD4D1598013C0F4A42FCF8E /* BlockedSites.swift */; };
+		C53C3DB6630B8D79644345A9 /* Routines.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35B65A7A7EEF60143C1CA9A /* Routines.swift */; };
 		73B5ED73EC5ACDF1BEC040FA /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA933C107E7E3A9D3818EB2 /* RootView.swift */; };
 		778BD23C48C3549EDE89FAFD /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42958A3A61CDE1EB76558A1D /* HomeView.swift */; };
 		77DCA9138899D98BFDD3677C /* GrayMatterWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6CC5B8463439D4FF5CCB3F5 /* GrayMatterWidget.swift */; };
@@ -67,15 +74,18 @@
 		8A0DDEB37BC0057135D3B185 /* HealthWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E674089D4ABDF36795E24B1 /* HealthWidget.swift */; };
 		8E2D624160EDABD874393C76 /* GrayMatterLiteWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 815E45654056AC737F6A99FE /* GrayMatterLiteWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		92E888031F99B219C8483FC4 /* SelectionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790833A766AAAF7D15D31E07 /* SelectionStore.swift */; };
+		E1232DF5BBA1348513F42D94 /* RoutineScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21955BBB039D967827FB7E3 /* RoutineScheduler.swift */; };
 		945373DEBFB42F2EA938F96F /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B973205C0BB00DCFC0EB5E71 /* OnboardingView.swift */; };
 		96B0FFAC372413C0E58BEEE0 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07E43BDFA1F2C99FD4D10D8E /* Components.swift */; };
 		97D88A9CF963A4A880E107A4 /* Alternatives.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FEE4EA3DD93C47E5FE323E /* Alternatives.swift */; };
 		98C8CF4FA0C5B3B87FAC5F77 /* BlockedSites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD4D1598013C0F4A42FCF8E /* BlockedSites.swift */; };
+		C36E14E87DECDC01C3EE1D9A /* Routines.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35B65A7A7EEF60143C1CA9A /* Routines.swift */; };
 		9A260EC91B90503D19FF45BA /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 482CA212E4FCBAD50C8505F4 /* PrivacyInfo.xcprivacy */; };
 		9AD16EDF4530D8A06842A688 /* Alternatives.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FEE4EA3DD93C47E5FE323E /* Alternatives.swift */; };
 		9B68DFBB5E141FC305B941C8 /* BrainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B308FEAC2127F1F1A709C2 /* BrainView.swift */; };
 		9F6B808345F6A7736352F208 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442193E566E4829C11676C8D /* AppModel.swift */; };
 		A3745A8628F652CC0908631E /* SelectionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790833A766AAAF7D15D31E07 /* SelectionStore.swift */; };
+		32D85A48F9211662170EDDF7 /* RoutineScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21955BBB039D967827FB7E3 /* RoutineScheduler.swift */; };
 		AC6F22207CFBE2E61E899F6E /* Alternatives.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FEE4EA3DD93C47E5FE323E /* Alternatives.swift */; };
 		AC8DBAD467569FF322E130D0 /* SharedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3653CE8A9DA83F6C2637834F /* SharedStore.swift */; };
 		B0989307D12C7174E6F8A632 /* TrackedApps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCF6244ACC986E283F86EB7 /* TrackedApps.swift */; };
@@ -86,6 +96,7 @@
 		BA7F38B6CC9AE5BBFABF1404 /* GrayMatterShield.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E9C79C20916D0A43155CBE4A /* GrayMatterShield.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BAA9F2AD5A626D98729F8C84 /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7251C9C15F84448F80DB63 /* AppGroup.swift */; };
 		BCD117007F3D72A6EBE719A0 /* BlockedSites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD4D1598013C0F4A42FCF8E /* BlockedSites.swift */; };
+		BF79F126D21A51B83418AA19 /* Routines.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35B65A7A7EEF60143C1CA9A /* Routines.swift */; };
 		BF262968D032038CF44CABD6 /* SharedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3653CE8A9DA83F6C2637834F /* SharedStore.swift */; };
 		C66ED12097CA5979ADCA21B4 /* RotModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD09BF162F2320D0435FAD0D /* RotModel.swift */; };
 		C9C0A4F34165C2BACF047761 /* RotModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD09BF162F2320D0435FAD0D /* RotModel.swift */; };
@@ -93,6 +104,7 @@
 		D0503F0A3422C1F4140C3F0D /* GrayMatterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1E3FAC6FB2F13D962EDD30 /* GrayMatterApp.swift */; };
 		D0ACFA52FB761928C52644FC /* RotModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD09BF162F2320D0435FAD0D /* RotModel.swift */; };
 		D226A09C7445D963C18BDF43 /* BlockedSites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD4D1598013C0F4A42FCF8E /* BlockedSites.swift */; };
+		B2F4661F0E0113238DF53525 /* Routines.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35B65A7A7EEF60143C1CA9A /* Routines.swift */; };
 		D35A3F8FA5660A73BC2C2B56 /* TrackedAppsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5962FA6DD05D67B39F82188C /* TrackedAppsView.swift */; };
 		D504BFE118288BD92A1D23B0 /* RotModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD09BF162F2320D0435FAD0D /* RotModel.swift */; };
 		D6106898710B9335AD3254B5 /* SharedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3653CE8A9DA83F6C2637834F /* SharedStore.swift */; };
@@ -108,6 +120,7 @@
 		F8A835CDAA8D1B01F52362F9 /* Alternatives.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FEE4EA3DD93C47E5FE323E /* Alternatives.swift */; };
 		F98423BFF45A37F997EFB2F2 /* Alternatives.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FEE4EA3DD93C47E5FE323E /* Alternatives.swift */; };
 		F9BF06FEF08BC47822974F70 /* BlockedSites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD4D1598013C0F4A42FCF8E /* BlockedSites.swift */; };
+		467558F598F3E04749EDC8FE /* Routines.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35B65A7A7EEF60143C1CA9A /* Routines.swift */; };
 		FCA4EA5BC7F191217B3D7C3F /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7251C9C15F84448F80DB63 /* AppGroup.swift */; };
 		FCBAAE8649E7FDC6FCC76817 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F369B65632B8BE2D9CCA79 /* SettingsView.swift */; };
 		FDAA51362974C783DCF2E8E1 /* SharedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3653CE8A9DA83F6C2637834F /* SharedStore.swift */; };
@@ -213,11 +226,13 @@
 		442193E566E4829C11676C8D /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		482CA212E4FCBAD50C8505F4 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		4FD4D1598013C0F4A42FCF8E /* BlockedSites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedSites.swift; sourceTree = "<group>"; };
+		A35B65A7A7EEF60143C1CA9A /* Routines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routines.swift; sourceTree = "<group>"; };
 		5962FA6DD05D67B39F82188C /* TrackedAppsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackedAppsView.swift; sourceTree = "<group>"; };
 		6ED223EB94922DB0B215FC63 /* ActivityNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityNames.swift; sourceTree = "<group>"; };
 		6FCF6244ACC986E283F86EB7 /* TrackedApps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackedApps.swift; sourceTree = "<group>"; };
 		75FE3CACE6F7BE364D57C10F /* GrayMatterReport.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = GrayMatterReport.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		790833A766AAAF7D15D31E07 /* SelectionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionStore.swift; sourceTree = "<group>"; };
+		B21955BBB039D967827FB7E3 /* RoutineScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineScheduler.swift; sourceTree = "<group>"; };
 		7AAB17F2B5DF6870BF704C22 /* ScreenTimeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTimeManager.swift; sourceTree = "<group>"; };
 		7D0FF0C9B95AF381474EB82B /* GrayMatterMonitor.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = GrayMatterMonitor.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		815E45654056AC737F6A99FE /* GrayMatterLiteWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = GrayMatterLiteWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -234,6 +249,7 @@
 		D2B308FEAC2127F1F1A709C2 /* BrainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrainView.swift; sourceTree = "<group>"; };
 		D6C2AAF44C1DB99F94D50418 /* GrayMatter.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = GrayMatter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E34A0E389E8B22B84ED36B45 /* BlockedSitesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedSitesView.swift; sourceTree = "<group>"; };
+		B38654E4434AF938F150687E /* RoutinesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutinesView.swift; sourceTree = "<group>"; };
 		E9C79C20916D0A43155CBE4A /* GrayMatterShield.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = GrayMatterShield.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -259,6 +275,7 @@
 			isa = PBXGroup;
 			children = (
 				E34A0E389E8B22B84ED36B45 /* BlockedSitesView.swift */,
+				B38654E4434AF938F150687E /* RoutinesView.swift */,
 				07E43BDFA1F2C99FD4D10D8E /* Components.swift */,
 				42958A3A61CDE1EB76558A1D /* HomeView.swift */,
 				B973205C0BB00DCFC0EB5E71 /* OnboardingView.swift */,
@@ -274,6 +291,7 @@
 			children = (
 				6ED223EB94922DB0B215FC63 /* ActivityNames.swift */,
 				790833A766AAAF7D15D31E07 /* SelectionStore.swift */,
+				B21955BBB039D967827FB7E3 /* RoutineScheduler.swift */,
 			);
 			path = SharedScreenTime;
 			sourceTree = "<group>";
@@ -284,6 +302,7 @@
 				84FEE4EA3DD93C47E5FE323E /* Alternatives.swift */,
 				AA7251C9C15F84448F80DB63 /* AppGroup.swift */,
 				4FD4D1598013C0F4A42FCF8E /* BlockedSites.swift */,
+				A35B65A7A7EEF60143C1CA9A /* Routines.swift */,
 				D2B308FEAC2127F1F1A709C2 /* BrainView.swift */,
 				482CA212E4FCBAD50C8505F4 /* PrivacyInfo.xcprivacy */,
 				BD09BF162F2320D0435FAD0D /* RotModel.swift */,
@@ -669,6 +688,7 @@
 				AC6F22207CFBE2E61E899F6E /* Alternatives.swift in Sources */,
 				579F2B60127B9BFC2CB717EC /* AppGroup.swift in Sources */,
 				D226A09C7445D963C18BDF43 /* BlockedSites.swift in Sources */,
+				B2F4661F0E0113238DF53525 /* Routines.swift in Sources */,
 				70D4CB702F372C1B13878126 /* BrainView.swift in Sources */,
 				77DCA9138899D98BFDD3677C /* GrayMatterWidget.swift in Sources */,
 				8A0DDEB37BC0057135D3B185 /* HealthWidget.swift in Sources */,
@@ -685,6 +705,7 @@
 				9AD16EDF4530D8A06842A688 /* Alternatives.swift in Sources */,
 				187BD0ED4CD538E1454E12DD /* AppGroup.swift in Sources */,
 				98C8CF4FA0C5B3B87FAC5F77 /* BlockedSites.swift in Sources */,
+				C36E14E87DECDC01C3EE1D9A /* Routines.swift in Sources */,
 				614AE7F6014F90D332568150 /* BrainView.swift in Sources */,
 				B316E81A695E6686FCC44ED7 /* GrayMatterWidget.swift in Sources */,
 				84AAB4A52351EE15A9AA7713 /* HealthWidget.swift in Sources */,
@@ -701,6 +722,7 @@
 				F8A835CDAA8D1B01F52362F9 /* Alternatives.swift in Sources */,
 				4AF424194891E9FA7AEA8774 /* AppGroup.swift in Sources */,
 				0B4F1BCCD201D2C41BAEF08F /* BlockedSites.swift in Sources */,
+				71CCA3D52A0C05E2FF76106A /* Routines.swift in Sources */,
 				197507F907B1BD4C1F060DDA /* BrainView.swift in Sources */,
 				D504BFE118288BD92A1D23B0 /* RotModel.swift in Sources */,
 				60EE5E286AA0D41756DF0845 /* SharedStore.swift in Sources */,
@@ -718,7 +740,9 @@
 				BAA9F2AD5A626D98729F8C84 /* AppGroup.swift in Sources */,
 				308A531435DD8C26AE1A30F3 /* AppModel.swift in Sources */,
 				72B555BE22187EC77D6812D1 /* BlockedSites.swift in Sources */,
+				C53C3DB6630B8D79644345A9 /* Routines.swift in Sources */,
 				23E83D9496BED4DE00D17D6F /* BlockedSitesView.swift in Sources */,
+				5C81AD50A85B4F4762410EBA /* RoutinesView.swift in Sources */,
 				DC7D8E7A42C84FC872461218 /* BrainView.swift in Sources */,
 				F75876DBEAB39F124EFE299A /* Components.swift in Sources */,
 				D8040BF4D34520FB45657F08 /* GrayMatterApp.swift in Sources */,
@@ -728,6 +752,7 @@
 				4D33C2AAB6276BB6C9429DE7 /* RotModel.swift in Sources */,
 				F31EA81E51F602A7ABE60E1C /* ScreenTimeManager.swift in Sources */,
 				92E888031F99B219C8483FC4 /* SelectionStore.swift in Sources */,
+				E1232DF5BBA1348513F42D94 /* RoutineScheduler.swift in Sources */,
 				B36162EE6C56790C1AE35385 /* SettingsView.swift in Sources */,
 				FDAA51362974C783DCF2E8E1 /* SharedStore.swift in Sources */,
 				EEE2E5E47FD13355C89223DD /* TrackedApps.swift in Sources */,
@@ -744,7 +769,9 @@
 				054DA6ED0E82E905D597FAF0 /* AppGroup.swift in Sources */,
 				9F6B808345F6A7736352F208 /* AppModel.swift in Sources */,
 				487F39BCF3280E40FEF6BAE1 /* BlockedSites.swift in Sources */,
+				2BA5BAABBCCBA67D8F4BFF03 /* Routines.swift in Sources */,
 				4BF150E3A90E3AC5E95A0F38 /* BlockedSitesView.swift in Sources */,
+				8295FE59A3274FCB96913DE5 /* RoutinesView.swift in Sources */,
 				E5BDA5DACDCFEFC796889BBF /* BrainView.swift in Sources */,
 				96B0FFAC372413C0E58BEEE0 /* Components.swift in Sources */,
 				D0503F0A3422C1F4140C3F0D /* GrayMatterApp.swift in Sources */,
@@ -754,6 +781,7 @@
 				6956958586248146C7F044D7 /* RotModel.swift in Sources */,
 				1A477C5D3253D6C02CA9AE0E /* ScreenTimeManager.swift in Sources */,
 				12CDB66FB0ED6925799C88C7 /* SelectionStore.swift in Sources */,
+				B59CF38ED115D3601E5309B2 /* RoutineScheduler.swift in Sources */,
 				FCBAAE8649E7FDC6FCC76817 /* SettingsView.swift in Sources */,
 				2715A6C48BB161668DEE1BFD /* SharedStore.swift in Sources */,
 				68C9DFC6AF45D388A87AD0DA /* TrackedApps.swift in Sources */,
@@ -769,10 +797,12 @@
 				30AC4B2B9613301A9B85A0E6 /* Alternatives.swift in Sources */,
 				FCA4EA5BC7F191217B3D7C3F /* AppGroup.swift in Sources */,
 				BCD117007F3D72A6EBE719A0 /* BlockedSites.swift in Sources */,
+				BF79F126D21A51B83418AA19 /* Routines.swift in Sources */,
 				22A094C769C630D68E022264 /* BrainView.swift in Sources */,
 				38578A76BD394AC2C17E047C /* DeviceActivityMonitorExtension.swift in Sources */,
 				D0ACFA52FB761928C52644FC /* RotModel.swift in Sources */,
 				A3745A8628F652CC0908631E /* SelectionStore.swift in Sources */,
+				32D85A48F9211662170EDDF7 /* RoutineScheduler.swift in Sources */,
 				0E8A4C033BA782D15D94B1FC /* SharedStore.swift in Sources */,
 				176EAF26E863F761820CC84B /* TrackedApps.swift in Sources */,
 			);
@@ -785,6 +815,7 @@
 				97D88A9CF963A4A880E107A4 /* Alternatives.swift in Sources */,
 				1575EEA063A46D9DC8D3BBFB /* AppGroup.swift in Sources */,
 				F9BF06FEF08BC47822974F70 /* BlockedSites.swift in Sources */,
+				467558F598F3E04749EDC8FE /* Routines.swift in Sources */,
 				DDE0140EADA62A4E25ACF2CF /* BrainView.swift in Sources */,
 				462F98EFA9E315DC52996EDB /* ReportExtension.swift in Sources */,
 				61789798289CC86F425B391E /* RotModel.swift in Sources */,
@@ -800,6 +831,7 @@
 				02090313AE7114F85DCEB984 /* Alternatives.swift in Sources */,
 				7ED3493FE7238640467DF54F /* AppGroup.swift in Sources */,
 				4A85D3A1F99D42AD528A84E6 /* BlockedSites.swift in Sources */,
+				D6B79174C8B3394D3507EA00 /* Routines.swift in Sources */,
 				9B68DFBB5E141FC305B941C8 /* BrainView.swift in Sources */,
 				3F31EFF706F8A8340A055A03 /* RotModel.swift in Sources */,
 				1186DE634ACDA391B889F093 /* SharedStore.swift in Sources */,

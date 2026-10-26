@@ -7,6 +7,8 @@ final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
 
     private func config(name: String?) -> ShieldConfiguration {
         let snap = SharedStore.snapshot()
+        // A routine's block has no unblock: the Unblock button only lifts the daily-limit shield.
+        if !snap.isShielded, let routine = Routines.active.first { return config(name: name, routine: routine) }
         let title = "\(name ?? "This app") is paused"
         var sub = "\(snap.minutes.asDuration) of scrolling today, limit \(snap.limit.asDuration). Your brain is \(snap.stage.title.lowercased())."
         if #unavailable(iOS 26.5) {
@@ -25,6 +27,23 @@ final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
             primaryButtonLabel: ShieldConfiguration.Label(text: "OK", color: .black),
             primaryButtonBackgroundColor: .white,
             secondaryButtonLabel: ShieldConfiguration.Label(text: "Unblock for \(SharedStore.unlockMinutes) min", color: .white)
+        )
+    }
+
+    private func config(name: String?, routine: Routine) -> ShieldConfiguration {
+        let icon = UIImage(systemName: "moon.zzz.fill",
+                           withConfiguration: UIImage.SymbolConfiguration(pointSize: 40, weight: .medium))?
+            .withTintColor(.white, renderingMode: .alwaysOriginal)
+        return ShieldConfiguration(
+            backgroundBlurStyle: .systemMaterialDark,
+            backgroundColor: UIColor.black.withAlphaComponent(0.6),
+            icon: icon,
+            title: ShieldConfiguration.Label(text: routine.title, color: .white),
+            subtitle: ShieldConfiguration.Label(
+                text: "\(routine.message)\n\(name ?? "This app") is paused until \(routine.endText).",
+                color: UIColor.white.withAlphaComponent(0.7)),
+            primaryButtonLabel: ShieldConfiguration.Label(text: "OK", color: .black),
+            primaryButtonBackgroundColor: .white
         )
     }
 

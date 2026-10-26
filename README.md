@@ -34,7 +34,12 @@ scripts/preview_brain.swift  renders BrainView at several health levels to a PNG
 5. **Blocked websites.** Settings → Blocked websites takes typed domains or pasted links (`BlockedSites`) and blocks them
    all day in every browser via Screen Time's web content filter (`WebsiteBlocker`, own `ManagedSettingsStore`), independent
    of the daily limit and the unblock window. Max 25 sites (the filter takes 50 domains; each site adds bare + `www.`).
-6. **Widget** shows only the brain (system background, adapts to light/dark, accentable on tinted Home Screens).
+6. **Routines.** Settings → Routines: a reminder at a set time on chosen days ("Time to read" at 23:00) via a repeating
+   local notification (`RoutineNotifications`), optionally blocking picked apps and typed websites until a set time
+   (07:00). Each blocking routine is a repeating `DeviceActivity` schedule (`graymatter.routine.<id>`); the monitor
+   extension shields its apps in the routine's own `ManagedSettingsStore` and adds its sites to the web filter
+   (`RoutineBlocker`). Windows can cross midnight, must last at least 15 min, have no unblock. Max 8 routines.
+7. **Widget** shows only the brain (system background, adapts to light/dark, accentable on tinted Home Screens).
 
 ## Build & run
 

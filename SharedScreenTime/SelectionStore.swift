@@ -35,13 +35,16 @@ enum SelectionStore {
     }
 }
 
-/// Blocks the sites in `BlockedSites` in every browser, all day. Uses its own store so the daily-limit
-/// shield and its unblock window never touch it; the only way back to a site is removing it from the list.
+/// Blocks the sites in `BlockedSites` in every browser, all day, plus the sites of routines that are on
+/// right now. Uses its own store so the daily-limit shield and its unblock window never touch it; the only
+/// way back to an all-day site is removing it from the list.
 enum WebsiteBlocker {
     static let store = ManagedSettingsStore(named: .websites)
 
     static func apply() {
-        let domains = BlockedSites.all.flatMap { [WebDomain(domain: $0), WebDomain(domain: "www." + $0)] }
+        var sites = BlockedSites.all
+        for site in Routines.activeSites where !sites.contains(site) { sites.append(site) }
+        let domains = sites.prefix(BlockedSites.maxCount).flatMap { [WebDomain(domain: $0), WebDomain(domain: "www." + $0)] }
         store.webContent.blockedByFilter = domains.isEmpty ? nil : .specific(Set(domains))
     }
 }

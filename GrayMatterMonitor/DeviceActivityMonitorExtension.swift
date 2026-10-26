@@ -16,7 +16,8 @@ final class DeviceActivityMonitorExtension: DeviceActivityMonitor {
             ShieldController.reconcile()
         case .unlock:
             ShieldController.unlock()
-        default: break
+        default:
+            if let id = activity.routineID { RoutineBlocker.intervalStarted(id) }
         }
         WidgetCenter.shared.reloadAllTimelines()
     }
@@ -32,7 +33,8 @@ final class DeviceActivityMonitorExtension: DeviceActivityMonitor {
         case .unlock:
             SharedStore.unlockUntil = nil
             ShieldController.reconcile()
-        default: break
+        default:
+            if let id = activity.routineID { RoutineBlocker.intervalEnded(id) }
         }
         WidgetCenter.shared.reloadAllTimelines()
     }

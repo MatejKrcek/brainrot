@@ -11,8 +11,9 @@ struct SettingsView: View {
     @State private var confirmReset = false
     @State private var path = NavigationPath()
     @State private var blockedSitesCount = BlockedSites.all.count
+    @State private var routineCount = Routines.all.count
 
-    private enum Route: Hashable { case trackedApps, blockedSites }
+    private enum Route: Hashable { case trackedApps, blockedSites, routines }
 
     /// What the Tracked apps row shows: how many apps the user picked.
     private var trackedSummary: String {
@@ -91,6 +92,20 @@ struct SettingsView: View {
                 }
 
                 Section {
+                    NavigationLink(value: Route.routines) {
+                        HStack {
+                            Label("Routines", systemImage: "alarm")
+                            Spacer()
+                            Text(routineCount == 0 ? "None" : "\(routineCount)").foregroundStyle(.secondary)
+                        }
+                    }
+                } header: {
+                    Text("Routines")
+                } footer: {
+                    Text("A reminder at the time you pick, like \"Time to read\" at 23:00, that can keep chosen apps and websites closed until morning.")
+                }
+
+                Section {
                     HStack {
                         Text("Shared data")
                         Spacer()
@@ -134,11 +149,17 @@ struct SettingsView: View {
                 switch route {
                 case .trackedApps: TrackedAppsView(showPicker: $showPicker).environmentObject(model)
                 case .blockedSites: BlockedSitesView().environmentObject(model)
+                case .routines: RoutinesView().environmentObject(model)
                 }
             }
             .onAppear {
                 blockedSitesCount = BlockedSites.all.count
+                routineCount = Routines.all.count
                 if model.openTrackedApps { model.openTrackedApps = false; path.append(Route.trackedApps) }
+            }
+            .onChange(of: path) { _, _ in
+                blockedSitesCount = BlockedSites.all.count
+                routineCount = Routines.all.count
             }
         }
         .familyActivityPicker(headerText: "Pick the apps that count against your brain",
@@ -151,12 +172,14 @@ struct SettingsView: View {
         .confirmationDialog("Reset all data?", isPresented: $confirmReset, titleVisibility: .visible) {
             Button("Reset", role: .destructive) {
                 model.screenTime.stopMonitoring()
+                RoutineScheduler.stopAll()
                 SharedStore.resetAll()
                 WebsiteBlocker.apply()
+                RoutineNotifications.reschedule()
                 model.onboarded = false
                 model.refresh()
                 dismiss()
             }
-        } message: { Text("Usage history, limit, app selection and blocked websites will be removed.") }
+        } message: { Text("Usage history, limit, app selection, blocked websites and routines will be removed.") }
     }
 }

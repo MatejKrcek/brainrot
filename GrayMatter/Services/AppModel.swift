@@ -74,14 +74,22 @@ final class AppModel: ObservableObject {
         rollAlternative()
         reloadWidgets(force: true)
         requestNotificationsIfNeeded()
+        syncRoutines()
         consumeUnblockRequest()
+    }
+
+    /// Re-registers routine schedules and notifications (iOS drops schedules on reinstall/restore) and
+    /// applies any block that should be on right now.
+    func syncRoutines() {
+        if screenTime.isAuthorized { RoutineScheduler.sync() }
+        RoutineNotifications.reschedule()
     }
 
     /// Before iOS 26.5 the shield's Unblock button can only post a notification, so blocking needs permission to show one.
     func requestNotificationsIfNeeded() {
         if #available(iOS 26.5, *) { return }
         guard SharedStore.lockEnabled, screenTime.isAuthorized else { return }
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) { _, _ in }
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in }
     }
 
     /// Offers the unblock if the user just tapped Unblock on the shield (see `UnblockRequest`).
