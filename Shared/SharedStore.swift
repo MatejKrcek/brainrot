@@ -173,3 +173,71 @@ enum SharedStore {
         for (k, _) in d.dictionaryRepresentation() { d.removeObject(forKey: k) }
     }
 }
+
+/// Bedtime: a second set of apps, picked separately from the tracked ones, fully blocked every night
+/// (default 22:00 to 8:00). No unblock window: the system's repeating `DeviceActivity` schedule shields the
+/// apps when the night starts and lifts it in the morning (see `BedtimeBlocker`).
+enum Bedtime {
+    static let selectionKey = "bedtimeSelection"
+
+    private static var d: UserDefaults { AppGroup.defaults }
+    private enum Key {
+        static let enabled = "bedtimeEnabled"
+        static let start = "bedtimeStart"          // minutes after midnight
+        static let end = "bedtimeEnd"
+        static let selectionCount = "bedtimeSelectionCount"
+    }
+
+    static let defaultStart = 22 * 60
+    static let defaultEnd = 8 * 60
+    /// DeviceActivity rejects intervals shorter than 15 minutes.
+    static let minimumLength = 15
+
+    static var enabled: Bool {
+        get { d.bool(forKey: Key.enabled) }
+        set { d.set(newValue, forKey: Key.enabled) }
+    }
+
+    static var startMinute: Int {
+        get { d.object(forKey: Key.start) as? Int ?? defaultStart }
+        set { d.set(newValue, forKey: Key.start) }
+    }
+
+    static var endMinute: Int {
+        get { d.object(forKey: Key.end) as? Int ?? defaultEnd }
+        set { d.set(newValue, forKey: Key.end) }
+    }
+
+    static var selectionCount: Int {
+        get { d.integer(forKey: Key.selectionCount) }
+        set { d.set(newValue, forKey: Key.selectionCount) }
+    }
+
+    /// Length of the window in minutes; a start after the end runs past midnight.
+    static func length(start: Int, end: Int) -> Int { (end - start + 1440) % 1440 }
+
+    /// Whether minute-of-day `m` falls in [start, end), wrapping past midnight when start > end.
+    static func contains(_ m: Int, start: Int, end: Int) -> Bool {
+        start < end ? (m >= start && m < end) : (m >= start || m < end)
+    }
+
+    /// True while the apps should be blocked: switched on, apps picked and the clock inside the window.
+    static func isActive(at date: Date = Date(), calendar: Calendar = .current) -> Bool {
+        guard enabled, selectionCount > 0, length(start: startMinute, end: endMinute) >= minimumLength else { return false }
+        let c = calendar.dateComponents([.hour, .minute], from: date)
+        return contains((c.hour ?? 0) * 60 + (c.minute ?? 0), start: startMinute, end: endMinute)
+    }
+
+    /// The next time the window ends, e.g. tomorrow 8:00.
+    static func nextEnd(after date: Date = Date(), calendar: Calendar = .current) -> Date? {
+        calendar.nextDate(after: date, matching: components(endMinute), matchingPolicy: .nextTime)
+    }
+
+    static func components(_ minute: Int) -> DateComponents { DateComponents(hour: minute / 60, minute: minute % 60) }
+
+    /// "22:00" / "10:00 PM", in the user's locale.
+    static func label(_ minute: Int) -> String {
+        let date = Calendar.current.date(bySettingHour: minute / 60, minute: minute % 60, second: 0, of: Date()) ?? Date()
+        return date.formatted(date: .omitted, time: .shortened)
+    }
+}

@@ -1,4 +1,5 @@
 import ManagedSettings
+import FamilyControls
 import UserNotifications
 import Foundation
 
@@ -7,7 +8,9 @@ import Foundation
 /// posts a notification that opens Brain Health when tapped.
 final class ShieldActionExtension: ShieldActionDelegate {
 
-    private func handle(_ action: ShieldAction, completionHandler: @escaping (ShieldActionResponse) -> Void) {
+    private func handle(_ action: ShieldAction, bedtime: Bool, completionHandler: @escaping (ShieldActionResponse) -> Void) {
+        // The bedtime shield has no Unblock button; if a stale daily-limit shield still shows one, it does nothing.
+        if bedtime { completionHandler(.close); return }
         switch action {
         case .primaryButtonPressed:
             completionHandler(.close)
@@ -33,14 +36,22 @@ final class ShieldActionExtension: ShieldActionDelegate {
     }
 
     override func handle(action: ShieldAction, for application: ApplicationToken, completionHandler: @escaping (ShieldActionResponse) -> Void) {
-        handle(action, completionHandler: completionHandler)
+        handle(action, bedtime: inBedtime { $0.applicationTokens.contains(application) }, completionHandler: completionHandler)
     }
 
     override func handle(action: ShieldAction, for webDomain: WebDomainToken, completionHandler: @escaping (ShieldActionResponse) -> Void) {
-        handle(action, completionHandler: completionHandler)
+        handle(action, bedtime: inBedtime { $0.webDomainTokens.contains(webDomain) }, completionHandler: completionHandler)
     }
 
     override func handle(action: ShieldAction, for category: ActivityCategoryToken, completionHandler: @escaping (ShieldActionResponse) -> Void) {
-        handle(action, completionHandler: completionHandler)
+        handle(action, bedtime: inBedtime { $0.categoryTokens.contains(category) }, completionHandler: completionHandler)
+    }
+
+    /// True during the bedtime window when the bedtime selection contains the shielded item.
+    private func inBedtime(_ contains: (FamilyActivitySelection) -> Bool) -> Bool {
+        guard Bedtime.isActive(),
+              let data = AppGroup.defaults.data(forKey: Bedtime.selectionKey),
+              let sel = try? JSONDecoder().decode(FamilyActivitySelection.self, from: data) else { return false }
+        return contains(sel)
     }
 }

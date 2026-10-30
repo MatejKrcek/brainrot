@@ -7,6 +7,8 @@ extension DeviceActivityName {
     static let daily = DeviceActivityName("graymatter.daily")
     /// One-shot schedule for an unlock window earned by a challenge.
     static let unlock = DeviceActivityName("graymatter.unlock")
+    /// Repeating nightly window (crosses midnight) that fully blocks the bedtime apps.
+    static let bedtime = DeviceActivityName("graymatter.bedtime")
 }
 
 extension DeviceActivityEvent.Name {
@@ -30,6 +32,8 @@ extension ManagedSettingsStore.Name {
     static let graymatter = ManagedSettingsStore.Name("graymatter")
     /// Always-on website blocklist, kept apart from the daily-limit shield.
     static let websites = ManagedSettingsStore.Name("graymatter.websites")
+    /// Nightly block of the bedtime apps, separate so the daily-limit unblock window never lifts it.
+    static let bedtime = ManagedSettingsStore.Name("graymatter.bedtime")
 }
 
 /// Minute marks at which the monitor extension is woken. Minute resolution for the first

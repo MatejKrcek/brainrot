@@ -16,6 +16,8 @@ final class DeviceActivityMonitorExtension: DeviceActivityMonitor {
             ShieldController.reconcile()
         case .unlock:
             ShieldController.unlock()
+        case .bedtime:
+            BedtimeBlocker.lock()
         default: break
         }
         WidgetCenter.shared.reloadAllTimelines()
@@ -32,6 +34,8 @@ final class DeviceActivityMonitorExtension: DeviceActivityMonitor {
         case .unlock:
             SharedStore.unlockUntil = nil
             ShieldController.reconcile()
+        case .bedtime:
+            BedtimeBlocker.unlock()
         default: break
         }
         WidgetCenter.shared.reloadAllTimelines()

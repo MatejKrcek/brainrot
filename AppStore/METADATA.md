@@ -28,6 +28,9 @@ Every time you open the app it tells you what the minutes could have been: a run
 OPTIONAL BLOCKING
 Over the limit? The selected apps get a pause screen. Unblock for 15, 30 or 45 minutes when you really need to — the extra time still counts.
 
+BEDTIME
+Pick the apps that keep you up and they lock every night, 10 PM to 8 AM by default. No unblock until the morning, so the late-night scroll simply isn't an option.
+
 BLOCKED WEBSITES
 Type in the sites you never want to open on your phone — instagram.com, youtube.com, anything — and they stay blocked all day in Safari, Chrome and every other browser, no matter the limit.
 
@@ -38,6 +41,9 @@ Brain Health is not a medical app. It just makes the cost of scrolling visible.
 
 ## Keywords (100)
 screen time,brain rot,digital detox,focus,app limit,website blocker,social media,tiktok,instagram,widget,habit
+
+## What's New (1.1)
+Bedtime. Pick the apps you can't put down at night and they stay locked from 10 PM to 8 AM. No unblock button, no "just five more minutes". You fall asleep sooner and wake up without an hour of scrolling behind you.
 
 ## What's New (1.0)
 First release.

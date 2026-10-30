@@ -11,8 +11,14 @@ struct SettingsView: View {
     @State private var confirmReset = false
     @State private var path = NavigationPath()
     @State private var blockedSitesCount = BlockedSites.all.count
+    @State private var bedtimeSummary = SettingsView.bedtimeText
 
-    private enum Route: Hashable { case trackedApps, blockedSites }
+    private enum Route: Hashable { case trackedApps, blockedSites, bedtime }
+
+    /// What the Bedtime row shows: the window, or Off.
+    private static var bedtimeText: String {
+        Bedtime.enabled ? "\(Bedtime.label(Bedtime.startMinute))-\(Bedtime.label(Bedtime.endMinute))" : "Off"
+    }
 
     /// What the Tracked apps row shows: how many apps the user picked.
     private var trackedSummary: String {
@@ -77,6 +83,18 @@ struct SettingsView: View {
                 }
 
                 Section {
+                    NavigationLink(value: Route.bedtime) {
+                        HStack {
+                            Label("Bedtime", systemImage: "moon.zzz")
+                            Spacer()
+                            Text(bedtimeSummary).foregroundStyle(.secondary)
+                        }
+                    }
+                } footer: {
+                    Text("Other apps, fully blocked every night. No unblock until the morning.")
+                }
+
+                Section {
                     NavigationLink(value: Route.blockedSites) {
                         HStack {
                             Label("Blocked websites", systemImage: "globe")
@@ -134,10 +152,12 @@ struct SettingsView: View {
                 switch route {
                 case .trackedApps: TrackedAppsView(showPicker: $showPicker).environmentObject(model)
                 case .blockedSites: BlockedSitesView().environmentObject(model)
+                case .bedtime: BedtimeView().environmentObject(model)
                 }
             }
             .onAppear {
                 blockedSitesCount = BlockedSites.all.count
+                bedtimeSummary = Self.bedtimeText
                 if model.openTrackedApps { model.openTrackedApps = false; path.append(Route.trackedApps) }
             }
         }
@@ -153,10 +173,12 @@ struct SettingsView: View {
                 model.screenTime.stopMonitoring()
                 SharedStore.resetAll()
                 WebsiteBlocker.apply()
+                model.screenTime.bedtimeSelection = Bedtime.loadSelection()
+                model.screenTime.scheduleBedtime()
                 model.onboarded = false
                 model.refresh()
                 dismiss()
             }
-        } message: { Text("Usage history, limit, app selection and blocked websites will be removed.") }
+        } message: { Text("Usage history, limit, app selection, bedtime and blocked websites will be removed.") }
     }
 }

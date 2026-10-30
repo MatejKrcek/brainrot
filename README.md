@@ -34,7 +34,12 @@ scripts/preview_brain.swift  renders BrainView at several health levels to a PNG
 5. **Blocked websites.** Settings → Blocked websites takes typed domains or pasted links (`BlockedSites`) and blocks them
    all day in every browser via Screen Time's web content filter (`WebsiteBlocker`, own `ManagedSettingsStore`), independent
    of the daily limit and the unblock window. Max 25 sites (the filter takes 50 domains; each site adds bare + `www.`).
-6. **Widget** shows only the brain (system background, adapts to light/dark, accentable on tinted Home Screens).
+6. **Bedtime.** Settings → Bedtime: a second app selection, separate from the tracked apps, fully blocked every night
+   (default 22:00-8:00, adjustable). A repeating `DeviceActivity` schedule that crosses midnight (`.bedtime`) makes the
+   monitor shield them at the start and lift it at the end (`BedtimeBlocker`, own `ManagedSettingsStore`); every app
+   foreground reconciles as a backstop. The shield shows no Unblock button during bedtime and the daily-limit unblock
+   never lifts it.
+7. **Widget** shows only the brain (system background, adapts to light/dark, accentable on tinted Home Screens).
 
 ## Build & run
 

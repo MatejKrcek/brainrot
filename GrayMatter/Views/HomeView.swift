@@ -17,6 +17,7 @@ struct HomeView: View {
                     hero
                     usageCard
                     if model.alternative != nil { insteadCard }
+                    if Bedtime.isActive() { bedtimeCard }
                     if snap.isShielded || snap.isUnlocked { blockCard }
                     if model.screenTime.isAuthorized && SharedStore.isMonitoring {
                         Card(title: "Apps") { exactUsage }
@@ -148,6 +149,20 @@ struct HomeView: View {
                     .buttonStyle(.bordered)
                     .controlSize(.large)
                     .padding(.top, 4)
+                }
+            }
+            .padding(.vertical, 10)
+        }
+    }
+
+    private var bedtimeCard: some View {
+        Card {
+            HStack(spacing: 12) {
+                Image(systemName: "moon.zzz.fill").font(.title2).foregroundStyle(.indigo)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Bedtime").font(.headline)
+                    Text("\(Bedtime.selectionCount == 1 ? "1 app is" : "\(Bedtime.selectionCount) apps are") blocked until \(Bedtime.label(Bedtime.endMinute)). Go to sleep.")
+                        .font(.subheadline).foregroundStyle(.secondary)
                 }
             }
             .padding(.vertical, 10)

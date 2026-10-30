@@ -46,6 +46,43 @@ enum WebsiteBlocker {
     }
 }
 
+extension Bedtime {
+    static func loadSelection() -> FamilyActivitySelection {
+        guard let data = AppGroup.defaults.data(forKey: selectionKey),
+              let sel = try? JSONDecoder().decode(FamilyActivitySelection.self, from: data) else {
+            return FamilyActivitySelection(includeEntireCategory: true)
+        }
+        return sel
+    }
+
+    static func saveSelection(_ selection: FamilyActivitySelection) {
+        if let data = try? JSONEncoder().encode(selection) {
+            AppGroup.defaults.set(data, forKey: selectionKey)
+        }
+        selectionCount = selection.applicationTokens.count
+            + selection.categoryTokens.count + selection.webDomainTokens.count
+    }
+}
+
+/// Shields the bedtime apps for the night. Its own store, so the daily-limit shield and its unblock window
+/// never touch it; nothing in the app lifts it before the window ends.
+enum BedtimeBlocker {
+    static let store = ManagedSettingsStore(named: .bedtime)
+
+    static func lock() {
+        let sel = Bedtime.loadSelection()
+        store.shield.applications = sel.applicationTokens.isEmpty ? nil : sel.applicationTokens
+        store.shield.applicationCategories = sel.categoryTokens.isEmpty ? nil : .specific(sel.categoryTokens)
+        store.shield.webDomains = sel.webDomainTokens.isEmpty ? nil : sel.webDomainTokens
+        store.shield.webDomainCategories = sel.categoryTokens.isEmpty ? nil : .specific(sel.categoryTokens)
+    }
+
+    static func unlock() { store.clearAllSettings() }
+
+    /// Matches the shield to the clock and the settings.
+    static func reconcile() { Bedtime.isActive() ? lock() : unlock() }
+}
+
 /// Applies / removes the shield. Safe to call from the app and from extensions.
 enum ShieldController {
     static let store = ManagedSettingsStore(named: .graymatter)

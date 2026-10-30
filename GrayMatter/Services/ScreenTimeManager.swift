@@ -8,6 +8,8 @@ import Combine
 final class ScreenTimeManager: ObservableObject {
     @Published private(set) var status: AuthorizationStatus = AuthorizationCenter.shared.authorizationStatus
     @Published var selection: FamilyActivitySelection = SelectionStore.load()
+    /// Apps blocked at night, picked separately from `selection`.
+    @Published var bedtimeSelection: FamilyActivitySelection = Bedtime.loadSelection()
     @Published var lastError: String?
 
     private let center = DeviceActivityCenter()
@@ -31,6 +33,7 @@ final class ScreenTimeManager: ObservableObject {
             try await AuthorizationCenter.shared.requestAuthorization(for: .individual)
             refreshStatus()
             if isAuthorized && !SelectionStore.isEmpty { startMonitoring() }
+            if isAuthorized { scheduleBedtime() }
             return isAuthorized
         } catch {
             lastError = error.localizedDescription
@@ -52,6 +55,12 @@ final class ScreenTimeManager: ObservableObject {
     func ensureMonitoring() {
         guard isAuthorized else { return }
         let active = center.activities
+        if Bedtime.enabled, !active.contains(.bedtime) {
+            scheduleBedtime()
+        } else {
+            // Backstop for a missed intervalDidStart / intervalDidEnd.
+            BedtimeBlocker.reconcile()
+        }
         if SharedStore.isMonitoring, !active.contains(.daily) || SharedStore.monitorSchema != Self.schema {
             startMonitoring()
         } else if !SharedStore.isMonitoring, SharedStore.onboarded, !SelectionStore.isEmpty, !SharedStore.demoMode {
@@ -96,6 +105,30 @@ final class ScreenTimeManager: ObservableObject {
         ShieldController.unlock()
         SharedStore.isMonitoring = false
         SharedStore.unlockUntil = nil
+    }
+
+    func saveBedtimeSelection() {
+        Bedtime.saveSelection(bedtimeSelection)
+        scheduleBedtime()
+    }
+
+    /// (Re)registers the nightly schedule from `Bedtime`, or removes it when bedtime is off. The interval
+    /// crosses midnight (22:00 to 8:00); the monitor extension shields at its start and lifts it at its end.
+    func scheduleBedtime() {
+        center.stopMonitoring([.bedtime])
+        defer { BedtimeBlocker.reconcile() }
+        guard isAuthorized, Bedtime.enabled, Bedtime.selectionCount > 0,
+              Bedtime.length(start: Bedtime.startMinute, end: Bedtime.endMinute) >= Bedtime.minimumLength else { return }
+        let schedule = DeviceActivitySchedule(
+            intervalStart: Bedtime.components(Bedtime.startMinute),
+            intervalEnd: Bedtime.components(Bedtime.endMinute),
+            repeats: true)
+        do {
+            try center.startMonitoring(.bedtime, during: schedule)
+            lastError = nil
+        } catch {
+            lastError = "Bedtime schedule failed: \(error.localizedDescription)"
+        }
     }
 
     /// Schedules a one-shot DeviceActivity interval so the monitor extension re-applies the shield at `until`.
