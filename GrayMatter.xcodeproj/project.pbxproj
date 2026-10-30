@@ -21,7 +21,6 @@
 		197507F907B1BD4C1F060DDA /* BrainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B308FEAC2127F1F1A709C2 /* BrainView.swift */; };
 		1A477C5D3253D6C02CA9AE0E /* ScreenTimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AAB17F2B5DF6870BF704C22 /* ScreenTimeManager.swift */; };
 		22A094C769C630D68E022264 /* BrainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B308FEAC2127F1F1A709C2 /* BrainView.swift */; };
-		B3D71A2E5C9F4E0A8B6C1D01 /* BedtimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D71A2E5C9F4E0A8B6C1D03 /* BedtimeView.swift */; };
 		23E83D9496BED4DE00D17D6F /* BlockedSitesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E34A0E389E8B22B84ED36B45 /* BlockedSitesView.swift */; };
 		25223495F4C9BE6BC0D91417 /* GrayMatterReport.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = 75FE3CACE6F7BE364D57C10F /* GrayMatterReport.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		259799675718C96D7E2E8FB1 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B973205C0BB00DCFC0EB5E71 /* OnboardingView.swift */; };
@@ -41,7 +40,6 @@
 		4A85D3A1F99D42AD528A84E6 /* BlockedSites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD4D1598013C0F4A42FCF8E /* BlockedSites.swift */; };
 		4AF424194891E9FA7AEA8774 /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7251C9C15F84448F80DB63 /* AppGroup.swift */; };
 		4B5251FFCD8D128643FC839E /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA933C107E7E3A9D3818EB2 /* RootView.swift */; };
-		B3D71A2E5C9F4E0A8B6C1D02 /* BedtimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D71A2E5C9F4E0A8B6C1D03 /* BedtimeView.swift */; };
 		4BF150E3A90E3AC5E95A0F38 /* BlockedSitesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E34A0E389E8B22B84ED36B45 /* BlockedSitesView.swift */; };
 		4D33C2AAB6276BB6C9429DE7 /* RotModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD09BF162F2320D0435FAD0D /* RotModel.swift */; };
 		526ECE67612152857959ED2A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42958A3A61CDE1EB76558A1D /* HomeView.swift */; };
@@ -85,6 +83,7 @@
 		B316E81A695E6686FCC44ED7 /* GrayMatterWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6CC5B8463439D4FF5CCB3F5 /* GrayMatterWidget.swift */; };
 		B36162EE6C56790C1AE35385 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F369B65632B8BE2D9CCA79 /* SettingsView.swift */; };
 		B9BC470B5B081BB62EB0DD2B /* TrackedApps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FCF6244ACC986E283F86EB7 /* TrackedApps.swift */; };
+		BA7B8F1EFFA8A87B4E63BB8F /* BedtimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DD691469B4625CAA9C2D25 /* BedtimeView.swift */; };
 		BA7F38B6CC9AE5BBFABF1404 /* GrayMatterShield.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E9C79C20916D0A43155CBE4A /* GrayMatterShield.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BAA9F2AD5A626D98729F8C84 /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7251C9C15F84448F80DB63 /* AppGroup.swift */; };
 		BCD117007F3D72A6EBE719A0 /* BlockedSites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD4D1598013C0F4A42FCF8E /* BlockedSites.swift */; };
@@ -115,6 +114,7 @@
 		FDAA51362974C783DCF2E8E1 /* SharedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3653CE8A9DA83F6C2637834F /* SharedStore.swift */; };
 		FDFFE6C06801E24C0C5B9731 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24F31F526B9BF87FDE64071B /* Assets.xcassets */; };
 		FEA82F25280F249AB24EFFD1 /* GrayMatterWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 3B2CBC5730D416A02AF033D2 /* GrayMatterWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		FF53ADDEE873C739BD299E25 /* BedtimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7DD691469B4625CAA9C2D25 /* BedtimeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -229,13 +229,13 @@
 		88AAFADB0D21CF7B7D73F315 /* ShieldConfigurationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShieldConfigurationExtension.swift; sourceTree = "<group>"; };
 		8F1E3FAC6FB2F13D962EDD30 /* GrayMatterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrayMatterApp.swift; sourceTree = "<group>"; };
 		A6CC5B8463439D4FF5CCB3F5 /* GrayMatterWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrayMatterWidget.swift; sourceTree = "<group>"; };
+		A7DD691469B4625CAA9C2D25 /* BedtimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BedtimeView.swift; sourceTree = "<group>"; };
 		AA7251C9C15F84448F80DB63 /* AppGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroup.swift; sourceTree = "<group>"; };
 		B973205C0BB00DCFC0EB5E71 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		BD09BF162F2320D0435FAD0D /* RotModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotModel.swift; sourceTree = "<group>"; };
 		C78F975FBCB37E15EF00E168 /* GrayMatterShieldAction.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = GrayMatterShieldAction.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2B308FEAC2127F1F1A709C2 /* BrainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrainView.swift; sourceTree = "<group>"; };
 		D6C2AAF44C1DB99F94D50418 /* GrayMatter.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = GrayMatter.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B3D71A2E5C9F4E0A8B6C1D03 /* BedtimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BedtimeView.swift; sourceTree = "<group>"; };
 		E34A0E389E8B22B84ED36B45 /* BlockedSitesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedSitesView.swift; sourceTree = "<group>"; };
 		E9C79C20916D0A43155CBE4A /* GrayMatterShield.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = GrayMatterShield.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -261,7 +261,7 @@
 		6818F72C3CDFD5D00A822FD1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				B3D71A2E5C9F4E0A8B6C1D03 /* BedtimeView.swift */,
+				A7DD691469B4625CAA9C2D25 /* BedtimeView.swift */,
 				E34A0E389E8B22B84ED36B45 /* BlockedSitesView.swift */,
 				07E43BDFA1F2C99FD4D10D8E /* Components.swift */,
 				42958A3A61CDE1EB76558A1D /* HomeView.swift */,
@@ -721,8 +721,8 @@
 				F98423BFF45A37F997EFB2F2 /* Alternatives.swift in Sources */,
 				BAA9F2AD5A626D98729F8C84 /* AppGroup.swift in Sources */,
 				308A531435DD8C26AE1A30F3 /* AppModel.swift in Sources */,
+				FF53ADDEE873C739BD299E25 /* BedtimeView.swift in Sources */,
 				72B555BE22187EC77D6812D1 /* BlockedSites.swift in Sources */,
-				B3D71A2E5C9F4E0A8B6C1D01 /* BedtimeView.swift in Sources */,
 				23E83D9496BED4DE00D17D6F /* BlockedSitesView.swift in Sources */,
 				DC7D8E7A42C84FC872461218 /* BrainView.swift in Sources */,
 				F75876DBEAB39F124EFE299A /* Components.swift in Sources */,
@@ -748,8 +748,8 @@
 				18E65C52B06151A40A412C16 /* Alternatives.swift in Sources */,
 				054DA6ED0E82E905D597FAF0 /* AppGroup.swift in Sources */,
 				9F6B808345F6A7736352F208 /* AppModel.swift in Sources */,
+				BA7B8F1EFFA8A87B4E63BB8F /* BedtimeView.swift in Sources */,
 				487F39BCF3280E40FEF6BAE1 /* BlockedSites.swift in Sources */,
-				B3D71A2E5C9F4E0A8B6C1D02 /* BedtimeView.swift in Sources */,
 				4BF150E3A90E3AC5E95A0F38 /* BlockedSitesView.swift in Sources */,
 				E5BDA5DACDCFEFC796889BBF /* BrainView.swift in Sources */,
 				96B0FFAC372413C0E58BEEE0 /* Components.swift in Sources */,
